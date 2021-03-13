@@ -1,10 +1,5 @@
 name: Build Android and iOS
 on: 
-  pull request:
-     branches:
-      - developer
-      - test
-      - production  
   push:
     branches:
       - developer
