@@ -1,6 +1,6 @@
 name: Build Android and iOS
 
-on: [pull_request]
+on: [push,pull_request]
 
 jobs:
   install-and-test:
