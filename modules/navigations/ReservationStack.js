@@ -1,9 +1,9 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react"
+import { createStackNavigator } from "@react-navigation/stack"
 
-import Reservation from "../modules/screens/reservation/Reservation";
-import colors from "../shared/components/ColorsApp"
-import strings from "../shared/components/Strings"
+import Reservation from "../screens/reservation/Reservation"
+import colors from "../../shared/styles/ColorsApp"
+import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ export default function ReservationStack() {
         name="reservation"
         component={Reservation}
         options={{
-          title: strings.reservation.title,
+          title: message.reservation.title,
           headerStyle: {
             backgroundColor: colors.primary,
           },

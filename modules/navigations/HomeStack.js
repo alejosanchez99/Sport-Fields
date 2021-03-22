@@ -1,10 +1,9 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack"
 
-
-import Home from "../modules/screens/home/Home";
-import colors from "../shared/components/ColorsApp"
-import strings from "../shared/components/Strings"
+import Home from "../screens/home/Home"
+import colors from "../../shared/styles/ColorsApp"
+import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
@@ -15,7 +14,7 @@ export default function HomeStack() {
         name="home"
         component={Home}
         options={{
-          title: strings.home.title,
+          title: message.home.title,
           headerStyle: {
             backgroundColor: colors.primary,
           },

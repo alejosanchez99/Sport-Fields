@@ -1,9 +1,9 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack"
 
-import colors from "../shared/components/ColorsApp"
-import strings from "../shared/components/Strings"
-import Account from "../modules/screens/account/InfoUser";
+import colors from "../../shared/styles/ColorsApp"
+import Account from "../screens/account/InformationUser"
+import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ export default function AccountStack() {
         name="account"
         component={Account}
         options={{
-          title: strings.account.title,
+          title: message.account.title,
           headerStyle: {
             backgroundColor: colors.primary,
           },
