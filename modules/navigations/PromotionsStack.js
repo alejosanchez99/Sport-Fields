@@ -1,9 +1,9 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack"
 
-import Promotions from "../modules/screens/promotions/Promotions";
-import colors from "../shared/components/ColorsApp"
-import strings from "../shared/components/Strings"
+import Promotions from "../screens/promotions/Promotions";
+import colors from "../../shared/styles/ColorsApp"
+import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ export default function PromotionsStack() {
         name="promotions"
         component={Promotions}
         options={{
-          title: strings.promotions.title,
+          title: message.promotions.title,
           headerStyle: {
             backgroundColor: colors.primary,
           },

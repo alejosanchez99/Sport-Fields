@@ -1,9 +1,9 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react"
+import { createStackNavigator } from "@react-navigation/stack"
 
-import Favorites from "../modules/screens/favorites/Favorites";
-import colors from "../shared/components/ColorsApp"
-import strings from "../shared/components/Strings"
+import Favorites from "../screens/favorites/Favorites"
+import colors from "../../shared/styles/ColorsApp"
+import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ export default function FavoriteStack() {
         name="favorites"
         component={Favorites}
         options={{
-          title: strings.favorites.title,
+          title: message.favorites.title,
           headerStyle: {
             backgroundColor: colors.primary,
           },
