@@ -13,3 +13,7 @@ jobs:
       - name: Run tests
         run: |
           npm test
+      - name: npm lint
+        run: |
+          npm run lint
+          
