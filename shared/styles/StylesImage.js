@@ -11,7 +11,17 @@ const stylesImage = StyleSheet.create({
         resizeMode: 'cover', // or 'stretch'
         justifyContent: 'center',
         alignItems: 'center',
-     }
+    },
+    imageLogin: {
+        height:100,
+        width: "80%",
+        marginVertical:20
+    }, 
+    backgroundImageLogin: {
+        flex: 1,
+        resizeMode: 'cover',
+        alignItems: 'center', // or 'stretch'
+    },
 });
 
 export default stylesImage

@@ -82,7 +82,7 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="account"
-          component={AccountStack}
+          component={AccountStack("account")}
           options={{ title: message.account.title }}
         />
       </Tab.Navigator>
