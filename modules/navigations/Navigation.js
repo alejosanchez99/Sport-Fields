@@ -20,7 +20,7 @@ export default function Navigation() {
     let iconName;
     switch (route.name) {
       case "home":
-        iconName = "apps";
+        iconName = "home";
         break;
       case "reservation":
         iconName = "magnify";
@@ -32,7 +32,7 @@ export default function Navigation() {
         iconName = "alert-circle"
         break;
       case "account":
-        iconName = "cog"
+        iconName = "account-circle-outline"
         break;
     }
     return (
@@ -53,7 +53,7 @@ export default function Navigation() {
           inactiveTintColor: colors.secundary,
           activeTintColor: colors.four,
           style: {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.primary
           }
         }}
         screenOptions={({ route }) => ({
@@ -63,7 +63,7 @@ export default function Navigation() {
         <Tab.Screen
           name="home"
           component={HomeStack}
-          options={{ title: message.home.title, }}
+          options={{ title: message.home.title }}
         />
         <Tab.Screen
           name="reservation"

@@ -12,7 +12,7 @@ const message = {
         title: "Favoritos"
     },
     account: {
-        title: "Cuenta"
+        title: "Perfil"
     }
 
 }

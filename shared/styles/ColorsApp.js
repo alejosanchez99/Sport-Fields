@@ -1,9 +1,9 @@
-
 const colors = {
-    primary: '#ABB2D7',
+    primary: '#CACEE2',
     secundary: '#1A1A1A',
     three: '#6F7070',
-    four: "#FFFFFF"
+    four: "#FFFFFF",
+    gray: "#F9F9F9"
 }
   
 export default colors
