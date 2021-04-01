@@ -1,22 +1,18 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import Navigation from "../../navigations/Navigation";
 
-import { useFocusEffect } from "@react-navigation/native"
-
-import UserGuest from './UserGuest'
-import UserLogged from './UserLogged'
+import AccountStack from "../../navigations/AccountStack";
 
 export default function Account() {
-
-    const [login, setLogin] = useState(null)
-
-
-    useFocusEffect(
-        useCallback(() => {
-            const user = false;//getCurrentUser()
-
-            user ? setLogin(true) : setLogin(false)
-        }, [])
-    )
-
-    return login ? <UserLogged /> : <UserGuest />
+  const [login, setlogin] = useState(null);
+  setlogin(false)
+  return login ? (
+    <Navigation />
+  ) : (
+    <NavigationContainer>
+      <AccountStack route={"login"}/>
+    </NavigationContainer>
+  )
 }
+

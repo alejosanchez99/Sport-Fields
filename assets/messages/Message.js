@@ -1,4 +1,5 @@
 const message = {
+    nameApp : "SportFields",
     reservation: {
         title: "Reservación"
     },
