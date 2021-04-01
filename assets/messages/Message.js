@@ -13,8 +13,10 @@ const message = {
     },
     account: {
         title: "Perfil"
+    },
+    Login: {
+        title: "Iniciar sesión"
     }
-
 }
 
 export default message

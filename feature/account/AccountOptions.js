@@ -14,40 +14,56 @@ export default function AccountOptions() {
                 iconNameLeft: "account-circle",
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
-                iconColorRight: "#a7bfd3"
+                iconColorRight: "#a7bfd3",
+                onPress: () => selectedComponent("displayName")
             },
             {
                 title: "Cambiar email",
                 iconNameLeft: "at",
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
-                iconColorRight: "#a7bfd3"
+                iconColorRight: "#a7bfd3",
+                onPress: () => selectedComponent("email")
             },
             {
                 title: "Cambiar contraseña",
                 iconNameLeft: "lock-reset",
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
-                iconColorRight: "#a7bfd3"
+                iconColorRight: "#a7bfd3",
+                onPress: () => selectedComponent("password")
             },
             {
                 title: "Cerrar sesión",
                 iconNameLeft: "account-remove-outline",
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
-                iconColorRight: "#a7bfd3"
+                iconColorRight: "#a7bfd3",
+                onPress: () => selectedComponent("signOut")
             }
         ]
     }
 
-    const menuOptions = generateOptions();
+    const selectedComponent = (key) => {
+        switch (key) {
+            case "displayName":
+                break
+            case "email":
+                break
+            case "password":
+                break
+            case "signOut":
+                break
+        }
+    }
 
+    const menuOptions = generateOptions();
 
     return (
         <View style={styles.container}>
             {
                 map(menuOptions, (menu, index) => (
-                    <Card containerStyle={styles.card} >
+                    <Card containerStyle={styles.card}>
                         <ListItem
                             key={index}
                             style={styles.menuItem}
@@ -75,7 +91,7 @@ export default function AccountOptions() {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: colors.gray
     },
     card: {
