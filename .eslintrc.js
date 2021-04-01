@@ -15,7 +15,7 @@ module.exports = {
         "react-hooks/exhaustive-deps": 1, 
         "react/jsx-uses-vars": 2,
         "no-undef": 2,
-        "react/prop-types": 2,
+        "react/prop-types": 0,
         "react/jsx-no-duplicate-props": 2      
     },
     globals: {

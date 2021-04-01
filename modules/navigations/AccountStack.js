@@ -2,20 +2,20 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import colors from "../../shared/styles/ColorsApp"
-import Account from "../screens/account/InformationUser"
+import UserLogged from "../screens/account/UserLogged";
 import UserGuest from "../screens/account/UserGuest"
 import message from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 
-export default function AccountStack({route}) {
+export default function AccountStack({ route }) {
   return (
     <Stack.Navigator
       initialRouteName={route}
     >
       <Stack.Screen
-        name="account"
-        component={Account}
+        name="user-logged"
+        component={UserLogged}
         options={{
           title: message.account.title,
           headerTitleStyle: {

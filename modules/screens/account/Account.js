@@ -6,6 +6,7 @@ import AccountStack from "../../navigations/AccountStack";
 
 export default function Account() {
   const [login, setlogin] = useState(null);
+
   setlogin(false)
   return login ? (
     <Navigation />
