@@ -14,7 +14,7 @@ import colors from "../../shared/styles/ColorsApp"
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation() {
+export default function Navigation({ routeScreen }) {
 
   const screenOptions = (route, color) => {
     let iconName;
@@ -82,9 +82,9 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="account"
-          component={AccountStack("account")}
+          component={() => <AccountStack route={routeScreen}/>}
           options={{ title: message.account.title }}
-        />
+        /> 
       </Tab.Navigator>
     </NavigationContainer>
   )

@@ -5,6 +5,7 @@ import colors from "../../shared/styles/ColorsApp"
 import UserLogged from "../screens/account/UserLogged";
 import UserGuest from "../screens/account/UserGuest"
 import message from "../../assets/messages/Message"
+import Login from "../screens/account/Login";
 
 const Stack = createStackNavigator();
 
@@ -28,7 +29,7 @@ export default function AccountStack({ route }) {
         }}
       />
       <Stack.Screen
-        name="login"
+        name="user-guest"
         component={UserGuest}
         options={{
           title: message.account.title,
@@ -40,6 +41,20 @@ export default function AccountStack({ route }) {
           headerTintColor: colors.four,
         }}
       />
+       <Stack.Screen
+        name="login"
+        component={Login}
+        options={{
+          title: message.account.title,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+
     </Stack.Navigator>
   );
 }
