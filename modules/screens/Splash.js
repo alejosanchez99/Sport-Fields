@@ -20,7 +20,7 @@ export default function Splash() {
   };
 
   return time ? (
-    <Account/>
+    <Account login={true}/>
   ) : (
     <View style={styleView.view}>
       <ImageBackground
