@@ -7,5 +7,6 @@ export const stylesCard =
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7
+    elevation: 7,
+    borderRadius: 15
 }

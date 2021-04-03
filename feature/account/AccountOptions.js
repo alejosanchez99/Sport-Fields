@@ -46,6 +46,7 @@ export default function AccountOptions() {
                 navigation.navigate("personal-information")
                 break
             case "password":
+                navigation.navigate("change-password")
                 break
             case "signOut":
                 break
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     },
     card: {
         padding: 3,
+        margin: 20,
         ...stylesCard
     }
 })

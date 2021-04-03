@@ -6,7 +6,8 @@ import UserLogged from "../screens/account/UserLogged"
 import UserGuest from "../screens/account/UserGuest"
 import { message } from "../../assets/messages/message"
 import Login from "../screens/account/Login"
-import PersonalInformation from "../screens/account/PersonalInformation"
+import ChangePersonalInformation from "../screens/account/ChangePersonalInformation"
+import ChangePassword from "../screens/account/ChangePassword"
 
 const Stack = createStackNavigator()
 
@@ -42,9 +43,23 @@ export default function AccountStack({ route }) {
       />
       <Stack.Screen
         name="personal-information"
-        component={PersonalInformation}
+        component={ChangePersonalInformation}
         options={{
           title: message.account.personalInformation.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="change-password"
+        component={ChangePassword}
+        options={{
+          title: message.account.changePassword.title,
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,

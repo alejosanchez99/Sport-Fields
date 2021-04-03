@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Card, Input, Button } from 'react-native-elements'
 
-import Header from "../../../shared/components/Header"
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import { message } from '../../../assets/messages/message'
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
@@ -10,10 +9,9 @@ import { stylesButtonContainer, stylesButton } from '../../../shared/styles/Styl
 export default function ChangePersonalInformation() {
     return (
         <View>
-            <Header />
             <Card containerStyle={styles.card}>
                 <Input
-                    placeholder="Nombres y apellidos"
+                    placeholder="Nombres y apellidos" 
                 />
                 <Input
                     placeholder="Correo electronico"
@@ -22,7 +20,7 @@ export default function ChangePersonalInformation() {
             <Button
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.button}
-                title={message.account.personalInformation.buttonTitle}
+                title={message.account.changePassword.buttonTitle}
             />
         </View>
     )

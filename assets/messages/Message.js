@@ -17,6 +17,10 @@ export const message = {
         personalInformation: {
             title: "Información personal",
             buttonTitle: "Editar"
+        },
+        changePassword: {
+            title: "Cambiar contraseña",
+            buttonTitle: "Editar"
         }
     },
     Login: {
