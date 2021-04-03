@@ -15,6 +15,7 @@ export default function PromotionsStack() {
         component={Promotions}
         options={{
           title: message.promotions.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
           },

@@ -15,6 +15,7 @@ export default function HomeStack() {
         component={Home}
         options={{
           title: message.home.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
           },

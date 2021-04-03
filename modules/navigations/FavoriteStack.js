@@ -15,6 +15,7 @@ export default function FavoriteStack() {
         component={Favorites}
         options={{
           title: message.favorites.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
           },

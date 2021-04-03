@@ -15,6 +15,7 @@ export default function ReservationStack() {
         component={Reservation}
         options={{
           title: message.reservation.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
           },
