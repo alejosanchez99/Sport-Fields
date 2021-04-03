@@ -8,32 +8,32 @@ import ReservationStack from './ReservationStack'
 import FavoriteStack from './FavoriteStack'
 import PromotionsStack from './PromotionsStack'
 import AccountStack from './AccountStack'
-import message from "../../assets/messages/Message"
+import { message } from "../../assets/messages/message"
 import colors from "../../shared/styles/ColorsApp"
 
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 export default function Navigation({ routeScreen }) {
 
   const screenOptions = (route, color) => {
-    let iconName;
+    let iconName
     switch (route.name) {
       case "home":
-        iconName = "home";
-        break;
+        iconName = "home"
+        break
       case "reservation":
-        iconName = "magnify";
-        break;
+        iconName = "magnify"
+        break
       case "favorites":
         iconName = "star"
-        break;
+        break
       case "promotions":
         iconName = "alert-circle"
-        break;
+        break
       case "account":
         iconName = "account-circle-outline"
-        break;
+        break
     }
     return (
       <Icon
@@ -82,9 +82,9 @@ export default function Navigation({ routeScreen }) {
         />
         <Tab.Screen
           name="account"
-          component={() => <AccountStack route={routeScreen}/>}
+          component={() => <AccountStack route={routeScreen} />}
           options={{ title: message.account.title }}
-        /> 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )

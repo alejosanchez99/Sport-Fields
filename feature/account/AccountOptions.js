@@ -5,7 +5,7 @@ import { ListItem, Icon, Card } from "react-native-elements"
 import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
-import stylesCard from '../../shared/styles/StylesCard'
+import { stylesCard } from '../../shared/styles/StylesCard'
 
 export default function AccountOptions() {
 
@@ -38,7 +38,7 @@ export default function AccountOptions() {
         ]
     }
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     const selectedComponent = (key) => {
         switch (key) {

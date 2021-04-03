@@ -1,14 +1,14 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react"
+import { createStackNavigator } from "@react-navigation/stack"
 
 import colors from "../../shared/styles/ColorsApp"
-import UserLogged from "../screens/account/UserLogged";
+import UserLogged from "../screens/account/UserLogged"
 import UserGuest from "../screens/account/UserGuest"
-import message from "../../assets/messages/Message"
-import Login from "../screens/account/Login";
-import PersonalInformation from "../screens/account/PersonalInformation";
+import { message } from "../../assets/messages/message"
+import Login from "../screens/account/Login"
+import PersonalInformation from "../screens/account/PersonalInformation"
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 export default function AccountStack({ route }) {
   return (
@@ -54,7 +54,7 @@ export default function AccountStack({ route }) {
           headerTintColor: colors.four,
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="login"
         component={Login}
         options={{
@@ -69,5 +69,5 @@ export default function AccountStack({ route }) {
       />
 
     </Stack.Navigator>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-const stylesCard =
+export const stylesCard =
 {
     shadowColor: "#000",
     shadowOffset: {
@@ -9,5 +9,3 @@ const stylesCard =
     shadowRadius: 4.65,
     elevation: 7
 }
-
-export default stylesCard

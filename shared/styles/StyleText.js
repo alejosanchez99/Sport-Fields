@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from "react-native"
 
 const styleText = StyleSheet.create({
   title: {
@@ -7,7 +7,7 @@ const styleText = StyleSheet.create({
     marginVertical: 10,
     color: "black",
     textAlign: "center",
-  },
-});
+  }
+})
 
-export default styleText;
+export default styleText

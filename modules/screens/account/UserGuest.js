@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, ScrollView, Image } from 'react-native'
 import { Button } from 'react-native-elements'
 
-import message from '../../../assets/messages/Message'
+import { message } from '../../../assets/messages/message'
 import colors from '../../../shared/styles/ColorsApp'
 
 export default function UserGuest() {
@@ -17,7 +17,7 @@ export default function UserGuest() {
                 style={styles.image}
             />
             <Text style={styles.text}>
-                
+
             </Text>
             <Text style={styles.description}>
 

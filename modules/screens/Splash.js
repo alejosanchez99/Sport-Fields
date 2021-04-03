@@ -32,7 +32,7 @@ export default function Splash() {
           resizeMode="contain"
           style={styleImage.image}
         />
-        <Text style={styleText.title}>SportFields</Text>
+        <Text style={styleText.title}>Sport Fields</Text>
       </ImageBackground>
     </View>
   );

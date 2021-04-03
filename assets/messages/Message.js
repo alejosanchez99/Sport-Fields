@@ -1,4 +1,4 @@
-const message = {
+export const message = {
     nameApp : "SportFields",
     reservation: {
         title: "Reservación"
@@ -23,5 +23,3 @@ const message = {
         title: "Iniciar sesión"
     },
 }
-
-export default message

@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native'
 import { Card, Input, Button } from 'react-native-elements'
 
 import Header from "../../../shared/components/Header"
-import stylesCard from "../../../shared/styles/StylesCard"
-import message from '../../../assets/messages/Message'
+import { stylesCard } from "../../../shared/styles/StylesCard"
+import { message } from '../../../assets/messages/message'
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 
 export default function ChangePersonalInformation() {
