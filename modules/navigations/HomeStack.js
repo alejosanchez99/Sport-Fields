@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 import Home from "../screens/home/Home"
 import colors from "../../shared/styles/ColorsApp"
-import { message } from "../../assets/messages/message"
+import { message } from "../../assets/messages/Message"
 
 const Stack = createStackNavigator()
 

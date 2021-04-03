@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 import Reservation from "../screens/reservation/Reservation"
 import colors from "../../shared/styles/ColorsApp"
-import { message } from "../../assets/messages/message"
+import { message } from "../../assets/messages/Message"
 
 const Stack = createStackNavigator();
 

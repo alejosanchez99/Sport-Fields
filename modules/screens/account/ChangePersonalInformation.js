@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { Card, Input, Button } from 'react-native-elements'
 
 import { stylesCard } from "../../../shared/styles/StylesCard"
-import { message } from '../../../assets/messages/message'
+import { message } from '../../../assets/messages/Message'
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 
 export default function ChangePersonalInformation() {
