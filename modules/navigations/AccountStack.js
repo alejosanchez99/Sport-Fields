@@ -6,6 +6,7 @@ import UserLogged from "../screens/account/UserLogged";
 import UserGuest from "../screens/account/UserGuest"
 import message from "../../assets/messages/Message"
 import Login from "../screens/account/Login";
+import PersonalInformation from "../screens/account/PersonalInformation";
 
 const Stack = createStackNavigator();
 
@@ -19,9 +20,7 @@ export default function AccountStack({ route }) {
         component={UserLogged}
         options={{
           title: message.account.title,
-          headerTitleStyle: {
-            alignSelf: "center"
-          },
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary
           },
@@ -33,6 +32,20 @@ export default function AccountStack({ route }) {
         component={UserGuest}
         options={{
           title: message.account.title,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="personal-information"
+        component={PersonalInformation}
+        options={{
+          title: message.account.personalInformation.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,

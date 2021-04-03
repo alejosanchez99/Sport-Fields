@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements'
+
 import colors from '../../shared/styles/ColorsApp'
 
 export default function InformationUser() {

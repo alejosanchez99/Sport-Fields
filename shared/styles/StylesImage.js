@@ -8,7 +8,7 @@ const stylesImage = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover', // or 'stretch'
+        resizeMode: 'cover',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -20,7 +20,7 @@ const stylesImage = StyleSheet.create({
     backgroundImageLogin: {
         flex: 1,
         resizeMode: 'cover',
-        alignItems: 'center', // or 'stretch'
+        alignItems: 'center',
     },
 });
 

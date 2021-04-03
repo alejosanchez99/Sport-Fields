@@ -2,28 +2,22 @@ import { map } from 'lodash'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ListItem, Icon, Card } from "react-native-elements"
+import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
+import stylesCard from '../../shared/styles/StylesCard'
 
 export default function AccountOptions() {
 
     const generateOptions = () => {
         return [
             {
-                title: "Cambiar nombres y apellidos",
+                title: "Cambiar información personal",
                 iconNameLeft: "account-circle",
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => selectedComponent("displayName")
-            },
-            {
-                title: "Cambiar email",
-                iconNameLeft: "at",
-                iconColorLeft: "#a7bfd3",
-                iconNameRight: "chevron-right",
-                iconColorRight: "#a7bfd3",
-                onPress: () => selectedComponent("email")
+                onPress: () => selectedComponent("personalInformation")
             },
             {
                 title: "Cambiar contraseña",
@@ -44,11 +38,12 @@ export default function AccountOptions() {
         ]
     }
 
+    const navigation = useNavigation();
+
     const selectedComponent = (key) => {
         switch (key) {
-            case "displayName":
-                break
-            case "email":
+            case "personalInformation":
+                navigation.navigate("personal-information")
                 break
             case "password":
                 break
@@ -57,7 +52,7 @@ export default function AccountOptions() {
         }
     }
 
-    const menuOptions = generateOptions();
+    const menuOptions = generateOptions()
 
     return (
         <View style={styles.container}>
@@ -95,6 +90,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.gray
     },
     card: {
-        padding: 3
+        padding: 3,
+        ...stylesCard
     }
 })

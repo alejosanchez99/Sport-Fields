@@ -13,11 +13,15 @@ const message = {
         title: "Favoritos"
     },
     account: {
-        title: "Perfil"
+        title: "Perfil",
+        personalInformation: {
+            title: "Información personal",
+            buttonTitle: "Editar"
+        }
     },
     Login: {
         title: "Iniciar sesión"
-    }
+    },
 }
 
 export default message
