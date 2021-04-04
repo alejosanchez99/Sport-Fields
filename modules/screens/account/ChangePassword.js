@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, ImageBackground } from 'react-native'
 import { Card, Input, Button } from 'react-native-elements'
 
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import { message } from '../../../assets/messages/message'
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
+import styleImage from "../../../shared/styles/StylesImage";
 import IconPassword from "../../../shared/components/IconPassword"
+import Header from '../../../shared/components/Header'
 
 export default function ChangePassword() {
     const [showCurrentPassword, setShowCurrentPassword] = useState(null);
@@ -13,7 +15,11 @@ export default function ChangePassword() {
     const [showConfirmPassword, setConfirmShowPassword] = useState(null);
 
     return (
-        <View>
+        <ImageBackground
+        source={require("../../..//assets/images/backgroundLogin.png")}
+        style={styleImage.backgroundImageLogin}
+        >
+            <Header/>
             <Card containerStyle={styles.card}>
                 <Input
                     wre
@@ -55,7 +61,7 @@ export default function ChangePassword() {
                 buttonStyle={styles.button}
                 title={message.account.personalInformation.buttonTitle}
             />
-        </View>
+        </ImageBackground>
     )
 }
 
@@ -64,10 +70,11 @@ const styles = StyleSheet.create({
         ...stylesButton
     },
     buttonContainer: {
-        marginTop: 20,
+        marginTop: 50,
         ...stylesButtonContainer
     },
     card: {
+        marginTop: 50,
         width: "80%",
         padding: 30,
         alignSelf: "center",

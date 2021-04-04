@@ -15,7 +15,7 @@ const stylesImage = StyleSheet.create({
     imageLogin: {
         height:100,
         width: "80%",
-        marginVertical:20
+        marginTop: 20
     }, 
     backgroundImageLogin: {
         flex: 1,

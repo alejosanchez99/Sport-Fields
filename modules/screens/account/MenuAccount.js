@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import { stylesCard } from "../../../shared/styles/StylesCard";
 import colors from "../../../shared/styles/ColorsApp";
 import styleImage from "../../../shared/styles/StylesImage";
-import Navigation from "../../navigations/Navigation";
 import { Text } from "react-native";
 
 export default function MenuAccount({setNavigation}) {

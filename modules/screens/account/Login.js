@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         ...stylesButtonContainer
     },
     card: {
-        marginTop: 100,
+        marginTop: 50,
         width: "80%",
         padding: 30,
         alignSelf: "center",

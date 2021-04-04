@@ -4,7 +4,7 @@ import { Image, View } from "react-native";
 import styleImage from "../styles/StylesImage";
 import styleView from "../styles/StylesView";
 
-export default function Header({ image }) {
+export default function Header() {
   return (
     <View
       style={styleView.viewHeader}
