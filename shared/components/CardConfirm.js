@@ -34,28 +34,28 @@ export default function CardConfirm({ successfulOperation }) {
                 opacity: fadeAnimation
             }}>
                 <Card containerStyle={styles.card}>
-                    <View style={styles.containerCard}>
-                        {
-                            successfulOperation ?
-                                (<Icon
+                    {
+                        successfulOperation ?
+                            (<View style={styles.containerCard}>
+                                <Icon
                                     type="material-community"
                                     color="#009827"
                                     name="checkbox-marked-circle"
-                                />)
-                                    (<Text style={styles.textCard}>
-                                        {message.generic.messageConfirm}
-                                    </Text>) :
-
-                                (<Icon
+                                /><Text style={styles.textCard}>
+                                    {message.generic.messageConfirm}
+                                </Text>
+                            </View>)
+                            :
+                            (<View style={styles.containerCard}>
+                                <Icon
                                     type="material-community"
                                     color="#F00000"
                                     name="close-circle"
-                                />)
-                                    (<Text style={styles.textCard}>
-                                        {message.generic.messageError}
-                                    </Text>)
-                        }
-                    </View>
+                                /><Text style={styles.textCard}>
+                                    {message.generic.messageError}
+                                </Text>
+                            </View>)
+                    }
                 </Card>
             </Animated.View>
         </View>
