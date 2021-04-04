@@ -7,6 +7,19 @@ const styleText = StyleSheet.create({
     marginVertical: 10,
     color: "black",
     textAlign: "center",
+  },
+  titleAlert: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginVertical: 10,
+    color: "black",
+    textAlign: "center",
+  },
+  textAlert: {
+    fontSize: 18,
+    marginBottom: 10,
+    color: "black",
+    textAlign: "center",
   }
 })
 

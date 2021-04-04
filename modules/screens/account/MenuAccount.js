@@ -1,7 +1,7 @@
 import React from "react";
-import { map } from 'lodash'
+import { map } from "lodash";
 import { ListItem, Icon, Card } from "react-native-elements";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
 
 import Header from "../../../shared/components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -10,8 +10,7 @@ import colors from "../../../shared/styles/ColorsApp";
 import styleImage from "../../../shared/styles/StylesImage";
 import { Text } from "react-native";
 
-export default function MenuAccount({setNavigation}) {
-
+export default function MenuAccount({ setNavigation }) {
   const generateOptions = () => {
     return [
       {
@@ -52,7 +51,7 @@ export default function MenuAccount({setNavigation}) {
         navigation.navigate("register");
         break;
       case "guest":
-        setNavigation(true)
+        setNavigation(true);
         break;
     }
   };
@@ -61,33 +60,35 @@ export default function MenuAccount({setNavigation}) {
 
   return (
     <ImageBackground
-    source={require("../../..//assets/images/backgroundLogin.png")}
-    style={styleImage.backgroundImageLogin}
+      source={require("../../..//assets/images/backgroundLogin.png")}
+      style={styleImage.backgroundImageLogin}
     >
-      <Header/>
-      <Text style={styles.title}>Si deseas poder utilizar todas las funciones {"\n"} de la App necesitas iniciar sesión.</Text>
+      <Header />
+      <Text style={styles.title}>
+        Si deseas poder utilizar todas las funciones {"\n"} de la App necesitas
+        iniciar sesión.
+      </Text>
       {map(menuOptions, (menu, index) => (
         <Card containerStyle={styles.card}>
-          <ListItem key={index}
-           style={styles.menuItem} onPress={menu.onPress}>
-            <Icon
-              type="material-community"
-              name={menu.iconNameLeft}
-              color={menu.iconColorLeft}
-            />
-            <ListItem.Content>
-              <ListItem.Title>{menu.title}</ListItem.Title>
-            </ListItem.Content>
-            <Icon
-              type="material-community"
-              name={menu.iconNameRight}
-              color={menu.iconColorRight}
-            />
-          </ListItem>
+          <TouchableOpacity onPress={menu.onPress}>
+            <ListItem key={index} style={styles.menuItem}>
+              <Icon
+                type="material-community"
+                name={menu.iconNameLeft}
+                color={menu.iconColorLeft}
+              />
+              <ListItem.Content>
+                <ListItem.Title>{menu.title}</ListItem.Title>
+              </ListItem.Content>
+              <Icon
+                type="material-community"
+                name={menu.iconNameRight}
+                color={menu.iconColorRight}
+              />
+            </ListItem>
+          </TouchableOpacity>
         </Card>
       ))}
-   
-      
     </ImageBackground>
   );
 }
@@ -97,8 +98,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray,
   },
   title: {
-    textAlign: 'center', // <-- the magic
-    fontWeight: 'bold',
+    textAlign: "center", // <-- the magic
+    fontWeight: "bold",
     fontSize: 14,
     marginTop: 20,
     marginBottom: 20,
