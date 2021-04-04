@@ -5,13 +5,93 @@ import { Card, Input, Button } from 'react-native-elements'
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import Header from "../../../shared/components/Header";
 import { message } from '../../../assets/messages/message'
+import { isEmpty,size } from "lodash"
 import styleImage from "../../../shared/styles/StylesImage";
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 import IconPassword from "../../../shared/components/IconPassword"
+import { validateEmail } from '../../../shared/utils/helpers';
+import { registerUser } from '../../../core/firebase/actions';
+import Modal from '../../../shared/components/Modal';
+
+
+const defaultFormsValues = () => {
+    return { name: "",email : "", password : "", confirm : ""}
+}
+
+
+
 
 export default function Register() {
     const [showNewPassword, setNewShowPassword] = useState(null);
     const [showConfirmPassword, setConfirmShowPassword] = useState(null);
+    const [formData, setFormData] = useState(defaultFormsValues());
+    const [errorText, setErrorText] = useState(null)
+    const [titleError, setTitleError] = useState(null)
+    const [enable, setEnable] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+
+
+    const onChange = (e,type) => {
+        formData[type] = e.nativeEvent.text
+        setEnable(validateData()) 
+    }
+
+    const validateRegister =()=>{
+        if(!validateEmail(formData.email)){
+            setTitleError("Correo invalido")
+            setErrorText("Por favor ingresa un correo electronico valido.")
+            setShowModal(true)
+            return false
+        }
+        if(size(formData.password) < 7){
+            setTitleError("Contraseña incorrecta")
+            setErrorText("Su contraseña debe de tener minimo 8 caracteres.")
+            setShowModal(true)
+            return false
+        }
+        if(formData.password !== formData.confirm){
+            setTitleError("Contraseña incorrecta") 
+            setErrorText("Las contraseñas no coinciden.") 
+            setShowModal(true)
+            return false
+        }
+        return true
+    }
+
+    const validateData = () => {
+        if (isEmpty(formData.name)){
+            return false
+        }
+        if (isEmpty(formData.email)){
+            return false
+        }
+        if (isEmpty(formData.password)){
+            return false
+        }
+        if (isEmpty(formData.confirm)){
+            return false
+        }
+       
+        return true
+    }
+
+
+    const doRegisterUser = async() =>{
+        if (!validateRegister()){
+            return;
+        }
+
+        const result = await registerUser(formData.email,formData.password)
+
+        if(!result.statusResponse){
+            setTitleError("Lo sentimos") 
+            setErrorText("hubo un problema al momento de crear el usuario o el email ya se encuentra registrado.") 
+            setShowModal(true)
+            return
+        }
+
+
+    }
 
 
     return (
@@ -23,16 +103,19 @@ export default function Register() {
             <Card containerStyle={styles.card}>
                 <Input
                     wre
+                    onChange={(e) => onChange(e,"email")}
                     placeholder="Correo electronico"
                 />
                   <Input
                     wre
+                    onChange={(e) => onChange(e,"name")}
                     placeholder="Nombre y apellidos"
                 />
                 <Input
                     placeholder="Contraseña"
                     password={true}
                     secureTextEntry={!showNewPassword}
+                    onChange={(e) => onChange(e,"password")}
                     rightIcon={
                         <IconPassword
                             showPassword={showNewPassword}
@@ -44,6 +127,7 @@ export default function Register() {
                     placeholder="Confirmación de contraseña"
                     password={true}
                     numberOfLines = {1}
+                    onChange={(e) => onChange(e,"confirm")}
                     secureTextEntry={!showConfirmPassword}
                     rightIcon={
                         <IconPassword
@@ -56,8 +140,12 @@ export default function Register() {
             <Button
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.button}
+                disabled={!enable}
                 title={message.login.register.buttonTitle}
+                onPress={() => doRegisterUser()}
             />
+            <Modal isVisible={showModal} setVisible={setShowModal} 
+            title={titleError} text={errorText}/>
         </ImageBackground>
     )
 }

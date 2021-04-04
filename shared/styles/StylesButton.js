@@ -11,3 +11,12 @@ export const stylesButtonContainer =
 export const stylesButton = {
     backgroundColor: colors.primary
 }
+
+export const stylesButtonContainerAlert =
+{
+    backgroundColor: colors.secundary,
+    marginTop: 10,
+    borderRadius: 10,
+    width: "30%",
+    alignSelf: "flex-end"
+}

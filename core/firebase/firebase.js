@@ -12,6 +12,5 @@ const firebaseConfig = {
   };
 
   const initializeApp = firebase.initializeApp(firebaseConfig)
-  firebase.analytics()
   
 export const firebaseApp = initializeApp

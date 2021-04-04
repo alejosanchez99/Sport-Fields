@@ -1,7 +1,9 @@
 import * as firebase from 'firebase'
+import {firebaseApp} from './firebase'
 import 'firebase/firestore'
 
 import { fileToBlob } from '../../shared/utils/fileUtily'
+
 
 export const isUserLogged = () => {
     let isLogged = false
