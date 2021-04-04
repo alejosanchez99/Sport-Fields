@@ -1,21 +1,21 @@
-import React from "react"
-import { createStackNavigator } from "@react-navigation/stack"
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import colors from "../../shared/styles/ColorsApp"
-import UserLogged from "../screens/account/UserLogged"
-import UserGuest from "../screens/account/UserGuest"
-import { message } from "../../assets/messages/Message"
-import Login from "../screens/account/Login"
-import ChangePersonalInformation from "../screens/account/ChangePersonalInformation"
-import ChangePassword from "../screens/account/ChangePassword"
+import colors from "../../shared/styles/ColorsApp";
+import UserLogged from "../screens/account/UserLogged";
+import UserGuest from "../screens/account/UserGuest";
+import { message } from "../../assets/messages/Message";
+import MenuAccount from "../screens/account/MenuAccount";
+import ChangePersonalInformation from "../screens/account/ChangePersonalInformation";
+import ChangePassword from "../screens/account/ChangePassword";
+import Register from "../screens/account/Register";
+import Login from "../screens/account/Login";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
-export default function AccountStack({ route }) {
+export default function AccountStack({ route, setNavigation }) {
   return (
-    <Stack.Navigator
-      initialRouteName={route}
-    >
+    <Stack.Navigator initialRouteName={route}>
       <Stack.Screen
         name="user-logged"
         component={UserLogged}
@@ -23,7 +23,7 @@ export default function AccountStack({ route }) {
           title: message.account.title,
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: colors.primary
+            backgroundColor: colors.primary,
           },
           headerTintColor: colors.four,
         }}
@@ -70,10 +70,10 @@ export default function AccountStack({ route }) {
         }}
       />
       <Stack.Screen
-        name="login"
-        component={Login}
+        name="menu-account"
+        component={() => <MenuAccount setNavigation={setNavigation} />}
         options={{
-          title: message.account.title,
+          title: message.login.title,
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,
@@ -82,7 +82,33 @@ export default function AccountStack({ route }) {
           headerTintColor: colors.four,
         }}
       />
-
+      <Stack.Screen
+        name="register"
+        component={Register}
+        options={{
+          title: message.login.register.title,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="login"
+        component={Login}
+        options={{
+          title: message.login.login.title,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
     </Stack.Navigator>
-  )
+    
+  );
 }

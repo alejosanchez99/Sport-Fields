@@ -23,7 +23,16 @@ export const message = {
             buttonTitle: "Editar"
         }
     },
-    Login: {
-        title: "Iniciar sesión"
+    login: {
+        title: "Opciones",
+        register: {
+            title: "Registrar",
+            buttonTitle : "Registrarse"
+        },
+        login : {
+            title: "Iniciar sesión",
+            buttonTitle : "Iniciar sesión"
+        }
+    
     },
 }

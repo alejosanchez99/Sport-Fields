@@ -9,9 +9,9 @@ import styleImage from "../../../shared/styles/StylesImage";
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 import IconPassword from "../../../shared/components/IconPassword"
 
-
-export default function Login() {
-    const [showPassword, setShowPassword] = useState(null);
+export default function Register() {
+    const [showNewPassword, setNewShowPassword] = useState(null);
+    const [showConfirmPassword, setConfirmShowPassword] = useState(null);
 
 
     return (
@@ -25,14 +25,30 @@ export default function Login() {
                     wre
                     placeholder="Correo electronico"
                 />
+                  <Input
+                    wre
+                    placeholder="Nombre y apellidos"
+                />
                 <Input
                     placeholder="Contraseña"
                     password={true}
-                    secureTextEntry={!showPassword}
+                    secureTextEntry={!showNewPassword}
                     rightIcon={
                         <IconPassword
-                            showPassword={showPassword}
-                            setShowPassword={setShowPassword}
+                            showPassword={showNewPassword}
+                            setShowPassword={setNewShowPassword}
+                        />
+                    }
+                />
+                <Input
+                    placeholder="Confirmación de contraseña"
+                    password={true}
+                    numberOfLines = {1}
+                    secureTextEntry={!showConfirmPassword}
+                    rightIcon={
+                        <IconPassword
+                            showPassword={showConfirmPassword}
+                            setShowPassword={setConfirmShowPassword}
                         />
                     }
                 />
@@ -40,7 +56,7 @@ export default function Login() {
             <Button
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.button}
-                title={message.login.login.buttonTitle}
+                title={message.login.register.buttonTitle}
             />
         </ImageBackground>
     )
@@ -55,7 +71,6 @@ const styles = StyleSheet.create({
         ...stylesButtonContainer
     },
     card: {
-        marginTop: 100,
         width: "80%",
         padding: 30,
         alignSelf: "center",

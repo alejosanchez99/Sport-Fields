@@ -1,16 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "../../navigations/Navigation";
 
 import AccountStack from "../../navigations/AccountStack";
 
 export default function Account({ login }) {
+  const [navigation, setNavigation] = useState(login)
 
-  return login ? (
+  return navigation ? (
     <Navigation routeScreen={"user-logged"} />
   ) : (
     <NavigationContainer>
-      <AccountStack route={"login"} />
+      <AccountStack route={"menu-account"} setNavigation={setNavigation} />
     </NavigationContainer>
   )
 }

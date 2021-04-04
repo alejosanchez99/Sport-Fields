@@ -20,7 +20,6 @@ const stylesImage = StyleSheet.create({
     backgroundImageLogin: {
         flex: 1,
         resizeMode: 'cover',
-        alignItems: 'center',
     },
 });
 
