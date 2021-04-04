@@ -4,7 +4,7 @@ import { Card, Input, Button } from 'react-native-elements'
 
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import Header from "../../../shared/components/Header";
-import { message } from '../../../assets/messages/Message'
+import { message } from '../../../assets/messages/message'
 import styleImage from "../../../shared/styles/StylesImage";
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 import IconPassword from "../../../shared/components/IconPassword"

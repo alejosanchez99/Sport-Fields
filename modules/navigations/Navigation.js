@@ -8,8 +8,8 @@ import ReservationStack from './ReservationStack'
 import FavoriteStack from './FavoriteStack'
 import PromotionsStack from './PromotionsStack'
 import AccountStack from './AccountStack'
-import { message } from "../../assets/messages/Message"
 import colors from "../../shared/styles/ColorsApp"
+import { message } from '../../assets/messages/message'
 
 
 const Tab = createBottomTabNavigator()
