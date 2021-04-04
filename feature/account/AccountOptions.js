@@ -1,6 +1,6 @@
 import { map } from 'lodash'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import { ListItem, Icon, Card } from "react-native-elements"
 import { useNavigation } from "@react-navigation/native"
 
@@ -17,7 +17,7 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => selectedComponent("personalInformation")
+                onPress: () => navigation.navigate("personal-information")
             },
             {
                 title: "Cambiar contraseña",
@@ -25,7 +25,7 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => selectedComponent("password")
+                onPress: () =>  navigation.navigate("change-password")
             },
             {
                 title: "Cerrar sesión",
@@ -33,52 +33,42 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => selectedComponent("signOut")
+                onPress: () => console.log("prueba")
             }
         ]
     }
 
-    const navigation = useNavigation()
-
-    const selectedComponent = (key) => {
-        switch (key) {
-            case "personalInformation":
-                navigation.navigate("personal-information")
-                break
-            case "password":
-                navigation.navigate("change-password")
-                break
-            case "signOut":
-                break
-        }
-    }
-
+    const navigation = useNavigation()    
     const menuOptions = generateOptions()
 
     return (
         <View style={styles.container}>
             {
                 map(menuOptions, (menu, index) => (
-                    <Card containerStyle={styles.card}>
-                        <ListItem
-                            key={index}
-                            style={styles.menuItem}
-                            onPress={menu.onPress}
-                        >
-                            <Icon
-                                type="material-community"
-                                name={menu.iconNameLeft}
-                                color={menu.iconColorLeft}
-                            />
-                            <ListItem.Content>
-                                <ListItem.Title>{menu.title}</ListItem.Title>
-                            </ListItem.Content>
-                            <Icon
-                                type="material-community"
-                                name={menu.iconNameRight}
-                                color={menu.iconColorRight}
-                            />
-                        </ListItem>
+                    <Card
+                        containerStyle={styles.card}
+                        key={index}
+                    >
+                        <TouchableOpacity onPress={menu.onPress}>
+                            <ListItem
+                                key={index}
+                                style={styles.menuItem}
+                            >
+                                <Icon
+                                    type="material-community"
+                                    name={menu.iconNameLeft}
+                                    color={menu.iconColorLeft}
+                                />
+                                <ListItem.Content>
+                                    <ListItem.Title>{menu.title}</ListItem.Title>
+                                </ListItem.Content>
+                                <Icon
+                                    type="material-community"
+                                    name={menu.iconNameRight}
+                                    color={menu.iconColorRight}
+                                />
+                            </ListItem>
+                        </TouchableOpacity>
                     </Card>
                 ))
             }
