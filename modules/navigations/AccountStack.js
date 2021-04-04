@@ -4,10 +4,10 @@ import { createStackNavigator } from "@react-navigation/stack"
 import colors from "../../shared/styles/ColorsApp"
 import UserLogged from "../screens/account/UserLogged"
 import UserGuest from "../screens/account/UserGuest"
-import { message } from "../../assets/messages/Message"
 import Login from "../screens/account/Login"
 import ChangePersonalInformation from "../screens/account/ChangePersonalInformation"
 import ChangePassword from "../screens/account/ChangePassword"
+import { message } from "../../assets/messages/message"
 
 const Stack = createStackNavigator()
 
