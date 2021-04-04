@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
 
 import colors from '../../shared/styles/ColorsApp'
+import ShowCurrentLocation from './ShowCurrentLocation'
 
 export default function SearchField() {
     return (
@@ -22,14 +23,15 @@ export default function SearchField() {
                     placeholder="¿Que cancha quieres hoy?"
                     underlineColorAndroid="transparent"
                 />
-                <TouchableOpacity onPress={() => console.log("prube")}>
                     <Icon
                         containerStyle={styles.location}
                         color={colors.secundary}
                         type="material-community"
                         name="map-marker"
+                        onPress={() => console.log("prueba")}
                     />
-                </TouchableOpacity>
+                <ShowCurrentLocation
+                />
             </View>
         </View>
     )

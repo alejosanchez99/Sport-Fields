@@ -35,7 +35,9 @@ export const message = {
         }
     },
     generic : {
-        messageConfirm : "Se ha guardado exitosamente",
+        messageCreate : "Se ha guardado exitosamente",
+        messageUpdate : "Se ha actualizado exitosamente",
+        messageDelete : "Se ha eliminado exitosamente",
         messageError : "Se produjo un error inesperado, por favor vuelva a intentarlo"
     }
 }

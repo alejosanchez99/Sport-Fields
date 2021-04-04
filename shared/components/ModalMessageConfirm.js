@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from 'react'
 import { StyleSheet, Text, View, Animated } from 'react-native'
 import { Card, Icon } from 'react-native-elements'
+
 import { message } from '../../assets/messages/message'
 
-export default function CardConfirm({ successfulOperation }) {
+export default function ModalMessageConfirm({ successfulOperation = false, isUpdate = false, isDelete = false, isCreate = false }) {
 
     useEffect(() => {
+        console.log("object");
         functionFadeIn()
         const timer = setTimeout(() => functionFadeOut(), 3000)
         return () => clearTimeout(timer)
@@ -28,6 +30,24 @@ export default function CardConfirm({ successfulOperation }) {
         }).start()
     }
 
+    const getMessage = () => {
+        let messageText = ""
+
+        if (isCreate) {
+            messageText = message.generic.messageCreate
+        }
+
+        if (isUpdate) {
+            messageText = message.generic.messageUpdate
+        }
+
+        if (isDelete) {
+            messageText = message.generic.messageDelete
+        }
+
+        return messageText
+    }
+
     return (
         <View style={styles.container}>
             <Animated.View style={{
@@ -42,7 +62,7 @@ export default function CardConfirm({ successfulOperation }) {
                                     color="#009827"
                                     name="checkbox-marked-circle"
                                 /><Text style={styles.textCard}>
-                                    {message.generic.messageConfirm}
+                                    {getMessage()}
                                 </Text>
                             </View>)
                             :
@@ -64,11 +84,8 @@ export default function CardConfirm({ successfulOperation }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
         alignItems: "center",
-        justifyContent: "flex-end",
-        marginBottom: 30,
+        position: "absolute"
     },
     card: {
         backgroundColor: '#fff',
@@ -81,7 +98,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        margin: 2
+        margin: 2,
+        marginTop: 80
     },
     textCard: {
         marginLeft: 10,
