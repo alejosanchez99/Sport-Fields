@@ -33,6 +33,9 @@ export const message = {
             title: "Iniciar sesión",
             buttonTitle : "Iniciar sesión"
         }
-    
     },
+    generic : {
+        messageConfirm : "Se ha guardado exitosamente",
+        messageError : "Se produjo un error inesperado, por favor vuelva a intentarlo"
+    }
 }
