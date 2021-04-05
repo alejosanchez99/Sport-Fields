@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, ImageBackground } from 'react-native'
 import { Card, Input, Button } from 'react-native-elements'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import Header from "../../../shared/components/Header";
@@ -24,7 +25,7 @@ const defaultFormsValues = () => {
 export default function Register() {
     const [showNewPassword, setNewShowPassword] = useState(null);
     const [showConfirmPassword, setConfirmShowPassword] = useState(null);
-    const [formData, setFormData] = useState(defaultFormsValues());
+    const [formData] = useState(defaultFormsValues());
     const [errorText, setErrorText] = useState(null)
     const [titleError, setTitleError] = useState(null)
     const [enable, setEnable] = useState(false)
@@ -38,20 +39,20 @@ export default function Register() {
 
     const validateRegister =()=>{
         if(!validateEmail(formData.email)){
-            setTitleError("Correo invalido")
-            setErrorText("Por favor ingresa un correo electronico valido.")
+            setTitleError(message.login.errorEmail.title)
+            setErrorText(message.login.errorEmail.description)
             setShowModal(true)
             return false
         }
         if(size(formData.password) < 7){
-            setTitleError("Contraseña incorrecta")
-            setErrorText("Su contraseña debe de tener minimo 8 caracteres.")
+            setTitleError(message.login.errorPassword.title)
+            setErrorText(message.login.errorPassword.description)
             setShowModal(true)
             return false
         }
         if(formData.password !== formData.confirm){
-            setTitleError("Contraseña incorrecta") 
-            setErrorText("Las contraseñas no coinciden.") 
+            setTitleError(message.login.errorPassword.title) 
+            setErrorText(message.login.errorPassword.confirm) 
             setShowModal(true)
             return false
         }
@@ -84,8 +85,8 @@ export default function Register() {
         const result = await registerUser(formData.email,formData.password)
 
         if(!result.statusResponse){
-            setTitleError("Lo sentimos") 
-            setErrorText("hubo un problema al momento de crear el usuario o el email ya se encuentra registrado.") 
+            setTitleError(message.login.register.errorService.title) 
+            setErrorText(message.login.register.errorService.description) 
             setShowModal(true)
             return
         }
@@ -99,6 +100,7 @@ export default function Register() {
         source={require("../../..//assets/images/backgroundLogin.png")}
         style={styleImage.backgroundImageLogin}
         >
+            <KeyboardAwareScrollView>
             <Header/>
             <Card containerStyle={styles.card}>
                 <Input
@@ -146,6 +148,7 @@ export default function Register() {
             />
             <Modal isVisible={showModal} setVisible={setShowModal} 
             title={titleError} text={errorText}/>
+            </KeyboardAwareScrollView>
         </ImageBackground>
     )
 }

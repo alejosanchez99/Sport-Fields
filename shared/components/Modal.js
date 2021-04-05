@@ -40,5 +40,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     width: "75%",
+    borderRadius: 10
   },
 });

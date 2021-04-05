@@ -46,7 +46,6 @@ export default function Navigation({ routeScreen }) {
   }
 
   return (
-    <NavigationContainer>
       <Tab.Navigator
         initialRouteName="home"
         tabBarOptions={{
@@ -86,7 +85,6 @@ export default function Navigation({ routeScreen }) {
           options={{ title: message.account.title }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   )
 }
 
