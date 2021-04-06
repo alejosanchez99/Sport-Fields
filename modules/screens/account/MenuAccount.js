@@ -10,7 +10,7 @@ import colors from "../../../shared/styles/ColorsApp";
 import styleImage from "../../../shared/styles/StylesImage";
 import { Text } from "react-native";
 
-export default function MenuAccount({ setNavigation }) {
+export default function MenuAccount({ setNavigation, setRoute }) {
   const generateOptions = () => {
     return [
       {
@@ -45,12 +45,16 @@ export default function MenuAccount({ setNavigation }) {
   const selectedComponent = (key) => {
     switch (key) {
       case "login":
-        navigation.navigate("login");
+        navigation.navigate("login",{
+          navigate: setNavigation,
+          setRoute: setRoute,
+        });
         break;
       case "register":
         navigation.navigate("register");
         break;
       case "guest":
+        setRoute("user-guest")
         setNavigation(true);
         break;
     }

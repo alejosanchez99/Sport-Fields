@@ -13,7 +13,7 @@ import Login from "../screens/account/Login";
 
 const Stack = createStackNavigator();
 
-export default function AccountStack({ route, setNavigation }) {
+export default function AccountStack({ route, setNavigation, setRoute }) {
   return (
     <Stack.Navigator initialRouteName={route}>
       <Stack.Screen
@@ -71,7 +71,7 @@ export default function AccountStack({ route, setNavigation }) {
       />
       <Stack.Screen
         name="menu-account"
-        component={() => <MenuAccount setNavigation={setNavigation} />}
+        component={() => <MenuAccount setNavigation={setNavigation} setRoute={setRoute} />}
         options={{
           title: message.login.title,
           headerStyle: {

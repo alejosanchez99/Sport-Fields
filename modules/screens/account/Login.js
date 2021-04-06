@@ -16,27 +16,26 @@ import Modal from "../../../shared/components/Modal";
 import { validateEmail } from "../../../shared/utils/helpers";
 import { loginUserWithEmailAndPassword } from "../../../core/firebase/actions";
 import Navigation from "../../navigations/Navigation";
-import { StackActions, NavigationActions,useNavigation } from '@react-navigation/native';
 
 const defaultFormsValues = () => {
   return { email: "", password: "" };
 };
 
-export default function Login() {
+export default function Login({route,navigation}) {
   const [showPassword, setShowPassword] = useState(null);
   const [formData] = useState(defaultFormsValues());
   const [enable, setEnable] = useState(false);
   const [errorText, setErrorText] = useState(null);
   const [titleError, setTitleError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [test, settest] = useState(false);
+  
+  const { navigate, setRoute } = route.params;
 
   const onChange = (e, type) => {
     formData[type] = e.nativeEvent.text;
     setEnable(validateData());
   };
 
-  const navigation = useNavigation();
 
   const doLogin = async () => {
     if (!validateLogin()) {
@@ -54,7 +53,11 @@ export default function Login() {
       setShowModal(true);
       return;
     }
-  };
+
+    setRoute("user-logged")
+    navigate(true)
+
+  }
 
   const validateLogin = () => {
     if (!validateEmail(formData.email)) {
@@ -115,11 +118,9 @@ export default function Login() {
         title={titleError}
         text={errorText}
       />
-      {test && (
-          <Navigation />
-      )}
+      
     </ImageBackground>
-  );
+  ) 
 }
 
 const styles = StyleSheet.create({

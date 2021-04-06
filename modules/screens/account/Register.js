@@ -13,6 +13,8 @@ import IconPassword from "../../../shared/components/IconPassword"
 import { validateEmail } from '../../../shared/utils/helpers';
 import { registerUser } from '../../../core/firebase/actions';
 import Modal from '../../../shared/components/Modal';
+import { StackActions,useNavigation } from '@react-navigation/native';
+
 
 
 const defaultFormsValues = () => {
@@ -77,6 +79,9 @@ export default function Register() {
     }
 
 
+  const navigation = useNavigation();
+
+
     const doRegisterUser = async() =>{
         if (!validateRegister()){
             return;
@@ -91,6 +96,7 @@ export default function Register() {
             return
         }
 
+        navigation.dispatch(StackActions.popToTop());
 
     }
 

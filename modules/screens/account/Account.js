@@ -6,12 +6,14 @@ import AccountStack from "../../navigations/AccountStack";
 
 export default function Account({ login }) {
   const [navigation, setNavigation] = useState(login)
+  const [route, setRoute] = useState("user-logged")
 
-  return navigation ? (
-    <Navigation routeScreen={"user-logged"} />
-  ) : (
+  return  (
     <NavigationContainer>
-      <AccountStack route={"menu-account"} setNavigation={setNavigation} />
+    {
+     navigation ? (<Navigation routeScreen={route} />) :
+      (<AccountStack route={"menu-account"} setNavigation={setNavigation} setRoute={setRoute} />)
+    }
     </NavigationContainer>
   )
 }
