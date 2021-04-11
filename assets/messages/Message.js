@@ -51,4 +51,10 @@ export const message = {
             description:"Usuario o contraseña incorrecta."
         }
     },
+    generic : {
+        messageCreate : "Se ha guardado exitosamente",
+        messageUpdate : "Se ha actualizado exitosamente",
+        messageDelete : "Se ha eliminado exitosamente",
+        messageError : "Se produjo un error inesperado, por favor vuelva a intentarlo"
+    }
 }
