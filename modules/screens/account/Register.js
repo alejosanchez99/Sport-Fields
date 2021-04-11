@@ -11,7 +11,7 @@ import styleImage from "../../../shared/styles/StylesImage";
 import { stylesButtonContainer, stylesButton } from '../../../shared/styles/StylesButton'
 import IconPassword from "../../../shared/components/IconPassword"
 import { validateEmail } from '../../../shared/utils/helpers';
-import { registerUser } from '../../../core/firebase/actions';
+import { registerUser , updateProfile,closeSession} from '../../../core/firebase/actions';
 import Modal from '../../../shared/components/Modal';
 import { StackActions,useNavigation } from '@react-navigation/native';
 import Loading from '../../../shared/components/Loading';
@@ -91,13 +91,20 @@ export default function Register() {
 
         setLoading(true)
         const result = await registerUser(formData.email,formData.password)
-        setLoading(false)
         if(!result.statusResponse){
             setTitleError(message.login.register.errorService.title) 
             setErrorText(message.login.register.errorService.description) 
             setShowModal(true)
             return
         }
+
+        const updateName = await updateProfile({displayName: formData.name})
+        closeSession()
+        if(!updateName.statusResponse){
+            console.log("no se guardo el nombre")
+        }
+
+        setLoading(false)
 
         navigation.dispatch(StackActions.popToTop());
 

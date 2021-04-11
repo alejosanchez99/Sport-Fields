@@ -49,7 +49,12 @@ export const message = {
         errorService: {
             title: "Lo sentimos",
             description:"Usuario o contraseña incorrecta."
+        },
+        changeData: {
+            errorPassword: "Contraseña incorrecta vuelva a intentar.",
+            errorPasswordDescription: "Se presentaron problemas al momento de cambiar la contraseña por favor intenta en unos minutos."
         }
+
     },
     generic : {
         messageLoading : "Por favor espere",

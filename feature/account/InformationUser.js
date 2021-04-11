@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useCallback,useState} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements'
+import {useFocusEffect} from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
+import { getCurrentUser } from '../../core/firebase/actions'
 
 export default function InformationUser() {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+
+    useFocusEffect(
+        useCallback(() => {
+            const user = getCurrentUser()
+            user && (
+                setName(user.displayName),
+                setEmail(user.email)
+                )
+        }, [])
+    )
+
     return (
         <View style={styles.container}>
             <Avatar
@@ -25,9 +40,9 @@ export default function InformationUser() {
             </Avatar>
             <View style={styles.InfoUser}>
                 <Text style={styles.displayName}>
-                    Alejandro Sanchez
+                   {name}
                 </Text>
-                <Text>alejosanchezgomez@gmail.com</Text>
+                <Text>{email}</Text>
             </View>
         </View>
     )

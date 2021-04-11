@@ -13,6 +13,7 @@ export default function Splash() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
+      console.log(user)
       user !== null ? setLogin(true) : setLogin(false)
       componentDidMount()
   })

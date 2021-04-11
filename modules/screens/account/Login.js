@@ -55,7 +55,6 @@ export default function Login({route,navigation}) {
       setShowModal(true);
       return;
     }
-
     setRoute("user-logged")
     navigate(true)
 
