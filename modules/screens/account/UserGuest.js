@@ -1,11 +1,47 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { StyleSheet, Text, ScrollView, Image } from 'react-native'
 import { Button } from 'react-native-elements'
+import { StackActions, useNavigation, CommonActions} from "@react-navigation/native";
 
 import { message } from '../../../assets/messages/message'
 import colors from '../../../shared/styles/ColorsApp'
+import {
+    stylesButtonSecundary,
+    stylesButtonContainerSecundary,
+    stylesButtonContainerSecundaryWhite,
+    stylesButton,
+  } from "../../../shared/styles/StylesButton";
 
 export default function UserGuest() {
+    const navigation = useNavigation();
+    const [route, setRoute] = useState(null)
+    const [test, setNavigate] = useState(false)
+
+    
+    useEffect(() => {
+        if(test){
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    { name: route },
+                  ],
+                })
+              );
+        }
+      }, [test]);
+
+    const signIn = () => {
+        navigation.navigate("login",{
+            navigate: setNavigate,
+            setRoute: setRoute,
+        }) 
+    }
+
+    const register = () => {
+        navigation.navigate("register")
+    }
+
     return (
         <ScrollView
             centerContent
@@ -23,8 +59,18 @@ export default function UserGuest() {
 
             </Text>
             <Button
-                buttonStyle={styles.button}
-                title={message.Login.title}
+                containerStyle={styles.buttonContainerLogin}
+                buttonStyle={styles.buttonLogin}
+                title={message.login.login.title}
+                onPress={() => {signIn()}}
+            />
+            <Button
+                containerStyle={styles.buttonContainerRegister}
+                buttonStyle={styles.buttonRegister}
+                titleStyle={styles.textButton}
+                type="outline"
+                title={message.login.register.buttonTitle}
+                onPress={() => {register()}}
             />
         </ScrollView>
     )
@@ -49,7 +95,24 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: "#a65273"
     },
-    button: {
-        backgroundColor: colors.primary
+    buttonLogin: {
+        ...stylesButton,
+    },
+    buttonRegister: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colors.primary,
+        ...stylesButtonSecundary
+    },
+    buttonContainerLogin: {
+        ...stylesButtonContainerSecundary,
+    },
+    buttonContainerRegister: {
+        marginTop: 20,
+        ...stylesButtonContainerSecundaryWhite,
+    },
+    textButton: {
+        color: colors.primary,
+        textAlign: "center",
     }
 })

@@ -8,8 +8,30 @@ export const stylesButtonContainer =
     alignSelf: "center"
 }
 
+export const stylesButtonContainerSecundary =
+{
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    width: "80%",
+    alignSelf: "center"
+}
+
+export const stylesButtonContainerSecundaryWhite =
+{
+    backgroundColor: colors.four,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    width: "80%",
+    alignSelf: "center"
+}
+
 export const stylesButton = {
     backgroundColor: colors.primary
+}
+
+export const stylesButtonSecundary = {
+    backgroundColor: colors.four,
+    
 }
 
 export const stylesButtonContainerAlert =

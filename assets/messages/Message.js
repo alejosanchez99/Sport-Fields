@@ -52,6 +52,7 @@ export const message = {
         }
     },
     generic : {
+        messageLoading : "Por favor espere",
         messageCreate : "Se ha guardado exitosamente",
         messageUpdate : "Se ha actualizado exitosamente",
         messageDelete : "Se ha eliminado exitosamente",

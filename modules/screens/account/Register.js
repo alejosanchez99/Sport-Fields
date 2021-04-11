@@ -14,6 +14,7 @@ import { validateEmail } from '../../../shared/utils/helpers';
 import { registerUser } from '../../../core/firebase/actions';
 import Modal from '../../../shared/components/Modal';
 import { StackActions,useNavigation } from '@react-navigation/native';
+import Loading from '../../../shared/components/Loading';
 
 
 
@@ -31,7 +32,8 @@ export default function Register() {
     const [errorText, setErrorText] = useState(null)
     const [titleError, setTitleError] = useState(null)
     const [enable, setEnable] = useState(false)
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
     const onChange = (e,type) => {
@@ -87,8 +89,9 @@ export default function Register() {
             return;
         }
 
+        setLoading(true)
         const result = await registerUser(formData.email,formData.password)
-
+        setLoading(false)
         if(!result.statusResponse){
             setTitleError(message.login.register.errorService.title) 
             setErrorText(message.login.register.errorService.description) 
@@ -155,6 +158,7 @@ export default function Register() {
             <Modal isVisible={showModal} setVisible={setShowModal} 
             title={titleError} text={errorText}/>
             </KeyboardAwareScrollView>
+            <Loading isVisible={loading}/>
         </ImageBackground>
     )
 }

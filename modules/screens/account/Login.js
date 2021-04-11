@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
-import { isEmpty } from "lodash";
+import { isEmpty, set } from "lodash";
 
 import { stylesCard } from "../../../shared/styles/StylesCard";
 import Header from "../../../shared/components/Header";
@@ -15,7 +15,7 @@ import IconPassword from "../../../shared/components/IconPassword";
 import Modal from "../../../shared/components/Modal";
 import { validateEmail } from "../../../shared/utils/helpers";
 import { loginUserWithEmailAndPassword } from "../../../core/firebase/actions";
-import Navigation from "../../navigations/Navigation";
+import Loading from "../../../shared/components/Loading";
 
 const defaultFormsValues = () => {
   return { email: "", password: "" };
@@ -28,6 +28,7 @@ export default function Login({route,navigation}) {
   const [errorText, setErrorText] = useState(null);
   const [titleError, setTitleError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false)
   
   const { navigate, setRoute } = route.params;
 
@@ -42,11 +43,12 @@ export default function Login({route,navigation}) {
       return;
     }
 
+    setLoading(true)
     const result = await loginUserWithEmailAndPassword(
       formData.email,
       formData.password
     );
-
+    setLoading(false)
     if (!result.statusResponse) {
       setTitleError(message.login.errorService.title);
       setErrorText(message.login.errorService.description);
@@ -118,7 +120,7 @@ export default function Login({route,navigation}) {
         title={titleError}
         text={errorText}
       />
-      
+       <Loading isVisible={loading}/>
     </ImageBackground>
   ) 
 }

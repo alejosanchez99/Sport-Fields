@@ -2,12 +2,14 @@ import { map } from 'lodash'
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import { ListItem, Icon, Card } from "react-native-elements"
-import { useNavigation } from "@react-navigation/native"
+import { StackActions, useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
 import { stylesCard } from '../../shared/styles/StylesCard'
+import { closeSession } from '../../core/firebase/actions'
 
 export default function AccountOptions() {
+    const navigation = useNavigation();
 
     const generateOptions = () => {
         return [
@@ -33,12 +35,18 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => console.log("prueba")
+                onPress: () => signOut()
             }
         ]
     }
 
-    const navigation = useNavigation()    
+    const signOut = () => {
+        closeSession()
+        navigation.dispatch(
+            StackActions.replace('user-guest')
+        )
+    }
+ 
     const menuOptions = generateOptions()
 
     return (

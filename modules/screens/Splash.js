@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,} from "react";
 import { View, Text, Image, ImageBackground } from "react-native";
 
 import Account from "../screens/account/Account";
 import styleView from "../../shared/styles/StylesView";
 import styleImage from "../../shared/styles/StylesImage";
 import styleText from "../../shared/styles/StyleText";
+import * as firebase from 'firebase'
 
 export default function Splash() {
   const [time, setTime] = useState(false);
+  const [login, setLogin] = useState(null)
 
   useEffect(() => {
-    componentDidMount();
+    firebase.auth().onAuthStateChanged((user) => {
+      user !== null ? setLogin(true) : setLogin(false)
+      componentDidMount()
+  })
+
   }, []);
 
   const componentDidMount = () => {
     this.timeoutHandle = setTimeout(() => {
       setTime(true);
-    }, 3000);
+    }, 1000);
   };
 
   return time ? (
-    <Account login={false}/>
+    <Account login={login}/>
   ) : (
     <View style={styleView.view}>
       <ImageBackground
