@@ -1,73 +1,121 @@
-import React, { useCallback,useState} from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Avatar } from 'react-native-elements'
-import {useFocusEffect} from "@react-navigation/native"
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar } from "react-native-elements";
+import { useFocusEffect } from "@react-navigation/native";
 
-import colors from '../../shared/styles/ColorsApp'
-import { getCurrentUser } from '../../core/firebase/actions'
+import colors from "../../shared/styles/ColorsApp";
+import { getCurrentUser, updateProfile, uploadImage } from "../../core/firebase/actions";
+import { loadImageFromGallery } from "../../shared/utils/fileUtily";
+import Modal from "../../shared/components/Modal";
+import Loading from "../../shared/components/Loading";
+import { message } from "../../assets/messages/message";
 
 export default function InformationUser() {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [photoUrl, setPhotoUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+  const [errorText, setErrorText] = useState(null);
+  const [titleError, setTitleError] = useState(null);
+  const [user, setUser] = useState(null)
 
-    useFocusEffect(
-        useCallback(() => {
-            const user = getCurrentUser()
-            user && (
-                setName(user.displayName),
-                setEmail(user.email)
-                )
-        }, [])
-    )
+  useFocusEffect(
+    useCallback(() => {
+      const userLogged = getCurrentUser();
+      userLogged && (setName(userLogged.displayName), 
+      setEmail(userLogged.email),
+      setPhotoUrl(userLogged.photoURL),
+      setUser(userLogged));
+    }, [])
+  );
 
-    return (
-        <View style={styles.container}>
-            <Avatar
-                rounded
-                size="large"
-                containerStyle={styles.avatar}
-                onPress={() => console.log("Works!")}
-                activeOpacity={0.7}
-                source={
-                    require("../../assets/icons/avatar-default.jpg")
-                }
-            >
-                <Avatar.Accessory
-                    onPress={() => console.log("Works!")}
-                    style={styles.avatarAccesory}
-                    icon={{ name: 'home', type: 'material-community' }}
-                />
-            </Avatar>
-            <View style={styles.InfoUser}>
-                <Text style={styles.displayName}>
-                   {name}
-                </Text>
-                <Text>{email}</Text>
-            </View>
-        </View>
-    )
+  const changePhoto = async () => {
+    const result = await loadImageFromGallery([1, 1]);
+    if (!result.status) {
+      return;
+    }
+    setLoading(true);
+    const resultUploadImage = await uploadImage(
+      result.image,
+      "avatars",
+      user.uid
+    );
+    if (!resultUploadImage.statusResponse) {
+      setLoading(false);
+      setTitleError(message.generic.titleError)
+      setErrorText(message.login.changeData.errorSaveImage);
+      showModal(true)
+      return;
+    }
+    const resultUpdateProfile = await updateProfile({
+      photoURL: resultUploadImage.url,
+    });
+    setLoading(false);
+    if (resultUpdateProfile.statusResponse) {
+        setPhotoUrl(resultUploadImage.url);
+    } else {
+        setTitleError(message.generic.titleError)
+        setErrorText(message.login.changeData.errorUploadImage);
+        showModal(true)
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Avatar
+        rounded
+        size="large"
+        onPress={changePhoto}
+        containerStyle={styles.avatar}
+        activeOpacity={0.7}
+        source={
+          photoUrl
+            ? { uri: photoUrl }
+            : require("../../assets/icons/avatar-default.jpg")
+        }
+      >
+        <Avatar.Accessory
+          onPress={() => console.log("Works!")}
+          style={styles.avatarAccesory}
+          icon={{ name: "home", type: "material-community" }}
+        />
+      </Avatar>
+      <View style={styles.InfoUser}>
+        <Text style={styles.displayName}>{name}</Text>
+        <Text>{email}</Text>
+      </View>
+      <Modal
+        isVisible={showModal}
+        setVisible={setShowModal}
+        title={titleError}
+        text={errorText}
+      />
+      <Loading isVisible={loading}/>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        backgroundColor: colors.gray,
-        paddingVertical: 20
-    },
-    InfoUser: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 14
-    },
-    displayName: {
-        fontWeight: "bold",
-        paddingBottom: 5
-    },
-    avatarAccesory: {
-        height: 30,
-        width: 30,
-        borderRadius: 30
-    }
-})
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    backgroundColor: colors.gray,
+    paddingVertical: 20,
+  },
+  InfoUser: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+  displayName: {
+    fontWeight: "bold",
+    paddingBottom: 5,
+  },
+  avatarAccesory: {
+    height: 30,
+    width: 30,
+    borderRadius: 30,
+  },
+});

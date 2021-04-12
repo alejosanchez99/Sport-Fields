@@ -51,12 +51,15 @@ export const message = {
             description:"Usuario o contraseña incorrecta."
         },
         changeData: {
+            errorSaveImage: "Ha ocurrido un error al almacenar la foto de perfil",
+            errorUploadImage: "Ha ocurrido un error al actualzar la foto de perfil",
             errorPassword: "Contraseña incorrecta vuelva a intentar.",
             errorPasswordDescription: "Se presentaron problemas al momento de cambiar la contraseña por favor intenta en unos minutos."
         }
 
     },
     generic : {
+        titleError : "Lo sentimos",
         messageLoading : "Por favor espere",
         messageCreate : "Se ha guardado exitosamente",
         messageUpdate : "Se ha actualizado exitosamente",
