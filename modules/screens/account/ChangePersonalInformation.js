@@ -1,105 +1,105 @@
-import React, { useState } from "react";
-import { StyleSheet, ImageBackground } from "react-native";
-import { Card, Input, Button } from "react-native-elements";
-import { useNavigation, StackActions } from "@react-navigation/native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { isEmpty } from "lodash";
+import React, { useState } from "react"
+import { StyleSheet, ImageBackground } from "react-native"
+import { Card, Input, Button } from "react-native-elements"
+import { useNavigation, StackActions } from "@react-navigation/native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { isEmpty } from "lodash"
 
-import { stylesCard } from "../../../shared/styles/StylesCard";
-import { message } from "../../../assets/messages/message";
+import { stylesCard } from "../../../shared/styles/StylesCard"
+import { message } from "../../../assets/messages/message"
 import {
   stylesButtonContainer,
   stylesButton,
-} from "../../../shared/styles/StylesButton";
-import styleImage from "../../../shared/styles/StylesImage";
-import Header from "../../../shared/components/Header";
-import { validateEmail } from "../../../shared/utils/helpers";
-import Modal from "../../../shared/components/Modal";
-import Loading from "../../../shared/components/Loading";
-import { updateEmail, updateProfile, reauthenticate } from "../../../core/firebase/actions";
-import IconPassword from "../../../shared/components/IconPassword";
+} from "../../../shared/styles/StylesButton"
+import styleImage from "../../../shared/styles/StylesImage"
+import Header from "../../../shared/components/Header"
+import { validateEmail } from "../../../shared/utils/helpers"
+import Modal from "../../../shared/components/Modal"
+import Loading from "../../../shared/components/Loading"
+import { updateEmail, updateProfile, reauthenticate } from "../../../core/firebase/actions"
+import IconPassword from "../../../shared/components/IconPassword"
 
 const defaultFormsValues = () => {
-  return { email: "", name: "", password: "" };
-};
+  return { email: "", name: "", password: "" }
+}
 
 export default function ChangePersonalInformation() {
-  const [formData] = useState(defaultFormsValues);
-  const [enable, setEnable] = useState(false);
-  const [showPassword, setShowPassword] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [errorText, setErrorText] = useState(null);
-  const [titleError, setTitleError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [formData] = useState(defaultFormsValues)
+  const [enable, setEnable] = useState(false)
+  const [showPassword, setShowPassword] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [errorText, setErrorText] = useState(null)
+  const [titleError, setTitleError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const onChange = (e, type) => {
-    formData[type] = e.nativeEvent.text;
-    setEnable(validateData());
-  };
+    formData[type] = e.nativeEvent.text
+    setEnable(validateData())
+  }
 
   const validateData = () => {
     if (isEmpty(formData.email)) {
-      return false;
+      return false
     }
     if (isEmpty(formData.name)) {
-      return false;
+      return false
     }
-    return true;
-  };
+    return true
+  }
 
   const changeInformation = async () => {
     if (!validateLogin()) {
-      return;
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
 
-    const resultReautheticate = await reauthenticate(formData.password);
+    const resultReautheticate = await reauthenticate(formData.password)
 
     if (!resultReautheticate.statusResponse) {
-      setTitleError(message.login.errorService.title);
-      setErrorText(message.login.errorService.description);
-      setShowModal(true);
-      setLoading(false);
-      return;
+      setTitleError(message.login.errorService.title)
+      setErrorText(message.login.errorService.description)
+      setShowModal(true)
+      setLoading(false)
+      return
     }
 
-    const result = await updateEmail(formData.email);
+    const result = await updateEmail(formData.email)
 
     if (!result.statusResponse) {
-      console.log(result.error);
-      setTitleError(message.login.errorService.title);
-      setErrorText(message.generic.messageError);
-      setShowModal(true);
-      setLoading(false);
-      return;
+      console.log(result.error)
+      setTitleError(message.login.errorService.title)
+      setErrorText(message.generic.messageError)
+      setShowModal(true)
+      setLoading(false)
+      return
     }
 
-    const resultEmail = await updateProfile({ displayName: formData.name });
-    setLoading(false);
+    const resultEmail = await updateProfile({ displayName: formData.name })
+    setLoading(false)
 
     if (!resultEmail.statusResponse) {
-      console.log(resultEmail.error);
-      setTitleError(message.login.errorService.title);
-      setErrorText(message.generic.messageError);
-      setShowModal(true);
-      return;
+      console.log(resultEmail.error)
+      setTitleError(message.login.errorService.title)
+      setErrorText(message.generic.messageError)
+      setShowModal(true)
+      return
     }
 
-    navigation.dispatch(StackActions.popToTop());
-  };
+    navigation.dispatch(StackActions.popToTop())
+  }
 
   const validateLogin = () => {
     if (!validateEmail(formData.email)) {
-      setTitleError(message.login.errorEmail.title);
-      setErrorText(message.login.errorEmail.description);
-      setShowModal(true);
-      return false;
+      setTitleError(message.login.errorEmail.title)
+      setErrorText(message.login.errorEmail.description)
+      setShowModal(true)
+      return false
     }
-    return true;
-  };
+    return true
+  }
 
   return (
     <ImageBackground
@@ -146,7 +146,7 @@ export default function ChangePersonalInformation() {
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
     </ImageBackground>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -164,4 +164,4 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     ...stylesCard,
   },
-});
+})

@@ -1,41 +1,43 @@
-import React,{useEffect, useState} from 'react'
-import { StyleSheet, Text, ScrollView, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, ImageBackground, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import { StackActions, useNavigation, CommonActions} from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 
+import Header from "../../../shared/components/Header"
 import { message } from '../../../assets/messages/message'
 import colors from '../../../shared/styles/ColorsApp'
+import styleImage from "../../../shared/styles/StylesImage"
 import {
     stylesButtonSecundary,
     stylesButtonContainerSecundary,
     stylesButtonContainerSecundaryWhite,
     stylesButton,
-  } from "../../../shared/styles/StylesButton";
+} from "../../../shared/styles/StylesButton";
 
 export default function UserGuest() {
     const navigation = useNavigation();
     const [route, setRoute] = useState(null)
     const [test, setNavigate] = useState(false)
 
-    
+
     useEffect(() => {
-        if(test){
+        if (test) {
             navigation.dispatch(
                 CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    { name: route },
-                  ],
+                    index: 0,
+                    routes: [
+                        { name: route },
+                    ],
                 })
-              );
+            );
         }
-      }, [test]);
+    }, [test]);
 
     const signIn = () => {
-        navigation.navigate("login",{
+        navigation.navigate("login", {
             navigate: setNavigate,
             setRoute: setRoute,
-        }) 
+        })
     }
 
     const register = () => {
@@ -43,36 +45,32 @@ export default function UserGuest() {
     }
 
     return (
-        <ScrollView
-            centerContent
-            style={styles.viewBody}
+        <ImageBackground
+            source={require("../../..//assets/images/backgroundLogin.png")}
+            style={styleImage.backgroundImageLogin}
         >
-            <Image
-                source={require("../../../assets/icons/avatar-default.jpg")}
-                resizeMode="contain"
-                style={styles.image}
-            />
-            <Text style={styles.text}>
-
+            <Header />
+            <Text style={styles.title}>
+                Si deseas poder utilizar todas las funciones {"\n"} de la App necesitas
+                iniciar sesión.
             </Text>
-            <Text style={styles.description}>
-
-            </Text>
-            <Button
-                containerStyle={styles.buttonContainerLogin}
-                buttonStyle={styles.buttonLogin}
-                title={message.login.login.title}
-                onPress={() => {signIn()}}
-            />
-            <Button
-                containerStyle={styles.buttonContainerRegister}
-                buttonStyle={styles.buttonRegister}
-                titleStyle={styles.textButton}
-                type="outline"
-                title={message.login.register.buttonTitle}
-                onPress={() => {register()}}
-            />
-        </ScrollView>
+            <View style={styles.container}>
+                <Button
+                    containerStyle={styles.buttonContainerLogin}
+                    buttonStyle={styles.buttonLogin}
+                    title={message.login.login.title}
+                    onPress={() => { signIn() }}
+                />
+                <Button
+                    containerStyle={styles.buttonContainerRegister}
+                    buttonStyle={styles.buttonRegister}
+                    titleStyle={styles.textButton}
+                    type="outline"
+                    title={message.login.register.buttonTitle}
+                    onPress={() => { register() }}
+                />
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -80,20 +78,13 @@ const styles = StyleSheet.create({
     viewBody: {
         marginHorizontal: 30
     },
-    image: {
-        height: 300,
-        width: "100%",
-        marginBottom: 10,
-    },
-    text: {
+    title: {
+        textAlign: "center",
         fontWeight: "bold",
-        fontSize: 19,
-        marginVertical: 20,
-    },
-    description: {
-        textAlign: "justify",
+        fontSize: 20,
+        marginTop: 20,
         marginBottom: 20,
-        color: "#a65273"
+        width: "100%",
     },
     buttonLogin: {
         ...stylesButton,

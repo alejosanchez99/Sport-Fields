@@ -27,7 +27,7 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () =>  navigation.navigate("change-password")
+                onPress: () => navigation.navigate("change-password")
             },
             {
                 title: "Cerrar sesión",
@@ -46,7 +46,7 @@ export default function AccountOptions() {
             StackActions.replace('user-guest')
         )
     }
- 
+
     const menuOptions = generateOptions()
 
     return (

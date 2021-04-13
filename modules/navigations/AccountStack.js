@@ -33,6 +33,7 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={UserGuest}
         options={{
           title: message.account.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,
@@ -74,6 +75,7 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={() => <MenuAccount setNavigation={setNavigation} setRoute={setRoute} />}
         options={{
           title: message.login.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,
@@ -87,6 +89,7 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={Register}
         options={{
           title: message.login.register.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,
@@ -100,6 +103,7 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={Login}
         options={{
           title: message.login.login.title,
+          headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
             elevation: 0,
@@ -109,6 +113,5 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         }}
       />
     </Stack.Navigator>
-    
   );
 }

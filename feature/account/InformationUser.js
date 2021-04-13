@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Avatar } from "react-native-elements";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useState } from "react"
+import { StyleSheet, Text, View } from "react-native"
+import { Avatar } from "react-native-elements"
+import { useFocusEffect } from "@react-navigation/native"
 
-import colors from "../../shared/styles/ColorsApp";
-import { getCurrentUser, updateProfile, uploadImage } from "../../core/firebase/actions";
-import { loadImageFromGallery } from "../../shared/utils/fileUtily";
-import Modal from "../../shared/components/Modal";
-import Loading from "../../shared/components/Loading";
-import { message } from "../../assets/messages/message";
+import colors from "../../shared/styles/ColorsApp"
+import { getCurrentUser, updateProfile, uploadImage } from "../../core/firebase/actions"
+import { loadImageFromGallery } from "../../shared/utils/fileUtily"
+import Modal from "../../shared/components/Modal"
+import Loading from "../../shared/components/Loading"
+import { message } from "../../assets/messages/message"
 
 export default function InformationUser() {
   const [name, setName] = useState("");
@@ -22,11 +22,11 @@ export default function InformationUser() {
 
   useFocusEffect(
     useCallback(() => {
-      const userLogged = getCurrentUser();
-      userLogged && (setName(userLogged.displayName), 
-      setEmail(userLogged.email),
-      setPhotoUrl(userLogged.photoURL),
-      setUser(userLogged));
+      const userLogged = getCurrentUser()
+      userLogged && (setName(userLogged.displayName),
+        setEmail(userLogged.email),
+        setPhotoUrl(userLogged.photoURL),
+        setUser(userLogged))
     }, [])
   );
 
@@ -51,13 +51,15 @@ export default function InformationUser() {
     const resultUpdateProfile = await updateProfile({
       photoURL: resultUploadImage.url,
     });
+
     setLoading(false);
+
     if (resultUpdateProfile.statusResponse) {
-        setPhotoUrl(resultUploadImage.url);
+      setPhotoUrl(resultUploadImage.url);
     } else {
-        setTitleError(message.generic.titleError)
-        setErrorText(message.login.changeData.errorUploadImage);
-        showModal(true)
+      setTitleError(message.generic.titleError)
+      setErrorText(message.login.changeData.errorUploadImage);
+      showModal(true)
     }
   };
 
@@ -76,8 +78,8 @@ export default function InformationUser() {
         }
       >
         <Avatar.Accessory
-          onPress={() => console.log("Works!")}
-          style={styles.avatarAccesory}
+        onPress={changePhoto}
+        style={styles.avatarAccesory}
           icon={{ name: "home", type: "material-community" }}
         />
       </Avatar>
@@ -91,7 +93,7 @@ export default function InformationUser() {
         title={titleError}
         text={errorText}
       />
-      <Loading isVisible={loading}/>
+      <Loading isVisible={loading} />
     </View>
   );
 }

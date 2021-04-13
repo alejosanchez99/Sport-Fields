@@ -13,10 +13,10 @@ const stylesImage = StyleSheet.create({
         alignItems: 'center',
     },
     imageLogin: {
-        height:100,
+        height: 100,
         width: "80%",
         marginTop: 20
-    }, 
+    },
     backgroundImageLogin: {
         flex: 1,
         resizeMode: 'cover',
