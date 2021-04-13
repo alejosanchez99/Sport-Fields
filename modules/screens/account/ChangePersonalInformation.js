@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useState,useRef } from "react"
 import { StyleSheet, ImageBackground } from "react-native"
 import { Card, Input, Button } from "react-native-elements"
 import { useNavigation, StackActions } from "@react-navigation/native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { isEmpty } from "lodash"
+import Toast from "react-native-easy-toast"
 
 import { stylesCard } from "../../../shared/styles/StylesCard"
 import { message } from "../../../assets/messages/message"
@@ -18,6 +19,7 @@ import Modal from "../../../shared/components/Modal"
 import Loading from "../../../shared/components/Loading"
 import { updateEmail, updateProfile, reauthenticate } from "../../../core/firebase/actions"
 import IconPassword from "../../../shared/components/IconPassword"
+import { getToastMessage } from "../../../shared/utils/toastMessage"
 
 const defaultFormsValues = () => {
   return { email: "", name: "", password: "" }
@@ -32,6 +34,7 @@ export default function ChangePersonalInformation() {
   const [titleError, setTitleError] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  const toastRef = useRef()
   const navigation = useNavigation()
 
   const onChange = (e, type) => {
@@ -88,7 +91,11 @@ export default function ChangePersonalInformation() {
       return
     }
 
-    navigation.dispatch(StackActions.popToTop())
+    const toastMessage = getToastMessage(true,message.generic.messageUpdate)
+
+    toastRef.current.show("Se ha actualizado nombres y apellidos", 3000)
+    console.log("prueba")
+    //navigation.dispatch(StackActions.popToTop())
   }
 
   const validateLogin = () => {
@@ -143,6 +150,11 @@ export default function ChangePersonalInformation() {
           title={titleError}
           text={errorText}
         />
+          <Toast
+        ref={toastRef}
+        opacity={0.8}
+        textStyle={{ color: 'white' }}
+      />
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
     </ImageBackground>

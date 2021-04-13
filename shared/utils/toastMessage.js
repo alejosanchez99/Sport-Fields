@@ -3,25 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { message } from '../../assets/messages/message'
 
-const getMessageSuccess = (isUpdate, isDelete, isCreate) => {
-    let messageText = ""
 
-    if (isCreate) {
-        messageText = message.generic.messageCreate
-    }
-
-    if (isUpdate) {
-        messageText = message.generic.messageUpdate
-    }
-
-    if (isDelete) {
-        messageText = message.generic.messageDelete
-    }
-
-    return messageText
-}
-
-export const getToastMessage = (successfulOperation = false, isUpdate = false, isDelete = false, isCreate = false) => {
+export const getToastMessage = (successfulOperation = false, textToast= "") => {
     const messageToast = successfulOperation ?
         (<View style={styles.containerToast}>
             <Icon
@@ -29,7 +12,7 @@ export const getToastMessage = (successfulOperation = false, isUpdate = false, i
                 color="#009827"
                 name="checkbox-marked-circle"
             /><Text style={styles.textToast}>
-                {getMessageSuccess(isUpdate, isDelete, isCreate)}
+                {textToast}
             </Text>
         </View>)
         :

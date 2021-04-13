@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -17,6 +17,7 @@ import { reauthenticate,updatePassword } from "../../../core/firebase/actions";
 import Modal from "../../../shared/components/Modal";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import Loading from "../../../shared/components/Loading";
+import Toast from "react-native-easy-toast"
 
 const defaultFormsValues = () => {
   return { currentPassword: "", newPassword: "", confirmPassword: "" };
@@ -32,6 +33,7 @@ export default function ChangePassword() {
   const [enable, setEnable] = useState(false);
   const [titleError, setTitleError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const toastRef = useRef()
   const navigation = useNavigation();
 
   const onChange = (e, type) => {
@@ -161,6 +163,11 @@ export default function ChangePassword() {
         />
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
+      <Toast
+        ref={toastRef}
+        opacity={0.8}
+        textStyle={{ color: 'white' }}
+      />
     </ImageBackground>
   );
 }
