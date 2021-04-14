@@ -1,10 +1,13 @@
 export const message = {
-    nameApp : "SportFields",
+    nameApp: "SportFields",
     reservation: {
         title: "Reservación"
     },
     home: {
-        title: "Inicio"
+        title: "Inicio",
+        mapFullScreen: {
+            title: "Mapa"
+        }
     },
     promotions: {
         title: "Promociones"
@@ -27,28 +30,28 @@ export const message = {
         title: "Opciones",
         register: {
             title: "Registrar",
-            buttonTitle : "Registrarse",
+            buttonTitle: "Registrarse",
             errorService: {
                 title: "Lo sentimos",
-                description:"hubo un problema al momento de crear el usuario o el email ya se encuentra registrado."
+                description: "hubo un problema al momento de crear el usuario o el email ya se encuentra registrado."
             }
         },
-        errorEmail: { 
+        errorEmail: {
             title: "Correo invalido",
             description: "Por favor ingresa un correo electronico valido."
         },
-        login : {
+        login: {
             title: "Iniciar sesión",
-            buttonTitle : "Iniciar sesión"
+            buttonTitle: "Iniciar sesión"
         },
-        errorPassword:{
+        errorPassword: {
             title: "Contraseña incorrecta",
             description: "Su contraseña debe de tener minimo 8 caracteres.",
             confirm: "Las contraseñas no coinciden."
         },
         errorService: {
             title: "Lo sentimos",
-            description:"Usuario o contraseña incorrecta."
+            description: "Usuario o contraseña incorrecta."
         },
         changeData: {
             errorSaveImage: "Ha ocurrido un error al almacenar la foto de perfil",
@@ -58,12 +61,12 @@ export const message = {
         }
 
     },
-    generic : {
-        titleError : "Lo sentimos",
-        messageLoading : "Por favor espere",
-        messageCreate : "Se ha guardado exitosamente",
-        messageUpdate : "Se ha actualizado exitosamente",
-        messageDelete : "Se ha eliminado exitosamente",
-        messageError : "Se produjo un error inesperado, por favor vuelva a intentarlo"
+    generic: {
+        titleError: "Lo sentimos",
+        messageLoading: "Por favor espere",
+        messageCreate: "Se ha guardado exitosamente",
+        messageUpdate: "Se ha actualizado exitosamente",
+        messageDelete: "Se ha eliminado exitosamente",
+        messageError: "Se produjo un error inesperado, por favor vuelva a intentarlo"
     }
 }

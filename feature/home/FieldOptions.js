@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 20,
         alignItems: "center",
-        justifyContent: 'center',
+        justifyContent: "center",
         ...stylesCard
     }
 })
