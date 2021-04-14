@@ -8,7 +8,7 @@ import colors from '../../shared/styles/ColorsApp'
 import { stylesCard } from '../../shared/styles/StylesCard'
 import { closeSession } from '../../core/firebase/actions'
 
-export default function AccountOptions() {
+export default function AccountOptions({user}) {
     const navigation = useNavigation();
 
     const generateOptions = () => {
@@ -19,7 +19,9 @@ export default function AccountOptions() {
                 iconColorLeft: "#a7bfd3",
                 iconNameRight: "chevron-right",
                 iconColorRight: "#a7bfd3",
-                onPress: () => navigation.navigate("personal-information")
+                onPress: () => navigation.navigate("personal-information", {
+                   user : user
+                  })
             },
             {
                 title: "Cambiar contraseña",

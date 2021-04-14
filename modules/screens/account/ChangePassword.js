@@ -2,6 +2,9 @@ import React, { useState,useRef } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-easy-toast";
+import { StackActions, useNavigation } from "@react-navigation/native";
+import { getToastMessage } from "../../../shared/utils/toastMessage";
 
 import { stylesCard } from "../../../shared/styles/StylesCard";
 import Header from "../../../shared/components/Header";
@@ -15,9 +18,9 @@ import {
 import IconPassword from "../../../shared/components/IconPassword";
 import { reauthenticate,updatePassword } from "../../../core/firebase/actions";
 import Modal from "../../../shared/components/Modal";
-import { StackActions, useNavigation } from "@react-navigation/native";
+
 import Loading from "../../../shared/components/Loading";
-import Toast from "react-native-easy-toast"
+
 
 const defaultFormsValues = () => {
   return { currentPassword: "", newPassword: "", confirmPassword: "" };
@@ -33,6 +36,7 @@ export default function ChangePassword() {
   const [enable, setEnable] = useState(false);
   const [titleError, setTitleError] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const toastRef = useRef()
   const navigation = useNavigation();
 
@@ -59,17 +63,22 @@ export default function ChangePassword() {
     }
 
     const result = await updatePassword(formData.newPassword);
+    setLoading(false)
+
     if (!result.statusResponse) {
       setTitleError(message.login.register.errorService.title);
       setErrorText(message.login.changeData.errorPasswordDescription);
       setShowModal(true);
-      setLoading(false);
       return;
     }
 
-    setLoading(false);
 
-    navigation.dispatch(StackActions.popToTop());
+    const toastMessage = getToastMessage(true, message.generic.messageUpdate);
+    toastRef.current.show(toastMessage, 2000);
+
+    this.timeoutHandle = setTimeout(() => {
+      navigation.dispatch(StackActions.popToTop())
+    }, 2000);
   };
 
   const validateRegister = () => {
@@ -165,6 +174,7 @@ export default function ChangePassword() {
       </KeyboardAwareScrollView>
       <Toast
         ref={toastRef}
+        position="center"
         opacity={0.8}
         textStyle={{ color: 'white' }}
       />

@@ -10,25 +10,14 @@ import Modal from "../../shared/components/Modal"
 import Loading from "../../shared/components/Loading"
 import { message } from "../../assets/messages/message"
 
-export default function InformationUser() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [photoUrl, setPhotoUrl] = useState(null);
+export default function InformationUser({user}) {
+  const [name] = useState(user.displayName);
+  const [email] = useState(user.email);
+  const [photoUrl, setPhotoUrl] = useState(user.photoURL);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false)
   const [errorText, setErrorText] = useState(null);
   const [titleError, setTitleError] = useState(null);
-  const [user, setUser] = useState(null)
-
-  useFocusEffect(
-    useCallback(() => {
-      const userLogged = getCurrentUser()
-      userLogged && (setName(userLogged.displayName),
-        setEmail(userLogged.email),
-        setPhotoUrl(userLogged.photoURL),
-        setUser(userLogged))
-    }, [])
-  );
 
   const changePhoto = async () => {
     const result = await loadImageFromGallery([1, 1]);

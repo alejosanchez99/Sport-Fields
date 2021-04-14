@@ -1,112 +1,121 @@
-import React, { useState,useRef } from "react"
-import { StyleSheet, ImageBackground } from "react-native"
-import { Card, Input, Button } from "react-native-elements"
-import { useNavigation, StackActions } from "@react-navigation/native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { isEmpty } from "lodash"
-import Toast from "react-native-easy-toast"
+import React, { useState, useRef } from "react";
+import { StyleSheet, ImageBackground } from "react-native";
+import { Card, Input, Button } from "react-native-elements";
+import { useNavigation, StackActions } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { isEmpty } from "lodash";
+import Toast from "react-native-easy-toast";
 
-import { stylesCard } from "../../../shared/styles/StylesCard"
-import { message } from "../../../assets/messages/message"
+import { stylesCard } from "../../../shared/styles/StylesCard";
+import { message } from "../../../assets/messages/message";
 import {
   stylesButtonContainer,
   stylesButton,
-} from "../../../shared/styles/StylesButton"
-import styleImage from "../../../shared/styles/StylesImage"
-import Header from "../../../shared/components/Header"
-import { validateEmail } from "../../../shared/utils/helpers"
-import Modal from "../../../shared/components/Modal"
-import Loading from "../../../shared/components/Loading"
-import { updateEmail, updateProfile, reauthenticate } from "../../../core/firebase/actions"
-import IconPassword from "../../../shared/components/IconPassword"
-import { getToastMessage } from "../../../shared/utils/toastMessage"
+} from "../../../shared/styles/StylesButton";
+import styleImage from "../../../shared/styles/StylesImage";
+import Header from "../../../shared/components/Header";
+import { validateEmail } from "../../../shared/utils/helpers";
+import Modal from "../../../shared/components/Modal";
+import Loading from "../../../shared/components/Loading";
+import {
+  updateEmail,
+  updateProfile,
+  reauthenticate,
+} from "../../../core/firebase/actions";
+import IconPassword from "../../../shared/components/IconPassword";
+import { getToastMessage } from "../../../shared/utils/toastMessage";
 
-const defaultFormsValues = () => {
-  return { email: "", name: "", password: "" }
-}
+const defaultFormsValues = ({nameUser,emailUser}) => {
+  return { email: emailUser, name: nameUser, password: "" };
+};
 
-export default function ChangePersonalInformation() {
-  const [formData] = useState(defaultFormsValues)
-  const [enable, setEnable] = useState(false)
-  const [showPassword, setShowPassword] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [errorText, setErrorText] = useState(null)
-  const [titleError, setTitleError] = useState(null)
-  const [loading, setLoading] = useState(false)
+export default function ChangePersonalInformation({route, navigate} ) {
+  const { user } = route.params;
+  const [formData] = useState(defaultFormsValues({nameUser: user.displayName, emailUser : user.email}));
+  const [enable, setEnable] = useState(false);
+  const [showPassword, setShowPassword] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [errorText, setErrorText] = useState(null);
+  const [titleError, setTitleError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const toastRef = useRef()
-  const navigation = useNavigation()
+  const toastRef = useRef();
+  const navigation = useNavigation();
+
+   console.log(user)
 
   const onChange = (e, type) => {
-    formData[type] = e.nativeEvent.text
-    setEnable(validateData())
-  }
+    formData[type] = e.nativeEvent.text;
+    setEnable(validateData());
+  };
 
   const validateData = () => {
     if (isEmpty(formData.email)) {
-      return false
+      return false;
     }
     if (isEmpty(formData.name)) {
-      return false
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const changeInformation = async () => {
     if (!validateLogin()) {
-      return
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
-    const resultReautheticate = await reauthenticate(formData.password)
+    const resultReautheticate = await reauthenticate(formData.password);
 
     if (!resultReautheticate.statusResponse) {
-      setTitleError(message.login.errorService.title)
-      setErrorText(message.login.errorService.description)
-      setShowModal(true)
-      setLoading(false)
-      return
+      setTitleError(message.login.errorService.title);
+      setErrorText(message.login.errorService.description);
+      setShowModal(true);
+      setLoading(false);
+      return;
     }
 
-    const result = await updateEmail(formData.email)
+    const result = await updateEmail(formData.email);
 
     if (!result.statusResponse) {
-      console.log(result.error)
-      setTitleError(message.login.errorService.title)
-      setErrorText(message.generic.messageError)
-      setShowModal(true)
-      setLoading(false)
-      return
+      console.log(result.error);
+      setTitleError(message.login.errorService.title);
+      setErrorText(message.generic.messageError);
+      setShowModal(true);
+      setLoading(false);
+      return;
     }
 
-    const resultEmail = await updateProfile({ displayName: formData.name })
-    setLoading(false)
+    const resultEmail = await updateProfile({ displayName: formData.name });
+    setLoading(false);
 
     if (!resultEmail.statusResponse) {
-      console.log(resultEmail.error)
-      setTitleError(message.login.errorService.title)
-      setErrorText(message.generic.messageError)
-      setShowModal(true)
-      return
+      console.log(resultEmail.error);
+      setTitleError(message.login.errorService.title);
+      setErrorText(message.generic.messageError);
+      setShowModal(true);
+      return;
     }
 
-    const toastMessage = getToastMessage(true,message.generic.messageUpdate)
+    const toastMessage = getToastMessage(true, message.generic.messageUpdate);
+    toastRef.current.show(toastMessage, 2000);
 
-    toastRef.current.show("Se ha actualizado nombres y apellidos", 3000)
-    console.log("prueba")
-    //navigation.dispatch(StackActions.popToTop())
-  }
+    this.timeoutHandle = setTimeout(() => {
+      navigation.dispatch(StackActions.popToTop())
+    }, 2000);
+    
+  };
 
   const validateLogin = () => {
     if (!validateEmail(formData.email)) {
-      setTitleError(message.login.errorEmail.title)
-      setErrorText(message.login.errorEmail.description)
-      setShowModal(true)
-      return false
+      setTitleError(message.login.errorEmail.title);
+      setErrorText(message.login.errorEmail.description);
+      setShowModal(true);
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   return (
     <ImageBackground
@@ -117,10 +126,12 @@ export default function ChangePersonalInformation() {
         <Header />
         <Card containerStyle={styles.card}>
           <Input
+            defaultValue={formData.name}
             onChange={(e) => onChange(e, "name")}
             placeholder="Nombres y apellidos"
           />
           <Input
+            defaultValue={formData.email}
             onChange={(e) => onChange(e, "email")}
             placeholder="Nuevo correo electronico"
           />
@@ -151,14 +162,15 @@ export default function ChangePersonalInformation() {
           text={errorText}
         />
           <Toast
-        ref={toastRef}
-        opacity={0.8}
-        textStyle={{ color: 'white' }}
-      />
+            ref={toastRef}
+            position= "center"
+            opacity={0.8}
+            textStyle={{ color: "white" }}
+          />
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
     </ImageBackground>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -176,4 +188,4 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     ...stylesCard,
   },
-})
+});
