@@ -5,7 +5,6 @@ import { useFocusEffect } from "@react-navigation/native"
 import AccountOptions from '../../../feature/account/AccountOptions'
 import InformationUser from '../../../feature/account/InformationUser'
 import { getCurrentUser } from "../../../core/firebase/actions"
-import { stylesCard } from '../../../shared/styles/StylesCard'
 
 export default function UserLogged() {
   const [user, setUser] = useState(null)

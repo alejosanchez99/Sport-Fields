@@ -1,11 +1,20 @@
-import React from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, TextInput, View, Text } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
+import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
-import ShowCurrentLocation from './ShowCurrentLocation'
+import { getCurrentUser } from "../../core/firebase/actions"
 
 export default function SearchField() {
+    const [photoUrl, setPhotoUrl] = useState(null)
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        const userLogged = getCurrentUser()
+        userLogged && (setPhotoUrl(userLogged.photoURL))
+    }, [])
+
     return (
         <View>
             <View style={styles.container}>
@@ -15,22 +24,22 @@ export default function SearchField() {
                     size="large"
                     activeOpacity={0.7}
                     source={
-                        require("../../assets/icons/avatar-default.jpg")
+                        photoUrl
+                            ? { uri: photoUrl }
+                            : require("../../assets/icons/avatar-default.jpg")
                     }
                 />
                 <TextInput
                     style={styles.textInput}
-                    placeholder="¿Que cancha quieres hoy?"
+                    placeholder="¿Qué cancha quieres hoy?"
                     underlineColorAndroid="transparent"
                 />
-                    <Icon
-                        containerStyle={styles.location}
-                        color={colors.secundary}
-                        type="material-community"
-                        name="map-marker"
-                        onPress={() => console.log("prueba")}
-                    />
-                <ShowCurrentLocation
+                <Icon
+                    containerStyle={styles.location}
+                    color={colors.secundary}
+                    type="material-community"
+                    name="map-marker"
+                    onPress={() => navigation.navigate("current-location")}
                 />
             </View>
         </View>

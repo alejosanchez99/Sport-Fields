@@ -7,6 +7,9 @@ export const message = {
         title: "Inicio",
         mapFullScreen: {
             title: "Mapa"
+        },
+        currentLocation : {
+            title: "Ubicación"
         }
     },
     promotions: {

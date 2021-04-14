@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 
 import { getCurrentLocation } from '../utils/location'
 
-export default function Map({ isHome }) {
+export default function Map({ isHome, setShowIconMapFullScren }) {
     const [userLocation, setUserLocation] = useState(null)
 
     useEffect(() => {
@@ -12,6 +12,7 @@ export default function Map({ isHome }) {
             const response = await getCurrentLocation()
             if (response.status) {
                 setUserLocation(response.location)
+                setShowIconMapFullScren(true)
             }
         })()
     }, [])

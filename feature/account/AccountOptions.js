@@ -12,7 +12,8 @@ import { collectionsFirebase } from '../../core/firebase/collectionsFirebase'
 export default function AccountOptions({ user }) {
 
     const [userIsAdmin, setUserIsAdmin] = useState(false)
-    
+    const navigation = useNavigation()
+
     useEffect(() => {
         (async () => {
 
@@ -24,7 +25,6 @@ export default function AccountOptions({ user }) {
         })()
     }, [])
 
-    const navigation = useNavigation()
 
     const generateOptions = () => {
 
