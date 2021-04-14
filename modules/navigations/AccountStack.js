@@ -10,6 +10,7 @@ import ChangePersonalInformation from "../screens/account/ChangePersonalInformat
 import ChangePassword from "../screens/account/ChangePassword";
 import Register from "../screens/account/Register";
 import Login from "../screens/account/Login";
+import AddUserAdmin from "../screens/account/AddUserAdmin";
 
 const Stack = createStackNavigator();
 
@@ -103,6 +104,20 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={Login}
         options={{
           title: message.login.login.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="add-user-admin"
+        component={AddUserAdmin}
+        options={{
+          title: message.account.addUserAdmin.title,
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,

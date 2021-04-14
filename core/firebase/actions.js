@@ -1,9 +1,10 @@
 import * as firebase from 'firebase'
-import {firebaseApp} from './firebase'
+import { firebaseApp } from './firebase'
 import 'firebase/firestore'
 
 import { fileToBlob } from '../../shared/utils/fileUtily'
 
+const db = firebase.firestore(firebaseApp)
 
 export const isUserLogged = () => {
     let isLogged = false
@@ -117,3 +118,31 @@ export const updatePassword = async (password) => {
 
     return result
 }
+
+export const addDocumentWithoutId = async (collection, data) => {
+    const result = { statusResponse: true, error: null }
+    try {
+        await db.collection(collection).add(data)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getCollection = async (collection) => {
+    const result = { statusResponse: false, data: null, error: null }
+
+    try {
+        const data = await db.collection(collection).get()
+        const arrayData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+
+        result.data = arrayData
+        result.statusResponse = true
+    } catch (error) {
+        result.error = error
+    }
+
+    return result
+}
+

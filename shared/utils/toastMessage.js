@@ -29,6 +29,8 @@ export const getToastMessage = (successfulOperation = false, textToast= "") => {
     return messageToast
 }
 
+export const defaultValueToastView  = 2000
+
 const styles = StyleSheet.create({
     containerToast: {
         flexDirection: "row",

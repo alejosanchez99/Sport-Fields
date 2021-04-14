@@ -1,11 +1,11 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-easy-toast";
 import { StackActions, useNavigation } from "@react-navigation/native";
-import { getToastMessage } from "../../../shared/utils/toastMessage";
 
+import { getToastMessage, defaultValueToastView } from "../../../shared/utils/toastMessage";
 import { stylesCard } from "../../../shared/styles/StylesCard";
 import Header from "../../../shared/components/Header";
 import { message } from "../../../assets/messages/message";
@@ -16,7 +16,7 @@ import {
   stylesButton,
 } from "../../../shared/styles/StylesButton";
 import IconPassword from "../../../shared/components/IconPassword";
-import { reauthenticate,updatePassword } from "../../../core/firebase/actions";
+import { reauthenticate, updatePassword } from "../../../core/firebase/actions";
 import Modal from "../../../shared/components/Modal";
 
 import Loading from "../../../shared/components/Loading";
@@ -74,7 +74,7 @@ export default function ChangePassword() {
 
 
     const toastMessage = getToastMessage(true, message.generic.messageUpdate);
-    toastRef.current.show(toastMessage, 2000);
+    toastRef.current.show(toastMessage, defaultValueToastView);
 
     this.timeoutHandle = setTimeout(() => {
       navigation.dispatch(StackActions.popToTop())

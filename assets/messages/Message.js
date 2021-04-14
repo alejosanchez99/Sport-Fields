@@ -24,6 +24,10 @@ export const message = {
         changePassword: {
             title: "Cambiar contraseña",
             buttonTitle: "Editar"
+        },
+        addUserAdmin: {
+            title: "Agregar administrador",
+            buttonTitle: "Agregar"
         }
     },
     login: {

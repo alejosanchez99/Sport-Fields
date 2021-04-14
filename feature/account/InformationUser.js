@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     backgroundColor: colors.gray,
-    paddingVertical: 20,
+    paddingVertical: 15
   },
   InfoUser: {
     alignItems: "center",
