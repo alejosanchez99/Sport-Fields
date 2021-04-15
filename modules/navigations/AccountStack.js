@@ -11,6 +11,8 @@ import ChangePassword from "../screens/account/ChangePassword";
 import Register from "../screens/account/Register";
 import Login from "../screens/account/Login";
 import AddUserAdmin from "../screens/account/AddUserAdmin";
+import AddField from "../screens/field/AddField"
+import CurrentLocation from "../screens/account/CurrentLocation"
 
 const Stack = createStackNavigator();
 
@@ -123,6 +125,32 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
             backgroundColor: colors.primary,
             elevation: 0,
             shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="add-field"
+        component={AddField}
+        options={{
+          title: message.account.addField.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="current-location"
+        component={CurrentLocation}
+        options={{
+          title: message.home.currentLocation.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
           },
           headerTintColor: colors.four,
         }}

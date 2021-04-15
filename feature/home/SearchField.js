@@ -36,10 +36,9 @@ export default function SearchField() {
                 />
                 <Icon
                     containerStyle={styles.location}
-                    color={colors.secundary}
                     type="material-community"
-                    name="map-marker"
-                    onPress={() => navigation.navigate("current-location")}
+                    name="google-maps"
+                    color={colors.black}
                 />
             </View>
         </View>

@@ -178,11 +178,11 @@ const styles = StyleSheet.create({
     ...stylesButton,
   },
   buttonContainer: {
-    marginTop: 50,
+    marginTop: 40,
     ...stylesButtonContainer,
   },
   card: {
-    marginTop: 50,
+    marginTop: 40,
     width: "80%",
     padding: 30,
     alignSelf: "center",

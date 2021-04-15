@@ -10,7 +10,7 @@ import Modal from "../../shared/components/Modal"
 import Loading from "../../shared/components/Loading"
 import { message } from "../../assets/messages/message"
 
-export default function InformationUser({user}) {
+export default function InformationUser({ user }) {
   const [name] = useState(user.displayName);
   const [email] = useState(user.email);
   const [photoUrl, setPhotoUrl] = useState(user.photoURL);
@@ -56,7 +56,7 @@ export default function InformationUser({user}) {
     <View style={styles.container}>
       <Avatar
         rounded
-        size="large"
+        size="xlarge"
         onPress={changePhoto}
         containerStyle={styles.avatar}
         activeOpacity={0.7}
@@ -67,8 +67,8 @@ export default function InformationUser({user}) {
         }
       >
         <Avatar.Accessory
-        onPress={changePhoto}
-        style={styles.avatarAccesory}
+          onPress={changePhoto}
+          style={styles.avatarAccesory}
           icon={{ name: "home", type: "material-community" }}
         />
       </Avatar>
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   avatarAccesory: {
-    height: 30,
-    width: 30,
+    height: 40,
+    width: 40,
     borderRadius: 30,
   },
 });

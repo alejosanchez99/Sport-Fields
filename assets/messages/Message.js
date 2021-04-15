@@ -31,6 +31,10 @@ export const message = {
         addUserAdmin: {
             title: "Agregar administrador",
             buttonTitle: "Agregar"
+        },
+        addField : {
+            title: "Agregar cancha",
+            buttonTitle: "Agregar"
         }
     },
     login: {
@@ -69,6 +73,7 @@ export const message = {
 
     },
     generic: {
+        saveButton: "Guardar",
         titleError: "Lo sentimos",
         messageLoading: "Por favor espere",
         messageCreate: "Se ha guardado exitosamente",

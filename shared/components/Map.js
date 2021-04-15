@@ -31,7 +31,6 @@ export default function Map({ isHome, setShowIconMapFullScren }) {
                                 latitude: userLocation.latitude,
                                 longitude: userLocation.longitude
                             }}
-                            draggable
                         />
                     </MapView>
                 )

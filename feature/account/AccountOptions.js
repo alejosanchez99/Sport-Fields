@@ -58,10 +58,12 @@ export default function AccountOptions({ user }) {
         ]
         if (userIsAdmin) {
             const menuFieldAdminOption = {
-                title: "Crear cancha",
+                title: "Agregar cancha",
                 iconNameLeft: "soccer-field",
                 ...commonMenuItems,
-                onPress: () => console.log("funciona")
+                onPress: () => navigation.navigate("add-field", {
+                    locationField: null
+                })
             }
 
             const menuPermissionsAdminOption = {

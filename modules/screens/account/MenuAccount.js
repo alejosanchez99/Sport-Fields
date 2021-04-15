@@ -45,7 +45,7 @@ export default function MenuAccount({ setNavigation, setRoute }) {
   const selectedComponent = (key) => {
     switch (key) {
       case "login":
-        navigation.navigate("login",{
+        navigation.navigate("login", {
           navigate: setNavigation,
           setRoute: setRoute,
         });
@@ -73,7 +73,10 @@ export default function MenuAccount({ setNavigation, setRoute }) {
         iniciar sesión.
       </Text>
       {map(menuOptions, (menu, index) => (
-        <Card containerStyle={styles.card}>
+        <Card
+          containerStyle={styles.card}
+          key={index}
+        >
           <TouchableOpacity onPress={menu.onPress}>
             <ListItem key={index} style={styles.menuItem}>
               <Icon

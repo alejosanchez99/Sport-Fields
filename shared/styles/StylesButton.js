@@ -31,7 +31,6 @@ export const stylesButton = {
 
 export const stylesButtonSecundary = {
     backgroundColor: colors.four,
-    
 }
 
 export const stylesButtonContainerAlert =
