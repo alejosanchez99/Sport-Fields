@@ -104,14 +104,14 @@ export default function AddUserAdmin() {
                     title={titleError}
                     text={errorText}
                 />
-                <Toast
-                    ref={toastRef}
-                    position="center"
-                    opacity={0.8}
-                    textStyle={{ color: "white" }}
-                />
                 <Loading isVisible={loading} />
             </KeyboardAwareScrollView>
+            <Toast
+             ref={toastRef}
+             positionValue={200}
+             opacity={0.8}
+             textStyle={{ color: "white" }}
+             />
         </ImageBackground>
     );
 }

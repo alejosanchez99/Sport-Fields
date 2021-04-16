@@ -43,7 +43,7 @@ export default function Register() {
 
   const onChange = (e, type) => {
     formData[type] = e.nativeEvent.text;
-    setEnable(validateData());
+    setEnable(validateData()); 
   };
 
   const validateRegister = () => {
@@ -95,6 +95,7 @@ export default function Register() {
     setLoading(true);
     const result = await registerUser(formData.email, formData.password);
     if (!result.statusResponse) {
+      setLoading(false);
       setTitleError(message.login.register.errorService.title);
       setErrorText(message.login.register.errorService.description);
       setShowModal(true);
@@ -175,13 +176,13 @@ export default function Register() {
           text={errorText}
         />
         <Loading isVisible={loading} />
-        <Toast
+      </KeyboardAwareScrollView>
+      <Toast
           ref={toastRef}
-          position="center"
+          positionValue={200}
           opacity={0.8}
           textStyle={{ color: "white" }}
         />
-      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 }

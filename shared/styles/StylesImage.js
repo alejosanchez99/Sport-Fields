@@ -18,9 +18,10 @@ const stylesImage = StyleSheet.create({
         marginTop: 20
     },
     backgroundImageLogin: {
-        flex: 1,
-        resizeMode: 'cover',
+        width: "100%",
+        height: "100%",
     },
+
 });
 
 export default stylesImage

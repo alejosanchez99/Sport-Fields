@@ -22,7 +22,7 @@ const defaultFormsValues = () => {
   return { email: "", password: "" };
 };
 
-export default function Login({ route, navigation }) {
+export default function Login({route}) {
   const [showPassword, setShowPassword] = useState(null);
   const [formData] = useState(defaultFormsValues());
   const [enable, setEnable] = useState(false);

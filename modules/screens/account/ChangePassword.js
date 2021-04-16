@@ -173,11 +173,11 @@ export default function ChangePassword() {
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
       <Toast
-        ref={toastRef}
-        position="center"
-        opacity={0.8}
-        textStyle={{ color: 'white' }}
-      />
+          ref={toastRef}
+          positionValue={200}
+          opacity={0.8}
+          textStyle={{ color: "white" }}
+        />
     </ImageBackground>
   );
 }
