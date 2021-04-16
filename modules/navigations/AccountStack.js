@@ -1,18 +1,19 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import colors from "../../shared/styles/ColorsApp";
-import UserLogged from "../screens/account/UserLogged";
-import UserGuest from "../screens/account/UserGuest";
 import { message } from "../../assets/messages/message"
-import MenuAccount from "../screens/account/MenuAccount";
+import colors from "../../shared/styles/ColorsApp"
+import UserLogged from "../screens/account/UserLogged"
+import UserGuest from "../screens/account/UserGuest"
+import MenuAccount from "../screens/account/MenuAccount"
 import ChangePersonalInformation from "../screens/account/ChangePersonalInformation";
 import ChangePassword from "../screens/account/ChangePassword";
 import Register from "../screens/account/Register";
 import Login from "../screens/account/Login";
 import AddUserAdmin from "../screens/account/AddUserAdmin";
 import AddField from "../screens/field/AddField"
-import CurrentLocation from "../screens/account/CurrentLocation"
+import CurrentLocation from "../screens/field/CurrentLocation"
+import AddFieldSchedule from "../screens/field/AddFieldSchedule"
 
 const Stack = createStackNavigator();
 
@@ -148,6 +149,18 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
         component={CurrentLocation}
         options={{
           title: message.home.currentLocation.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
+      <Stack.Screen
+        name="add-field-schedule"
+        component={AddFieldSchedule}
+        options={{
+          title: message.account.addFieldSchedule.title,
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: colors.primary,
