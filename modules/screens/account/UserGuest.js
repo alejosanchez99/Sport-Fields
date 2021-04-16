@@ -31,6 +31,7 @@ export default function UserGuest() {
                 })
             );
         }
+        return () => setNavigate(true);
     }, [test]);
 
     const signIn = () => {

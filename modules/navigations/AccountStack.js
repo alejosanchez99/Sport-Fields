@@ -75,7 +75,7 @@ export default function AccountStack({ route, setNavigation, setRoute }) {
       />
       <Stack.Screen
         name="menu-account"
-        component={() => <MenuAccount setNavigation={setNavigation} setRoute={setRoute} />}
+        children={ (props) => <MenuAccount setNavigation={setNavigation} setRoute={setRoute} {...props} />}
         options={{
           title: message.login.title,
           headerTitleAlign: "center",

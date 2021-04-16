@@ -189,14 +189,14 @@ export default function AddField({ route, navigation }) {
           title={titleError}
           text={errorText}
         />
-        <Toast
+        <Loading isVisible={loading} />
+      </KeyboardAwareScrollView>
+      <Toast
           ref={toastRef}
-          position="center"
+          positionValue={200}
           opacity={0.8}
           textStyle={{ color: "white" }}
         />
-        <Loading isVisible={loading} />
-      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 }
