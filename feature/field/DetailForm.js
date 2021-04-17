@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
-import { Icon, Avatar, Card } from "react-native-elements";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Icon, Card } from "react-native-elements";
 import colors from "../../shared/styles/ColorsApp";
 import {
   stylesButton,
   stylesButtonContainerAlert,
   stylesButtonSecundary,
+  stylesButtonContainer,
 } from "../../shared/styles/StylesButton";
 import { Button } from "react-native-elements";
 import { message } from "../../assets/messages/message";
 import ModalComponents from "../../shared/components/ModalComponents";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import LocaleConfig, { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { stylesCard } from "../../shared/styles/StylesCard";
+import moment from "moment";
 
 export default function DetailForm() {
   const [
     showModalChooseScheduleTime,
     setShowModalChooseScheduleTime,
-  ] = useState(true);
+  ] = useState(false);
+  const [reservation, setReservation] = useState("")
 
   return (
     <View>
@@ -144,7 +147,21 @@ export default function DetailForm() {
       <Schedule
         isVisible={showModalChooseScheduleTime}
         setVisible={setShowModalChooseScheduleTime}
+        setReservation={setReservation}
       />
+      <TouchableOpacity
+        style={styles.containerSchedule}
+        onPress={() =>
+          setShowModalChooseScheduleTime(!showModalChooseScheduleTime)
+        }
+      >
+        <Icon
+          type="material-community"
+          name="clock-outline"
+          color="#7a7a7a"      
+        />
+        <Text style={styles.textSchedule}>Seleccionar Fecha</Text>
+      </TouchableOpacity>
       <View
         style={{
           marginTop: 30,
@@ -193,35 +210,34 @@ export default function DetailForm() {
   );
 }
 
-function Schedule({ isVisible, setVisible }) {
+function Schedule({ isVisible, setVisible, dateReservation }) {
+  const data = moment().format("YYYY-MM-DD");  
+  const [date, setDate] = useState(data)
+
+  const mark = {
+		[date]: {selected: true, marked: true}
+	};
+
   return (
     <ModalComponents
       isVisible={isVisible}
       setVisible={setVisible}
       containerStyle={styles.card}
     >
-      <View
-      >
+      <View>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
           Fecha de la reserva:
         </Text>
         <Card>
+
           <Calendar
-            // Collection of dates that have to be marked. Default = {}
-            markedDates={{
-              "2012-05-16": {
-                selected: true,
-                marked: true,
-                selectedColor: "blue",
-              },
-              "2012-05-17": { marked: true },
-              "2012-05-18": {
-                marked: true,
-                dotColor: "red",
-                activeOpacity: 0,
-              },
-              "2012-05-19": { disabled: true, disableTouchEvent: true },
+             minDate={data}
+             onDayPress={day => {
+              setDate(day.dateString)
             }}
+            markedDates={mark}
+  
+           
           />
         </Card>
         <View
@@ -310,5 +326,19 @@ const styles = StyleSheet.create({
     padding: 20,
     alignSelf: "center",
     ...stylesCard,
+  },
+  textSchedule: {
+    marginLeft: 5,
+  },
+  containerSchedule: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    height: 40,
+    width: "40%",
+    backgroundColor: "#e3e3e3",
+    borderRadius: 30,
+    marginTop: 30,
+    marginStart: 20
   },
 });
