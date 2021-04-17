@@ -13,7 +13,6 @@ import {
     stylesButtonContainerSecundaryWhite,
     stylesButton,
 } from "../../../shared/styles/StylesButton";
-import { getCurrentUser } from '../../../core/firebase/actions'
 
 export default function UserGuest() {
     const navigation = useNavigation();
@@ -21,7 +20,6 @@ export default function UserGuest() {
     const [test, setNavigate] = useState(false)
 
     useEffect(() => {
-
         if (test) {
             navigation.dispatch(
                 CommonActions.reset({

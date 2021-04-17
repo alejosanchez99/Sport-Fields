@@ -2,6 +2,7 @@ import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 
 import Reservation from "../screens/reservation/Reservation"
+import Detail from "../screens/field/DetailField"
 import colors from "../../shared/styles/ColorsApp"
 import { message } from "../../assets/messages/message"
 
@@ -10,6 +11,18 @@ const Stack = createStackNavigator();
 export default function ReservationStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="detail"
+        component={Detail}
+        options={{
+          title: message.reservation.title,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.four,
+        }}
+      />
       <Stack.Screen
         name="reservation"
         component={Reservation}
