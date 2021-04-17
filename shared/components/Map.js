@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
+import { Button } from 'react-native-elements'
 import MapView, { Callout, Marker } from 'react-native-maps'
-import { map } from "lodash";
+import { map, isNull } from "lodash"
+
 import { getCurrentLocation } from '../utils/location'
 import { getCollection } from "../../core/firebase/actions"
 import { collectionsFirebase } from "../../core/firebase/collectionsFirebase"
+import { message } from '../../assets/messages/message';
+import { stylesButton, stylesButtonContainer } from '../styles/StylesButton'
 
-export default function Map({ isHome, setShowIconMapFullScren = null, setShowLoadingMap }) {
+export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren = null, setShowLoadingMap, initialLocation = null }) {
     const [userLocation, setUserLocation] = useState(null)
-    const [fields, setFields] = useState([])
+    const [fields, setFields] = useState(fieldsSearch)
 
     useEffect(() => {
         (async () => {
             const response = await getCurrentLocation()
-            const responseField = await getCollection(collectionsFirebase.fields)
 
-            if (response.status && responseField.statusResponse) {
+            if (response.status) {
                 setUserLocation(response.location)
                 isHome && setShowIconMapFullScren(true)
                 setShowLoadingMap(false)
-                setFields(responseField.data)
+
+                if (fieldsSearch.length == 0) {
+                    const responseField = await getCollection(collectionsFirebase.fields)
+                    if (responseField.statusResponse) {
+                        setFields(responseField.data)
+                    }
+                }
             }
         })()
     }, [])
@@ -30,28 +39,19 @@ export default function Map({ isHome, setShowIconMapFullScren = null, setShowLoa
                 userLocation && (
                     <MapView
                         style={isHome ? styles.mapViewHome : styles.mapViewFullScren}
-                        initialRegion={userLocation}
+                        initialRegion={!isNull(initialLocation) ? initialLocation : userLocation}
                         showsUserLocation={true}
                     >
-                        <Marker
-                            coordinate={{
-                                latitude: userLocation.latitude,
-                                longitude: userLocation.longitude
-                            }}
-                            image={require("../../assets/icons/currentLocation.png")}
-                        >
-                            <Callout tooltip>
-                                <View>
-                                    <View style={styles.bubble}>
-                                        <Text style={styles.nameBubble}>
-                                            Tu ubicación
-                                        </Text>
-                                    </View>
-                                    <View style={styles.arrowBorder} />
-                                    <View style={styles.arrow} />
-                                </View>
-                            </Callout>
-                        </Marker>
+                        {
+                            isNull(initialLocation) &&
+                            (<Marker
+                                coordinate={{
+                                    latitude: userLocation.latitude,
+                                    longitude: userLocation.longitude
+                                }}
+                                image={require("../../assets/icons/currentLocation.png")}
+                            />)
+                        }
                         {
                             map(fields, (field, index) => (
                                 <Marker
@@ -68,9 +68,17 @@ export default function Map({ isHome, setShowIconMapFullScren = null, setShowLoa
                                                 <Text style={styles.nameBubble}>
                                                     {field.name}
                                                 </Text>
-                                                <Text>
-                                                    {field.description}
-                                                </Text>
+                                                <Image
+                                                    style={styles.image}
+                                                    source={{
+                                                        uri: field.images[0]
+                                                    }}
+                                                />
+                                                <Button
+                                                    containerStyle={styles.buttonContainer}
+                                                    buttonStyle={styles.button}
+                                                    title={message.reservation.buttonTitle}
+                                                />
                                             </View>
                                             <View style={styles.arrowBorder} />
                                             <View style={styles.arrow} />
@@ -103,11 +111,14 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         borderWidth: 0.5,
         padding: 15,
-        width: 150
+        width: 150,
+        borderRadius: 20
     },
     nameBubble: {
         fontSize: 16,
-        marginBottom: 5
+        marginBottom: 5,
+        fontWeight: "bold",
+        textAlign: "center"
     },
     arrow: {
         backgroundColor: "transparent",
@@ -124,5 +135,22 @@ const styles = StyleSheet.create({
         borderWidth: 16,
         alignSelf: "center",
         marginTop: -0.5
-    }
+    },
+    image: {
+        width: 120,
+        height: 80,
+        borderRadius: 10
+    },
+    button: {
+        ...stylesButton,
+        width: 80,
+        height: 40
+    },
+    buttonContainer: {
+        marginTop: 15,
+        ...stylesButtonContainer,
+        width: 80,
+        height: 40,
+        borderRadius: 40
+    },
 })

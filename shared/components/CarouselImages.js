@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image } from 'react-native-elements'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { size } from 'lodash'
 
