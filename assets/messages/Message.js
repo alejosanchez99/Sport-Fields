@@ -35,6 +35,9 @@ export const message = {
         addField : {
             title: "Agregar cancha",
             buttonTitle: "Agregar"
+        },
+        addFieldSchedule : {
+            title: "Horarios"
         }
     },
     login: {

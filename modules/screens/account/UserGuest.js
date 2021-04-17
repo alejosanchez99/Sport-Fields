@@ -1,7 +1,7 @@
-import React, { useEffect, useState,useCallback,useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { StyleSheet, Text, ImageBackground, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import { useNavigation, CommonActions, useFocusEffect, StackActions } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 
 import Header from "../../../shared/components/Header"
 import { message } from '../../../assets/messages/message'
@@ -13,14 +13,15 @@ import {
     stylesButtonContainerSecundaryWhite,
     stylesButton,
 } from "../../../shared/styles/StylesButton";
+import { getCurrentUser } from '../../../core/firebase/actions'
 
 export default function UserGuest() {
     const navigation = useNavigation();
     const [route, setRoute] = useState(null)
     const [test, setNavigate] = useState(false)
-    const mountedRef = useRef(true)
 
     useEffect(() => {
+
         if (test) {
             navigation.dispatch(
                 CommonActions.reset({

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, View, Text } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
-import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
 import { getCurrentUser } from "../../core/firebase/actions"
 
+
 export default function SearchField() {
     const [photoUrl, setPhotoUrl] = useState(null)
-    const navigation = useNavigation()
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const userLogged = getCurrentUser()
-        userLogged && (setPhotoUrl(userLogged.photoURL))
+        console.log(user)
     }, [])
+
 
     return (
         <View>
