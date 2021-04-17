@@ -74,7 +74,7 @@ export default function Navigation({ routeScreen }) {
       />
       <Tab.Screen
         name="account"
-        children={(props) => <AccountStack route={routeScreen} {...props} />}
+        children={(props) => <AccountStack route={routeScreen} props={props}/>}
         options={{ title: message.account.title }}
       />
     </Tab.Navigator>
