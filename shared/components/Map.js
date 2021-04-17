@@ -4,7 +4,7 @@ import MapView from 'react-native-maps'
 
 import { getCurrentLocation } from '../utils/location'
 
-export default function Map({ isHome, setShowIconMapFullScren }) {
+export default function Map({ isHome, setShowIconMapFullScren = null, setShowLoadingMap }) {
     const [userLocation, setUserLocation] = useState(null)
 
     useEffect(() => {
@@ -12,7 +12,8 @@ export default function Map({ isHome, setShowIconMapFullScren }) {
             const response = await getCurrentLocation()
             if (response.status) {
                 setUserLocation(response.location)
-                setShowIconMapFullScren(true)
+                isHome && setShowIconMapFullScren(true)
+                setShowLoadingMap(false)
             }
         })()
     }, [])

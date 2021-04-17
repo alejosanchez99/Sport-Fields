@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import { Card, Icon } from "react-native-elements"
 import { useNavigation } from "@react-navigation/native"
 
 import Map from "../../shared/components/Map"
 import colors from '../../shared/styles/ColorsApp'
 import { stylesCard } from '../../shared/styles/StylesCard'
+import LoadingMap from '../../shared/components/LoadingMap'
 
 export default function MapFields() {
 
     const navigation = useNavigation()
     const [showIconMapFullScren, setShowIconMapFullScren] = useState(false)
+    const [showLoadingMap, setShowLoadingMap] = useState(true)
 
     return (
         <View>
@@ -19,7 +21,11 @@ export default function MapFields() {
                     isHome={true}
                     showIconMapFullScren={showIconMapFullScren}
                     setShowIconMapFullScren={setShowIconMapFullScren}
+                    setShowLoadingMap={setShowLoadingMap}
                 />
+                {showLoadingMap &&
+                    (<LoadingMap />)
+                }
                 {showIconMapFullScren &&
                     (<Icon
                         type="material-community"
@@ -28,7 +34,7 @@ export default function MapFields() {
                         reverse
                         containerStyle={styles.btnContainer}
                         onPress={() => navigation.navigate("map")}
-                   />)}
+                    />)}
             </Card>
         </View>
     )

@@ -1,8 +1,7 @@
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Overlay } from 'react-native-elements'
-import { message } from '../../assets/messages/message'
 import colors from '../styles/ColorsApp'
 
 export default function Loading({ isVisible }) {

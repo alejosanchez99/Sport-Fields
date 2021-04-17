@@ -10,15 +10,15 @@ export default function FieldOptions() {
     const generateFirstOptions = () => {
         return [
             {
-                uri: "https://images.vexels.com/media/users/3/146850/isolated/preview/b314541f49ce483dd4c47d0142a47f77-icono-de-pelota-de-f-uacute-tbol-cl-aacute-sico-by-vexels.png",
+                uri: require("../../assets/images/futbol.png"),
                 onPress: () => console.log("prueba")
             },
             {
-                uri: "https://emojitool.com/img/apple/ios-12.1/tennis-racquet-and-ball-2041.png",
+                uri: require("../../assets/images/tenis.png"),
                 onPress: () => console.log("prueba")
             },
             {
-                uri: "https://images.vexels.com/media/users/3/156544/isolated/preview/82434b96bf5caa8eec0bcd1bcdd219b8-icono-de-pelota-de-baloncesto-by-vexels.png",
+                uri: require("../../assets/images/baloncesto.png"),
                 onPress: () => console.log("prueba")
             }
         ]
@@ -27,11 +27,11 @@ export default function FieldOptions() {
     const generateSecondOptions = () => {
         return [
             {
-                uri: "https://creazilla-store.fra1.digitaloceanspaces.com/emojis/49350/american-football-emoji-clipart-md.png",
+                uri: require("../../assets/images/futbol-americano.png"),
                 onPress: () => console.log("prueba")
             },
             {
-                uri: "https://assets.stickpng.com/images/580b585b2edbce24c47b2afd.png",
+                uri: require("../../assets/images/golf.png"),
                 onPress: () => console.log("prueba")
             }
         ]
@@ -52,9 +52,7 @@ export default function FieldOptions() {
                             <TouchableOpacity onPress={menu.onPress}>
                                 <Image
                                     style={styles.image}
-                                    source={{
-                                        uri: menu.uri,
-                                    }}
+                                    source={menu.uri}
                                     onPress={menu.onPress}
                                 />
                             </TouchableOpacity>
@@ -72,9 +70,7 @@ export default function FieldOptions() {
                             <TouchableOpacity onPress={menu.onPress}>
                                 <Image
                                     style={styles.image}
-                                    source={{
-                                        uri: menu.uri,
-                                    }}
+                                    source={menu.uri}
                                     onPress={menu.onPress}
                                 />
                             </TouchableOpacity>

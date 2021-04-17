@@ -11,7 +11,8 @@ export default function SearchField() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        console.log(user)
+        const userLogged = getCurrentUser()
+        userLogged && (setPhotoUrl(userLogged.photoURL))
     }, [])
 
 

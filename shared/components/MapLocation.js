@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 
-import { getCurrentLocation } from '../utils/location'
-
-export default function MapLocaltion({ newRegion, setNewRegion, setShowIcons }) {
-
-    useEffect(() => {
-        setShowIcons(true)
-    }, [newRegion])
+export default function MapLocation({ newRegion, setNewRegion }) {
 
     return (
         <View>

@@ -7,11 +7,11 @@ import { message } from '../../../assets/messages/message';
 import { getCurrentLocation } from '../../../shared/utils/location'
 import { stylesButtonContainer, stylesButton } from "../../../shared/styles/StylesButton"
 import { getToastMessage, defaultValueToastView } from "../../../shared/utils/toastMessage"
-import MapLocaltion from '../../../shared/components/MapLocation'
+import MapLocation from '../../../shared/components/MapLocation'
 
 export default function CurrentLocation({ navigation }) {
     const [newRegion, setNewRegion] = useState(null)
-    const [showIcons, setShowIcons] = useState(false)
+    const [currentLocation, setCurrentLocation] = useState(null)
 
     useEffect(() => {
         (async () => {
@@ -24,7 +24,6 @@ export default function CurrentLocation({ navigation }) {
     }, [])
 
     const confirmLocation = () => {
-        console.log(newRegion); 
         navigation.navigate("add-field", {
             locationField: newRegion
         })
@@ -35,43 +34,45 @@ export default function CurrentLocation({ navigation }) {
     }
 
     return (
-        <View>
-            <MapLocaltion
+        <View style={styles.containerPrincipal}>
+            <MapLocation
                 newRegion={newRegion}
                 setNewRegion={setNewRegion}
-                setShowIcons={setShowIcons}
             />
-            {showIcons &&
-                (
-                    <View style={styles.containerView}>
-                        <TouchableOpacity style={styles.container} onPress={getLocation}>
-                            <Icon
-                                type="material-community"
-                                name="plus"
-                                color={colors.primary}
-                                reverse
-                            />
-                            <Text style={styles.text}>
-                                Ubicación Actual
-                            </Text>
-                        </TouchableOpacity>
-                        <Button
-                            containerStyle={styles.buttonContainer}
-                            buttonStyle={styles.button}
-                            title={message.generic.saveButton}
-                            onPress={confirmLocation}
-
+            {
+                <View style={styles.containerView}>
+                    <TouchableOpacity style={styles.container} onPress={getLocation}>
+                        <Icon
+                            type="material-community"
+                            name="plus"
+                            color={colors.primary}
+                            reverse
                         />
-                    </View>
-                )
+                        <Text style={styles.text}>
+                            Ubicación Actual
+                        </Text>
+                    </TouchableOpacity>
+                    <Button
+                        containerStyle={styles.buttonContainer}
+                        buttonStyle={styles.button}
+                        title={message.generic.saveButton}
+                        onPress={confirmLocation}
+                    />
+                </View>
             }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    containerPrincipal: {
+        flex: 1
+    },
     containerView: {
-        marginTop: -60
+        marginTop: -60,
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 36
     },
     container: {
         alignItems: "center",
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         ...stylesButton,
     },
     buttonContainer: {
-        marginTop: 40,
+        marginTop: 20,
         ...stylesButtonContainer,
     }
 })
