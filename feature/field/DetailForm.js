@@ -6,12 +6,11 @@ import {
   stylesButton,
   stylesButtonContainerAlert,
   stylesButtonSecundary,
-  stylesButtonContainer,
 } from "../../shared/styles/StylesButton";
 import { Button } from "react-native-elements";
 import { message } from "../../assets/messages/message";
 import ModalComponents from "../../shared/components/ModalComponents";
-import LocaleConfig, { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import  { Calendar} from "react-native-calendars";
 import { stylesCard } from "../../shared/styles/StylesCard";
 import moment from "moment";
 
@@ -203,7 +202,7 @@ export default function DetailForm() {
         <Button
           containerStyle={styles.buttonContainer}
           buttonStyle={styles.button}
-          title={message.reservation.titleButton}
+          title={message.reservation.reservationButton}
         />
       </View>
     </View>

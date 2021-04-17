@@ -2,8 +2,9 @@ export const message = {
     nameApp: "SportFields",
     reservation: {
         title: "Reservación",
-        titleButton: "Reservar",
-        coments: "Comentarios"
+        reservationButton: "Reservar",
+        coments: "Comentarios",
+        buttonTitle: "Ver más"
     },
     home: {
         title: "Inicio",
@@ -76,10 +77,7 @@ export const message = {
             errorPasswordDescription: "Se presentaron problemas al momento de cambiar la contraseña por favor intenta en unos minutos."
         }
 
-    },
-    reservation: {
-        buttonTitle: "Ver más"
-    },
+    }, 
     generic: {
         cancel: "Cancelar",
         saveButton: "Guardar",
