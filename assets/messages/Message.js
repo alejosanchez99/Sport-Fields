@@ -77,6 +77,9 @@ export const message = {
         }
 
     },
+    reservation: {
+        buttonTitle: "Ver más"
+    },
     generic: {
         cancel: "Cancelar",
         saveButton: "Guardar",

@@ -130,11 +130,11 @@ export const addDocumentWithoutId = async (collection, data) => {
     return result
 }
 
-export const getCollection = async (collection) => {
+export const getCollection = async (collectionName) => {
     const result = { statusResponse: false, data: null, error: null }
 
     try {
-        const data = await db.collection(collection).get()
+        const data = await db.collection(collectionName).get()
         const arrayData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 
         result.data = arrayData
