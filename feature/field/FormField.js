@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { Card, Input, Button, Icon, Text } from "react-native-elements"
-import { isEmpty } from "lodash"
+import { isEmpty, isNull, isUndefined } from "lodash"
 import Toast from "react-native-easy-toast"
 import RNPickerSelect from 'react-native-picker-select'
 
 import { stylesCard } from "../../shared/styles/StylesCard"
 import { message } from "../../assets/messages/message"
 import { stylesButtonContainer, stylesButton } from "../../shared/styles/StylesButton"
-import { addDocumentWithoutId } from "../../core/firebase/actions"
+import { addDocumentWithoutId, uploadImage } from "../../core/firebase/actions"
 import { collectionsFirebase } from "../../core/firebase/collectionsFirebase"
 import { getToastMessage, defaultValueToastView } from "../../shared/utils/toastMessage"
 import { validateEmail } from "../../shared/utils/helpers"
@@ -19,6 +19,7 @@ import UploadImages from "./UploadImages"
 
 export default function FormField({ route, navigation }) {
     const { locationField } = route.params;
+    const { availablesDays } = route.params;
     const [formData, setFormData] = useState(defaultFormValues())
     const [enableButton, setEnableButton] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -32,11 +33,12 @@ export default function FormField({ route, navigation }) {
     const onChange = (e, type) => {
         setFormData({ ...formData, [type]: e.nativeEvent.text })
         setEnableButton(validateData())
-    };
+    }
+
     const onValueChange = (value, type) => {
         setFormData({ ...formData, [type]: value })
         setEnableButton(validateData())
-    };
+    }
 
     const validateData = () => {
         let validateSuccessData = true;
@@ -61,9 +63,9 @@ export default function FormField({ route, navigation }) {
         }
 
         return validateSuccessData;
-    };
+    }
 
-    const validateCorrectEmail = () => {
+    const validateForm = () => {
         let correctEmail = true;
         if (!validateEmail(formData.email)) {
             setTitleError(message.login.errorEmail.title);
@@ -74,29 +76,61 @@ export default function FormField({ route, navigation }) {
         }
 
         return correctEmail
-    };
+    }
 
-    const addUserAdmin = async () => {
-        if (!validateCorrectEmail()) {
+    const addField = async () => {
+        if (!validateForm()) {
             return;
         }
 
         setLoading(true)
+        const responseUploadImages = await uploadImages()
 
-        const responseAddUserAdmin = await addDocumentWithoutId(collectionsFirebase.userAdmin, formData)
+        const field = {
+            name: formData.name,
+            address: formData.address,
+            email: formData.email,
+            priceHour: formData.priceHour,
+            callingCode: formData.callingCode,
+            phone: formData.phone,
+            description: formData.description,
+            typeField: formData.typeField,
+            location: locationField,
+            availablesDays: availablesDays,
+            images: responseUploadImages,
+            rating: 0,
+            ratingTotal: 0,
+            quantityVoting: 0,
+            createAt: new Date()
+        }
 
         setLoading(false)
+        const responseAddField = await addDocumentWithoutId(collectionsFirebase.fields, field)
+        setLoading(false)
 
-        let toastMessage = ""
+        if (!responseAddDocument.statusResponse) {
+            toastRef.current.show("Error al grabar el restaurante, por favor intenta más tarde.", 3000)
+            return
+        }
 
-        responseAddUserAdmin.statusResponse
-            ? toastMessage = getToastMessage(true, message.generic.messageCreate)
-            : toastMessage = getToastMessage(false)
-
-        toastRef.current.show(toastMessage, defaultValueToastView);
         setFormData(defaultFormValues())
-    };
+        navigation.navigate("account-options")
+    }
 
+    const uploadImages = async () => {
+        const imagesUrl = []
+
+        await Promise.all(
+            map(imagesSelected, async (image) => {
+                const response = await uploadImage(image, collectionsFirebase.fields, uuid())
+                if (response.statusResponse) {
+                    imagesUrl.push(response.url)
+                }
+            })
+        )
+
+        return imagesUrl
+    }
 
     return (
         <View>
@@ -169,7 +203,15 @@ export default function FormField({ route, navigation }) {
                 />
                 <TouchableOpacity
                     style={styles.containerSchedule}
-                    onPress={() => navigation.navigate("add-field-schedule")}
+                    onPress={() => (isUndefined(availablesDays) || isNull(availablesDays)) ?
+                        navigation.navigate("add-field-schedule", {
+                            availablesDays: []
+                        })
+                        :
+                        navigation.navigate("add-field-schedule", {
+                            availablesDays: availablesDays
+                        })
+                    }
                 >
                     <Icon
                         type="material-community"
@@ -213,13 +255,14 @@ export default function FormField({ route, navigation }) {
 const defaultFormValues = () => {
     return {
         name: "",
-        description: "",
-        email: "",
-        phone: "",
         address: "",
+        email: "",
         priceHour: "",
         country: "CO",
-        callingCode: "57"
+        callingCode: "57",
+        phone: "",
+        description: "",
+        typeField: ""
     }
 }
 
@@ -261,7 +304,7 @@ const styles = StyleSheet.create({
     textSchedule: {
         marginLeft: 5
     }
-});
+})
 
 const pickerStyles = StyleSheet.create({
     inputIOS: {
@@ -288,4 +331,4 @@ const pickerStyles = StyleSheet.create({
         color: 'black',
         paddingRight: 30,
     }
-});
+})

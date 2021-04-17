@@ -1,60 +1,70 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
-import { Icon, Avatar, Card } from 'react-native-elements'
-import { map } from "lodash"
+import { StyleSheet, View, Text } from 'react-native'
+import { Icon, Card, Button } from 'react-native-elements'
+import { map, size, isNull } from "lodash"
 
-import colors from '../../../shared/styles/ColorsApp'
 import { stylesCard } from '../../../shared/styles/StylesCard'
 import ChooseScheduleTime from "../../../feature/field/ChooseScheduleTime"
+import colors from '../../../shared/styles/ColorsApp'
+import { message } from '../../../assets/messages/message'
+import { stylesButtonContainer, stylesButton } from "../../../shared/styles/StylesButton"
 
-export default function AddFieldSchedule() {
-    const [daysSelected, setDaysSelected] = useState([])
-    const [daysOfWeek, setDaysOfWeek] = useState(getDateOfWeek())
+export default function AddFieldSchedule({ route, navigation }) {
+    const { availablesDays } = route.params;
     const [showModalChooseScheduleTime, setShowModalChooseScheduleTime] = useState(false)
-    const [informationFieldSchedule, setInformationFieldSchedule] = useState({})
-
-    const addDaySelected = (dayOfWeek, index) => {
-        changePropertyIsSelected(index)
-        setDaysSelected(daysSelected => [...daysSelected, dayOfWeek])
-    }
-
-    const changePropertyIsSelected = (indexDay) => {
-        const daysOfWeekSelected = map(daysOfWeek, (dayOfWeek, index) => {
-            if (indexDay == index) {
-                dayOfWeek.isSelected = !dayOfWeek.isSelected
-            }
-
-            return { ...dayOfWeek }
-        })
-
-        setDaysOfWeek(daysOfWeekSelected)
-    }
+    const [informationSchedulesTime, setInformationSchedulesTime] = useState([...availablesDays])
 
     return (
         <View style={styles.viewBody}>
-            <Card containerStyle={styles.card}>
-                <ScrollView
-                    style={styles.containerCard}
-                    horizontal
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                >
-                    {
-                        map(daysOfWeek, (dayOfWeek, index) => (
-                            <Avatar
-                                onPress={() => addDaySelected(dayOfWeek, index)}
-                                size="medium"
-                                key={index}
-                                rounded
-                                title={dayOfWeek.value}
-                                titleStyle={{ color: "#FFFFFF" }}
-                                containerStyle={{ backgroundColor: dayOfWeek.isSelected ? colors.three : colors.primary, marginLeft: 6 }}
+            {
+                map(informationSchedulesTime, (informationScheduleTime, index) => (
+                    <Card
+                        containerStyle={styles.card}
+                        key={index}
+                    >
+                        <View style={{ alignItems: "center", flexDirection: "row" }}>
+                            <Icon
+                                type="material-community"
+                                name="checkbox-blank-circle"
+                                color="#A6AEAF"
                             />
-                        ))
-                    }
-                </ScrollView>
-            </Card>
-            
+                            <View style={{ flexDirection: "column" }}>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <Text style={{ marginLeft: 4, margin: 3, marginBottom: 5, fontWeight: "bold", fontSize: 20, flexWrap: 'wrap' }}>
+                                        {
+                                            map(informationScheduleTime.daysSelected, (daysSelected) => {
+                                                return daysSelected.value
+                                            }).join(", ")
+                                        }
+                                    </Text>
+                                    <Text style={{ color: colors.primary, marginLeft: 2 }}>
+                                        {informationScheduleTime.createDate}
+                                    </Text>
+                                </View>
+
+
+                                <Text style={{ marginLeft: 4, color: "#A2A1A1", fontSize: 18 }}>
+                                    {"fecha entrada:" + " " + informationScheduleTime.entryTime}
+                                </Text>
+                                <Text style={{ marginLeft: 4, color: "#A2A1A1", marginTop: 8, fontSize: 18 }}>
+                                    {"fecha salida:" + " " + informationScheduleTime.exitTime}
+                                </Text>
+                            </View>
+                        </View>
+                    </Card>
+                ))
+            }
+            {size(informationSchedulesTime) > 0 && (
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    buttonStyle={styles.button}
+                    title={message.generic.saveButton}
+                    onPress={() => navigation.navigate("add-field", {
+                        availablesDays: informationSchedulesTime
+                    })}
+                />
+            )}
+
             <Icon
                 type="material-community"
                 name="plus"
@@ -66,55 +76,24 @@ export default function AddFieldSchedule() {
             <ChooseScheduleTime
                 setShowModal={setShowModalChooseScheduleTime}
                 showModal={showModalChooseScheduleTime}
-                setInformationFieldSchedule={setInformationFieldSchedule}
+                setInformationSchedulesTime={setInformationSchedulesTime}
+                informationSchedulesTime={informationSchedulesTime}
             />
         </View>
     )
 }
 
-const getDateOfWeek = () => {
-    return [
-        {
-            name: "lunes",
-            value: "L",
-            isSelected: false
-        },
-        {
-            name: "martes",
-            value: "M",
-            isSelected: false
-        },
-        {
-            name: "miercoles",
-            value: "M",
-            isSelected: false
-        },
-        {
-            name: "jueves",
-            value: "J",
-            isSelected: false
-        },
-        {
-            name: "viernes",
-            value: "V",
-            isSelected: false
-        },
-        {
-            name: "sabado",
-            value: "S",
-            isSelected: false
-        },
-        {
-            name: "domingo",
-            value: "D",
-            isSelected: false
-        }
-    ]
-}
-
 const styles = StyleSheet.create({
     viewBody: {
         flex: 1
+    },
+    button: {
+        ...stylesButton,
+    },
+    buttonContainer: {
+        marginTop: 50,
+        ...stylesButtonContainer,
+        marginBottom: 30
     },
     btnContainer: {
         position: "absolute",
@@ -127,11 +106,8 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: "row",
         margin: 20,
+        marginTop: 30,
         alignItems: "center",
         ...stylesCard
     },
-    containerCard: {
-        flexDirection: "row",
-        margin: 1
-    }
 })

@@ -1,29 +1,56 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Button, Icon } from 'react-native-elements'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { Button, Icon, Card, Avatar } from 'react-native-elements'
 import ModalComponents from "../../shared/components/ModalComponents"
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { map } from "lodash"
 
 import { stylesCard } from '../../shared/styles/StylesCard'
 import { message } from '../../assets/messages/message'
 import { stylesButtonContainer, stylesButton } from "../../shared/styles/StylesButton"
+import colors from '../../shared/styles/ColorsApp'
 
-export default function ChooseScheduleTime({ showModal, setShowModal, setInformationFieldSchedule }) {
+export default function ChooseScheduleTime({ showModal, setShowModal, informationSchedulesTime, setInformationSchedulesTime }) {
+    const [dateNow] = useState(new Date())
     const [dateEntryTime, setDateEntryTime] = useState(new Date())
     const [dateExitTime, setDateExitTime] = useState(new Date())
     const [mode] = useState('time')
     const [entryTime, setEntryTime] = useState(null)
     const [exitTime, setExitTime] = useState(null)
+    const [daysSelected, setDaysSelected] = useState([])
+    const [daysOfWeek, setDaysOfWeek] = useState(getDefaultDateOfWeek())
+
+    const addDaySelected = (dayOfWeek, index) => {
+        changePropertyIsSelected(index)
+        setDaysSelected(daysSelected => [...daysSelected, dayOfWeek])
+    }
+
+    const changePropertyIsSelected = (indexDay) => {
+        const daysOfWeekSelected = map(daysOfWeek, (dayOfWeek, index) => {
+            if (indexDay == index) {
+                dayOfWeek.isSelected = !dayOfWeek.isSelected
+            }
+
+            return { ...dayOfWeek }
+        })
+
+        setDaysOfWeek(daysOfWeekSelected)
+    }
 
     const addTimeSchedule = () => {
-        const timeSchedule = {
-            createDate: new Date(),
+        const scheduleTime = {
+            createDate: dateNow.getDate() + "/" + dateNow.getMonth() + "/" + dateNow.getFullYear(),
             entryTime: entryTime,
-            exitTime: exitTime
+            exitTime: exitTime,
+            daysSelected: [
+                ...daysSelected
+            ]
         }
 
-        setInformationFieldSchedule(timeSchedule)
+        setInformationSchedulesTime([...informationSchedulesTime, scheduleTime])
         setShowModal(false)
+        setDaysOfWeek(getDefaultDateOfWeek())
+        setDaysSelected([])
     }
 
     const onChange = (event, selectedDate, selectDateTimePicker) => {
@@ -59,6 +86,30 @@ export default function ChooseScheduleTime({ showModal, setShowModal, setInforma
                     />
                 </View>
                 <View style={styles.separator}></View>
+                <Card containerStyle={styles.card}>
+                    <ScrollView
+                        style={styles.containerCard}
+                        horizontal
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {
+                            map(daysOfWeek, (dayOfWeek, index) => (
+                                <Avatar
+                                    onPress={() => addDaySelected(dayOfWeek, index)}
+                                    size="medium"
+                                    key={index}
+                                    rounded
+                                    title={dayOfWeek.value}
+                                    titleStyle={{ color: "#FFFFFF" }}
+                                    containerStyle={{ backgroundColor: dayOfWeek.isSelected ? colors.three : colors.primary, marginLeft: 6 }}
+                                />
+                            ))
+                        }
+                    </ScrollView>
+                </Card>
+                <View style={styles.separator}></View>
+
                 <View>
                     <View style={styles.viewDates}>
                         <Text style={styles.textDates}>
@@ -77,7 +128,7 @@ export default function ChooseScheduleTime({ showModal, setShowModal, setInforma
                 <View style={styles.separator}></View>
                 <View style={styles.viewDates}>
                     <Text style={styles.textDates}>
-                        Hora Salida
+                        Hora salida
                     </Text>
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -102,12 +153,47 @@ export default function ChooseScheduleTime({ showModal, setShowModal, setInforma
     )
 }
 
+const getDefaultDateOfWeek = () => {
+    return [
+        {
+            name: "lunes",
+            value: "L",
+            isSelected: false
+        },
+        {
+            name: "martes",
+            value: "M",
+            isSelected: false
+        },
+        {
+            name: "miercoles",
+            value: "M",
+            isSelected: false
+        },
+        {
+            name: "jueves",
+            value: "J",
+            isSelected: false
+        },
+        {
+            name: "viernes",
+            value: "V",
+            isSelected: false
+        },
+        {
+            name: "sabado",
+            value: "S",
+            isSelected: false
+        },
+        {
+            name: "domingo",
+            value: "D",
+            isSelected: false
+        }
+    ]
+}
+
 const styles = StyleSheet.create({
-    card: {
-        height: "43%",
-        width: "90%",
-        ...stylesCard
-    },
     viewContainer: {
         flex: 1
     },
@@ -143,4 +229,15 @@ const styles = StyleSheet.create({
     buttonContainer: {
         ...stylesButtonContainer,
     },
+    card: {
+        flexDirection: "row",
+        margin: 20,
+        marginTop: -5,
+        alignItems: "center",
+        ...stylesCard
+    },
+    containerCard: {
+        flexDirection: "row",
+        margin: 1
+    }
 })
