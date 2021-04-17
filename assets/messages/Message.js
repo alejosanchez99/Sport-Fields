@@ -1,7 +1,9 @@
 export const message = {
     nameApp: "SportFields",
     reservation: {
-        title: "Reservación"
+        title: "Reservación",
+        titleButton: "Reservar",
+        coments: "Comentarios"
     },
     home: {
         title: "Inicio",
@@ -76,6 +78,7 @@ export const message = {
 
     },
     generic: {
+        cancel: "Cancelar",
         saveButton: "Guardar",
         titleError: "Lo sentimos",
         messageLoading: "Por favor espere",

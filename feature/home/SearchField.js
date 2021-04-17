@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useLayoutEffect} from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
 
@@ -8,7 +8,6 @@ import { getCurrentUser } from "../../core/firebase/actions"
 
 export default function SearchField() {
     const [photoUrl, setPhotoUrl] = useState(null)
-    const [user, setUser] = useState(null)
 
     useEffect(() => {
         const userLogged = getCurrentUser()

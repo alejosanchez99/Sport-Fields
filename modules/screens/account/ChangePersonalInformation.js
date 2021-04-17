@@ -42,7 +42,6 @@ export default function ChangePersonalInformation({route, navigate} ) {
   const toastRef = useRef();
   const navigation = useNavigation();
 
-   console.log(user)
 
   const onChange = (e, type) => {
     formData[type] = e.nativeEvent.text;
@@ -79,7 +78,6 @@ export default function ChangePersonalInformation({route, navigate} ) {
     const result = await updateEmail(formData.email);
 
     if (!result.statusResponse) {
-      console.log(result.error);
       setTitleError(message.login.errorService.title);
       setErrorText(message.generic.messageError);
       setShowModal(true);

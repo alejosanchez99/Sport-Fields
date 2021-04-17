@@ -13,18 +13,12 @@ export default function Splash() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user)
       user !== null ? setLogin(true) : setLogin(false)
-      componentDidMount()
+      setTimeout(() => {
+        setTime(true);
+      }, 1000);
   })
-
   }, []);
-
-  const componentDidMount = () => {
-    this.timeoutHandle = setTimeout(() => {
-      setTime(true);
-    }, 1000);
-  };
 
   return time ? (
     <Account login={login}/>
