@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import { Icon, Card, Avatar, Button, Rating } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import colors from "../../shared/styles/ColorsApp";
 import moment from "moment";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import {
   stylesButton,
@@ -21,9 +21,14 @@ import { message } from "../../assets/messages/message";
 import ModalComponents from "../../shared/components/ModalComponents";
 import { Calendar } from "react-native-calendars";
 import { stylesCard } from "../../shared/styles/StylesCard";
-import { getCollection } from "../../core/firebase/actions";
-import { collectionsFirebase } from "../../core/firebase/collectionsFirebase";
+import {
+  deleteFavorite,
+  addDocumentWithoutId,
+  getCurrentUser,
+  getIsFavorite,
+} from "../../core/firebase/actions";
 import { isNull, map } from "lodash";
+import Loading from "../../shared/components/Loading";
 
 export default function DetailForm({ field }) {
   const {
@@ -36,6 +41,7 @@ export default function DetailForm({ field }) {
     typeField,
     availablesDays,
     priceHour,
+    id,
   } = field;
   const [
     showModalChooseScheduleTime,
@@ -43,20 +49,48 @@ export default function DetailForm({ field }) {
   ] = useState(false);
 
   const { daysSelected, entryTime, exitTime } = availablesDays[0];
-
+  const [user, setUser] = useState(false)
   const [dateTime, setDateTime] = useState(new Date());
-  const [user, setUser] = useState("jl");
   const [reservation, setReservation] = useState(null);
   const [favorites, setFavorites] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const addFavorites = () => {
+  useFocusEffect(
+    useCallback(() => {
+      const userLogged = getCurrentUser()
+      userLogged ? setUser(true) : setUser(false)
+      if (user) {
+        async function getData() {
+          setLoading(true);
+          const response = await getIsFavorite(id);
+          response.statusResponse && setFavorites(response.isFavorite);
+          setLoading(false);
+        }
+        getData();
+      }
+    }, [user])
+  );
+
+  const addFavoritesOrDeleteFavorites = async () => {
     const add = !favorites;
     if (add) {
-      console.log("agregado");
+      addFavorites();
     } else {
-      console.log("eliminado");
+      deleteFavorites();
     }
     setFavorites(add);
+  };
+
+  const addFavorites = async () => {
+    await addDocumentWithoutId("favorites", {
+      idUser: getCurrentUser().uid,
+      idField: id,
+    });
+  };
+
+  const deleteFavorites = async () => {
+    await deleteFavorite(id);
+   
   };
 
   const navigation = useNavigation();
@@ -73,27 +107,31 @@ export default function DetailForm({ field }) {
           }
         />
       </View>
-      <View
-        style={{
-          position: "absolute",
-          height: 60,
-          width: 60,
-          backgroundColor: favorites ? colors.secundary : colors.yellow,
-          top: -30,
-          right: 90,
-          borderRadius: 30,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Icon
-          type="material-community"
-          name="star"
-          size={30}
-          color={colors.four}
-          onPress={() => addFavorites()}
-        />
-      </View>
+      {
+          user && ( <View
+            style={{
+              position: "absolute",
+              height: 60,
+              width: 60,
+              backgroundColor: favorites ? colors.yellow : colors.secundary,
+              top: -30,
+              right: 90,
+              borderRadius: 30,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            
+            <Icon
+              type="material-community"
+              name="star"
+              size={30}
+              color={colors.four}
+              onPress={() => addFavoritesOrDeleteFavorites()}
+            />
+          </View>)
+        }
+     
       <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
         <Text
@@ -209,7 +247,6 @@ export default function DetailForm({ field }) {
       <Text style={styles.titleDates}>Horario de atención</Text>
       <Card containerStyle={styles.cardDates}>
         <ScrollView
-          style={styles.containerCard}
           horizontal
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
@@ -237,6 +274,7 @@ export default function DetailForm({ field }) {
             fontSize: 15,
             lineHeight: 20,
             color: colors.primary,
+            fontWeight: "bold"
           }}
         >
           {entryTime + "-" + exitTime}
@@ -282,7 +320,7 @@ export default function DetailForm({ field }) {
         </View>
       </View>
 
-      {!isNull(user) ? (
+      {user ? (
         <View style={styles.viewContainer}>
           <Button
             containerStyle={styles.buttonContainer}
@@ -308,6 +346,7 @@ export default function DetailForm({ field }) {
           />
         </View>
       )}
+      <Loading isVisible={loading} />
     </View>
   );
 }
@@ -398,45 +437,7 @@ function Schedule({
   );
 }
 
-const getDefaultDateOfWeek = () => {
-  return [
-    {
-      name: "lunes",
-      value: "L",
-      isSelected: false,
-    },
-    {
-      name: "martes",
-      value: "M",
-      isSelected: false,
-    },
-    {
-      name: "miercoles",
-      value: "M",
-      isSelected: false,
-    },
-    {
-      name: "jueves",
-      value: "J",
-      isSelected: false,
-    },
-    {
-      name: "viernes",
-      value: "V",
-      isSelected: false,
-    },
-    {
-      name: "sabado",
-      value: "S",
-      isSelected: false,
-    },
-    {
-      name: "domingo",
-      value: "D",
-      isSelected: false,
-    },
-  ];
-};
+
 
 const styles = StyleSheet.create({
   textButton: {
@@ -511,9 +512,9 @@ const styles = StyleSheet.create({
     ...stylesCard,
   },
   cardDates: {
-    width: "90%",
+    height: "13%",
+    alignSelf:'baseline',
     marginStart: 10,
-    alignSelf: "center",
     ...stylesCard,
   },
   textSchedule: {
