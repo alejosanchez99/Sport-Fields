@@ -69,7 +69,7 @@ export default function SearchFields({ navigation }) {
             <View style={styles.container}>
                 <View style={styles.containerItems}>
                     <View style={styles.containerIconBack}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("home")}>
                             <Icon name="chevron-left" size={50} color="#000000" />
                         </TouchableOpacity>
                     </View>
