@@ -9,7 +9,7 @@ import { getCurrentUser } from "../../../core/firebase/actions";
 export default function DetailField({route}) {
   const [user, setUser] = useState(false)
   const{fields} = route.params
-  const {images} = fields.item
+  const {images} = fields
 
   useEffect(() => {
     const userLogged = getCurrentUser()

@@ -9,12 +9,14 @@ import { map, isNull,isUndefined } from "lodash"
 export default function MapFullScreen({route}) {
     const [showLoadingMap, setShowLoadingMap] = useState(true)
     const data = route.params;
+
     
 
     return (
         <View style={styles.container}>
             <Map
                 fieldsSearch={ data ? data.fieldData : [] }
+                initialLocation={data ? data.fieldData[0].location : null}
                 isHome={false}
                 setShowLoadingMap={setShowLoadingMap}
             />

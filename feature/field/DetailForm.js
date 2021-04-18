@@ -36,7 +36,7 @@ export default function DetailForm({ field }) {
     typeField,
     availablesDays,
     priceHour,
-  } = field.item;
+  } = field;
   const [
     showModalChooseScheduleTime,
     setShowModalChooseScheduleTime,
@@ -69,7 +69,7 @@ export default function DetailForm({ field }) {
           name="map-marker-outline"
           color={colors.four}
           onPress={() =>
-            navigation.navigate("map-reservation", { fieldData: [field.item] })
+            navigation.navigate("map-reservation", { fieldData: [field] })
           }
         />
       </View>

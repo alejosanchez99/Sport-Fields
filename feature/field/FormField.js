@@ -121,12 +121,14 @@ export default function FormField({ route, navigation,toastRef }) {
         }
 
         setFormData(defaultFormValues())
-        const toastMessage = getToastMessage(true, message.generic.messageCreate);
-        toastRef.current.show(toastMessage, 2000)
+        const toastMessage = getToastMessage(true, message.generic.messageCreate)
+        toastRef.current.show(toastMessage, defaultValueToastView)
 
         this.timeoutHandle = setTimeout(() => {
             navigation.dispatch(StackActions.popToTop());
           }, 2000);
+             
+       
 
     }
 

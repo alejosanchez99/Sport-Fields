@@ -66,7 +66,7 @@ export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren
                                     image={require("../../assets/icons/marker.png")}
                                 >
                                     <Callout
-                                     onPress={() => navigation.navigate("detail",{fields: field.item})}
+                                     onPress={() => navigation.navigate("detail",{fields: field})}
                                      tooltip>
                                         <View>
                                             <View style={styles.bubble}>

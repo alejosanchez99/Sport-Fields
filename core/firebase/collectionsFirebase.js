@@ -1,4 +1,5 @@
 export const collectionsFirebase = {
     fields: "fields",
-    userAdmin: "userAdmin"
+    userAdmin: "userAdmin",
+    favorites: "favorites"
 }
