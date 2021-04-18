@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { Icon, Card, Button } from 'react-native-elements'
 import { map, size } from "lodash"
+import moment from 'moment'
+import 'moment/locale/es'
 
 import { stylesCard } from '../../../shared/styles/StylesCard'
 import ChooseScheduleTime from "../../../feature/field/ChooseScheduleTime"
@@ -15,7 +17,9 @@ export default function AddFieldSchedule({ route, navigation }) {
     const [informationSchedulesTime, setInformationSchedulesTime] = useState([...availablesDays])
 
     return (
-        <View style={styles.viewBody}>
+        <View
+            style={styles.viewBody}
+        >
             {
                 map(informationSchedulesTime, (informationScheduleTime, index) => (
                     <Card
@@ -38,7 +42,7 @@ export default function AddFieldSchedule({ route, navigation }) {
                                         }
                                     </Text>
                                     <Text style={{ color: colors.primary, marginLeft: 2 }}>
-                                        {informationScheduleTime.createDate}
+                                        {moment(informationScheduleTime.createDate).locale('es').format('MMMM Do YYYY, h:mm:ss')}
                                     </Text>
                                 </View>
 

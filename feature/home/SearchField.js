@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
 import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
 import { getCurrentUser } from "../../core/firebase/actions"
+import { useFocusEffect } from '@react-navigation/native'
 
 
 export default function SearchField() {
     const [photoUrl, setPhotoUrl] = useState(null)
     const navigation = useNavigation()
-
-    useEffect(() => {
-        const userLogged = getCurrentUser()
-        userLogged && (setPhotoUrl(userLogged.photoURL))
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            async function getPhotoUrl() {
+                const userLogged = getCurrentUser()
+                userLogged ? (setPhotoUrl(userLogged.photoURL))
+                : setPhotoUrl(null)
+            }
+            getPhotoUrl()
+        }, [])
+    )
 
     return (
         <View>

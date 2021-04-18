@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback } from 'react'
 import { StyleSheet, View, FlatList, Text } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { Icon, Button } from 'react-native-elements'
 import { useFocusEffect } from '@react-navigation/native'
 import firebase from 'firebase/app'
 
@@ -9,6 +9,8 @@ import { getFavorites } from "../../../core/firebase/actions"
 import Fields from "../../../feature/field/Fields"
 import Loading from "../../../shared/components/Loading"
 import { size } from 'lodash'
+import { message } from '../../../assets/messages/message'
+import { stylesButton, stylesButtonContainerSecundary } from '../../../shared/styles/StylesButton'
 
 export default function Favorites({ navigation }) {
 
@@ -30,11 +32,32 @@ export default function Favorites({ navigation }) {
         }, [userLogged, reloadData])
     )
 
+    if (!userLogged) {
+        return <UserNoLogged navigation={navigation} />
+    }
+
     async function getData() {
         setLoading(true)
         const response = await getFavorites()
         setFields(response.favorites)
         setLoading(false)
+    }
+
+    function UserNoLogged({ navigation }) {
+        return (
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Icon type="material-community" name="alert-outline" size={150} />
+                <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
+                    Necesitas estar logueado para ver los favoritos
+                </Text>
+                <Button
+                    containerStyle={styles.buttonContainerLogin}
+                    buttonStyle={styles.buttonLogin}
+                    title={message.login.login.title}
+                    onPress={() => navigation.navigate("user-guest")}
+                />
+            </View>
+        )
     }
 
     return (
@@ -82,6 +105,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f4f4f4',
         flex: 1,
-    }
+    },
+    buttonLogin: {
+        ...stylesButton,
+    },
+    buttonContainerLogin: {
+        marginTop: 30,
+        ...stylesButtonContainerSecundary,
+    },
 }
 )

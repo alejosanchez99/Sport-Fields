@@ -9,20 +9,31 @@ import { stylesCard } from '../../shared/styles/StylesCard'
 import { message } from '../../assets/messages/message'
 import { stylesButtonContainer, stylesButton } from "../../shared/styles/StylesButton"
 import colors from '../../shared/styles/ColorsApp'
+import moment from 'moment'
+import 'moment/locale/es'
 
 export default function ChooseScheduleTime({ showModal, setShowModal, informationSchedulesTime, setInformationSchedulesTime }) {
-    const [dateNow] = useState(new Date())
     const [dateEntryTime, setDateEntryTime] = useState(new Date())
     const [dateExitTime, setDateExitTime] = useState(new Date())
-    const [mode] = useState('time')
-    const [entryTime, setEntryTime] = useState(null)
-    const [exitTime, setExitTime] = useState(null)
+    const [entryTime, setEntryTime] = useState(defaultValueTime())
+    const [exitTime, setExitTime] = useState(defaultValueTime())
     const [daysSelected, setDaysSelected] = useState([])
+    const [mode] = useState('time')
     const [daysOfWeek, setDaysOfWeek] = useState(getDefaultDateOfWeek())
 
     const addDaySelected = (dayOfWeek, index) => {
         changePropertyIsSelected(index)
-        setDaysSelected(daysSelected => [...daysSelected, dayOfWeek])
+        if (dayOfWeek.isSelected) {
+            setDaysSelected(daysSelected => [...daysSelected, dayOfWeek])
+
+        } else {
+            const daysOfWeekSelected = map(daysSelected, (day, index) => {
+
+                console.log(day)
+            })
+
+            setDaysSelected(daysOfWeekSelected)
+        }
     }
 
     const changePropertyIsSelected = (indexDay) => {
@@ -39,7 +50,7 @@ export default function ChooseScheduleTime({ showModal, setShowModal, informatio
 
     const addTimeSchedule = () => {
         const scheduleTime = {
-            createDate: dateNow.getDate() + "/" + dateNow.getMonth() + "/" + dateNow.getFullYear(),
+            createDate: new Date(),
             entryTime: entryTime,
             exitTime: exitTime,
             daysSelected: [
@@ -55,7 +66,7 @@ export default function ChooseScheduleTime({ showModal, setShowModal, informatio
 
     const onChange = (event, selectedDate, selectDateTimePicker) => {
         const currentDate = selectedDate || time
-        const time = currentDate.getHours() + ":" + currentDate.getMinutes()
+        const time = moment(currentDate).locale('es').format("LTS")
 
         if (selectDateTimePicker === "entryTime") {
             setDateEntryTime(currentDate)
@@ -151,6 +162,10 @@ export default function ChooseScheduleTime({ showModal, setShowModal, informatio
             </View>
         </ModalComponents>
     )
+}
+
+const defaultValueTime = () => {
+    return moment().format("LTS")
 }
 
 const getDefaultDateOfWeek = () => {
