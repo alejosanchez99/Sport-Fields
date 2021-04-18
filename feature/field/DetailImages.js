@@ -1,25 +1,28 @@
 import React from "react";
-import { Alert, StyleSheet, ScrollView, TouchableOpacity,Image, View , Dimensions } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import { size, map, filter, round } from "lodash";
 import { Icon, Avatar } from "react-native-elements";
 import { loadImageFromGallery } from "../../shared/utils/fileUtily";
 import { ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
 
 const widthScreen = Dimensions.get("window").width;
 
-export default function DetailImages({ imagesSelected, setImagesSelected }) {
-
-  const navigation = useNavigation()
-
+export default function DetailImages({ images }) {
   return (
     <ScrollView horizontal style={styles.viewImages}>
-      <ImageBackground
-        style={styles.headerImage}
-        source={require("../../assets/images/futbol.png")}
-      />
-      
+      {map(images, (imageField, index) => (
+        <ImageBackground
+          key={index}
+          source={{
+            uri: imageField
+          }}
+          style={styles.headerImage}
+        />
+      ))}
     </ScrollView>
   );
 }
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerImage: {
-    height: 200,  
+    height: 200,
     width: widthScreen,
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,

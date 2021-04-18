@@ -6,8 +6,10 @@ import DetailImages from "../../../feature/field/DetailImages";
 import DetailForm from "../../../feature/field/DetailForm";
 import { getCurrentUser } from "../../../core/firebase/actions";
 
-export default function DetailField() {
-  const [user, setUser] = useState(null)
+export default function DetailField({route}) {
+  const [user, setUser] = useState(false)
+  const{fields} = route.params
+  const {images} = fields
 
   useEffect(() => {
     const userLogged = getCurrentUser()
@@ -20,8 +22,8 @@ export default function DetailField() {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.containerScroll}
     >
-      <DetailImages />
-      <DetailForm/>
+      <DetailImages images={images} />
+      <DetailForm field={fields} />
      
     </ScrollView>
     </View> 

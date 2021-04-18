@@ -9,6 +9,10 @@ import Loading from "../../shared/components/Loading"
 export default function Fields({ field, navigation, showIconDelete = false, setReloadData = null, setLoading = null }) {
     const { name, images, priceHour, typeField, rating, id } = field.item
 
+    const goDetail = () => {
+        navigation.navigate("detail",{fields: field.item})
+    }
+
     const confirmRemoveFavorite = () => {
         Alert.alert(
             "Eliminar la cancha de favoritos",
@@ -37,7 +41,7 @@ export default function Fields({ field, navigation, showIconDelete = false, setR
     return (
         <View style={styles.containerCardField}>
             <TouchableWithoutFeedback
-                onPress={() => navigation.navigate("detail")}
+                onPress={() => goDetail()}
             >
                 <Card containerStyle={styles.card}>
                     <View style={{ flexDirection: "row" }}>

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity,ScrollView } from "react-native";
-import { Icon, Card,Avatar,Button } from "react-native-elements";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Icon, Card, Avatar, Button, Rating } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import colors from "../../shared/styles/ColorsApp";
 import moment from "moment";
@@ -19,26 +25,39 @@ import { getCollection } from "../../core/firebase/actions";
 import { collectionsFirebase } from "../../core/firebase/collectionsFirebase";
 import { isNull, map } from "lodash";
 
-export default function DetailForm() {
+export default function DetailForm({ field }) {
+  const {
+    name,
+    description,
+    email,
+    address,
+    phone,
+    rating,
+    typeField,
+    availablesDays,
+    priceHour,
+  } = field;
   const [
     showModalChooseScheduleTime,
     setShowModalChooseScheduleTime,
   ] = useState(false);
-  const [fields, setFields] = useState([]);
+
+  const { daysSelected, entryTime, exitTime } = availablesDays[0];
+
   const [dateTime, setDateTime] = useState(new Date());
   const [user, setUser] = useState("jl");
   const [reservation, setReservation] = useState(null);
-  const [daysOfWeek, setDaysOfWeek] = useState(getDefaultDateOfWeek())
+  const [favorites, setFavorites] = useState(false);
 
-  
-  useEffect(() => {
-    (async () => {
-      const responseField = await getCollection(collectionsFirebase.fields);
-      if (responseField.statusResponse) {
-        setFields(responseField.data);
-      }
-    })();
-  }, []);
+  const addFavorites = () => {
+    const add = !favorites;
+    if (add) {
+      console.log("agregado");
+    } else {
+      console.log("eliminado");
+    }
+    setFavorites(add);
+  };
 
   const navigation = useNavigation();
 
@@ -50,12 +69,33 @@ export default function DetailForm() {
           name="map-marker-outline"
           color={colors.four}
           onPress={() =>
-            navigation.navigate("map-reservation", { fieldData: fields })
+            navigation.navigate("map-reservation", { fieldData: [field] })
           }
         />
       </View>
+      <View
+        style={{
+          position: "absolute",
+          height: 60,
+          width: 60,
+          backgroundColor: favorites ? colors.secundary : colors.yellow,
+          top: -30,
+          right: 90,
+          borderRadius: 30,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Icon
+          type="material-community"
+          name="star"
+          size={30}
+          color={colors.four}
+          onPress={() => addFavorites()}
+        />
+      </View>
       <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Cancha</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
         <Text
           style={{
             fontSize: 12,
@@ -64,10 +104,7 @@ export default function DetailForm() {
             marginTop: 5,
           }}
         >
-          El Estadio Alberto J. Armando, popularmente conocido como La
-          Bombonera, es un estadio de fútbol perteneciente al Club Atlético Boca
-          Juniors, ubicado en el barrio de La Boca en la ciudad de Buenos Aires,
-          Argentina
+          {description}
         </Text>
         <View
           style={{
@@ -78,14 +115,16 @@ export default function DetailForm() {
         >
           <View style={{ flexDirection: "row" }}>
             <View style={{ flexDirection: "row" }}>
-              <Icon name="star" size={20} color={colors.primary} />
-              <Icon name="star" size={20} color={colors.primary} />
-              <Icon name="star" size={20} color={colors.primary} />
-              <Icon name="star" size={20} color={colors.primary} />
-              <Icon name="star" size={20} color={colors.gray} />
+              <Rating
+                readonly
+                startingValue={rating}
+                ratingCount={5}
+                value={2}
+                imageSize={20}
+              />
             </View>
-            <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 5 }}>
-              4.0
+            <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 10 }}>
+              {rating}
             </Text>
           </View>
         </View>
@@ -98,7 +137,7 @@ export default function DetailForm() {
               fontWeight: "bold",
             }}
           >
-            Futbol
+            {typeField}
           </Text>
         </View>
       </View>
@@ -121,7 +160,7 @@ export default function DetailForm() {
               marginLeft: 5,
             }}
           >
-            Calle 10 # 20-14
+            {address}
           </Text>
         </View>
       </View>
@@ -142,7 +181,7 @@ export default function DetailForm() {
             marginLeft: 5,
           }}
         >
-          3005812312
+          {phone}
         </Text>
       </View>
       <View
@@ -164,7 +203,7 @@ export default function DetailForm() {
             marginLeft: 5,
           }}
         >
-          prueba@hotmail.com
+          {email}
         </Text>
       </View>
       <Text style={styles.titleDates}>Horario de atención</Text>
@@ -175,7 +214,7 @@ export default function DetailForm() {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >
-          {map(daysOfWeek, (dayOfWeek, index) => (
+          {map(daysSelected, (dayOfWeek, index) => (
             <Avatar
               size="medium"
               key={index}
@@ -192,17 +231,17 @@ export default function DetailForm() {
           ))}
         </ScrollView>
       </Card>
-      <View style={{ marginTop: 10,marginStart:20 }}>
-          <Text
-            style={{
-              fontSize: 15,
-              lineHeight: 20,
-              color: colors.primary,
-            }}
-          >
-            10am - 9pm
-          </Text>
-        </View>
+      <View style={{ marginTop: 10, marginStart: 20 }}>
+        <Text
+          style={{
+            fontSize: 15,
+            lineHeight: 20,
+            color: colors.primary,
+          }}
+        >
+          {entryTime + "-" + exitTime}
+        </Text>
+      </View>
       <Schedule
         isVisible={showModalChooseScheduleTime}
         setVisible={setShowModalChooseScheduleTime}
@@ -238,7 +277,7 @@ export default function DetailForm() {
               marginLeft: 10,
             }}
           >
-            $120.000
+            ${priceHour}
           </Text>
         </View>
       </View>
@@ -345,7 +384,7 @@ function Schedule({
             titleStyle={styles.textButton}
             type="outline"
             title={message.generic.cancel}
-            onPress={() => setVisible(false) }
+            onPress={() => setVisible(false)}
           />
           <Button
             containerStyle={styles.buttonContainer}
@@ -441,6 +480,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  iconContainerFavorite: {
+    position: "absolute",
+    height: 60,
+    width: 60,
+    backgroundColor: colors.secundary,
+    top: -30,
+    right: 90,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   headerImage: {
     height: 400,
     borderBottomRightRadius: 40,
@@ -460,7 +510,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     ...stylesCard,
   },
-  cardDates:{
+  cardDates: {
     width: "90%",
     marginStart: 10,
     alignSelf: "center",

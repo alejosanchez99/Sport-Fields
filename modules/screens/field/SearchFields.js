@@ -167,6 +167,8 @@ function SportsCategory() {
     )
 }
 
+
+
 function NotFound() {
     return (
         <View style={{ flex: 0.9, alignItems: "center", justifyContent: "center" }}>
