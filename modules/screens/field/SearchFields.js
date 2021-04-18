@@ -169,10 +169,15 @@ function SportsCategory() {
 
 function NotFound() {
     return (
-        <View style={styles.containerCardField}>
-            <Card containerStyle={styles.card}>
-            </Card>
-        </View>
+        <View style={{ flex: 0.9, alignItems: "center", justifyContent: "center" }}>
+            <Image
+                style={styles.imageNotFound}
+                source={require("../../../assets/images/lupa.png")}
+            />
+            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
+                No encontramos resultados para tu búsqueda
+            </Text>
+        </View >
     )
 }
 
@@ -242,5 +247,9 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
+    },
+    imageNotFound: {
+        width: 150,
+        height: 150
     }
 })

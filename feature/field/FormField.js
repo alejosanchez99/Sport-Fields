@@ -5,6 +5,7 @@ import { isEmpty, isNull, isUndefined, map } from "lodash"
 import Toast from "react-native-easy-toast"
 import RNPickerSelect from 'react-native-picker-select'
 import uuid from "random-uuid-v4"
+import CountryPicker from 'react-native-country-picker-modal'
 
 import { stylesCard } from "../../shared/styles/StylesCard"
 import { message } from "../../assets/messages/message"
@@ -17,7 +18,6 @@ import Modal from "../../shared/components/Modal"
 import Loading from "../../shared/components/Loading"
 import colors from "../../shared/styles/ColorsApp"
 import UploadImages from "./UploadImages"
-import CountryPicker from 'react-native-country-picker-modal'
 
 export default function FormField({ route, navigation }) {
     const { locationField } = route.params;
@@ -116,7 +116,7 @@ export default function FormField({ route, navigation }) {
         }
 
         setFormData(defaultFormValues())
-             
+
         const toastMessage = getToastMessage(true, message.generic.messageCreate)
         toastRef.current.show(toastMessage, defaultValueToastView)
 
