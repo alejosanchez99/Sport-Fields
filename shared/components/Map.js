@@ -9,10 +9,14 @@ import { getCollection } from "../../core/firebase/actions"
 import { collectionsFirebase } from "../../core/firebase/collectionsFirebase"
 import { message } from '../../assets/messages/message';
 import { stylesButton, stylesButtonContainer } from '../styles/StylesButton'
+import { useNavigation } from '@react-navigation/native'
+
 
 export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren = null, setShowLoadingMap, initialLocation = null }) {
     const [userLocation, setUserLocation] = useState(null)
     const [fields, setFields] = useState(fieldsSearch)
+
+    const navigation = useNavigation()
 
     useEffect(() => {
         (async () => {
@@ -22,7 +26,6 @@ export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren
                 setUserLocation(response.location)
                 isHome && setShowIconMapFullScren(true)
                 setShowLoadingMap(false)
-                console.log(fieldsSearch)
                 if (fieldsSearch.length == 0) {
                     const responseField = await getCollection(collectionsFirebase.fields)
                     if (responseField.statusResponse) {
@@ -62,7 +65,9 @@ export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren
                                     }}
                                     image={require("../../assets/icons/marker.png")}
                                 >
-                                    <Callout tooltip>
+                                    <Callout
+                                     onPress={() => navigation.navigate("detail",{fields: field.item})}
+                                     tooltip>
                                         <View>
                                             <View style={styles.bubble}>
                                                 <Text style={styles.nameBubble}>

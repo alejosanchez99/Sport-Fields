@@ -167,10 +167,15 @@ function SportsCategory() {
 
 function Fields({ field, navigation }) {
     const { name, images, priceHour, typeField, rating } = field.item
+
+    const goDetail = () => {
+        navigation.navigate("detail",{fields: field})
+    }
+
     return (
         <View style={styles.containerCardField}>
             <TouchableWithoutFeedback
-              onPress={() => navigation.navigate("detail") }
+              onPress={() =>  goDetail()}
             >
                 <Card containerStyle={styles.card}>
                     <View style={{ flexDirection: "row" }}>

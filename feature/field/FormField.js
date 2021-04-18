@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { Card, Input, Button, Icon, Text } from "react-native-elements"
 import { isEmpty, isNull, isUndefined, map } from "lodash"
-import Toast from "react-native-easy-toast"
 import RNPickerSelect from 'react-native-picker-select'
 import uuid from "random-uuid-v4"
+import { StackActions } from "@react-navigation/native"
 
 import { stylesCard } from "../../shared/styles/StylesCard"
 import { message } from "../../assets/messages/message"
@@ -19,7 +19,7 @@ import colors from "../../shared/styles/ColorsApp"
 import UploadImages from "./UploadImages"
 import CountryPicker from 'react-native-country-picker-modal'
 
-export default function FormField({ route, navigation }) {
+export default function FormField({ route, navigation,toastRef }) {
     const { locationField } = route.params;
     const { availablesDays } = route.params;
     const [formData, setFormData] = useState(defaultFormValues())
@@ -31,7 +31,6 @@ export default function FormField({ route, navigation }) {
     const [loading, setLoading] = useState(false)
     const [country] = useState("CO")
 
-    const toastRef = useRef()
 
     const onChange = (e, type) => {
         formData[type] = e.nativeEvent.text;
@@ -63,6 +62,12 @@ export default function FormField({ route, navigation }) {
         }
         if (isEmpty(formData.description)) {
             validateSuccessData = false;
+        }
+        if (isEmpty(formData.typeField)){
+            validateSuccessData = false
+        }
+        if (isNull(locationField)){
+            validateSuccessData = false
         }
 
         return validateSuccessData;
@@ -116,9 +121,13 @@ export default function FormField({ route, navigation }) {
         }
 
         setFormData(defaultFormValues())
-        toastRef.current.show("Guardado exitoso", 2000)
+        const toastMessage = getToastMessage(true, message.generic.messageCreate);
+        toastRef.current.show(toastMessage, 2000)
 
-        navigation.navigate("user-logged")
+        this.timeoutHandle = setTimeout(() => {
+            navigation.dispatch(StackActions.popToTop());
+          }, 2000);
+
     }
 
     const uploadImages = async () => {
@@ -259,12 +268,6 @@ export default function FormField({ route, navigation }) {
                 setVisible={setShowModal}
                 title={titleError}
                 text={errorText}
-            />
-            <Toast
-                ref={toastRef}
-                position="center"
-                opacity={0.8}
-                textStyle={{ color: "white" }}
             />
             <Loading isVisible={loading} />
         </View>
