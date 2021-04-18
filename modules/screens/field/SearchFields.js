@@ -8,6 +8,7 @@ import { stylesCard } from '../../../shared/styles/StylesCard'
 import { getAllOptionsSportsCategory } from "../../../core/sportsCategory/sportsCategoryItems"
 import { getFields, getMoreFields, searchFields } from "../../../core/firebase/actions"
 import Loading from "../../../shared/components/Loading"
+import Fields from "../../../feature/field/Fields"
 
 export default function SearchFields({ navigation }) {
     const [search, setSearch] = useState("")
@@ -166,61 +167,6 @@ function SportsCategory() {
     )
 }
 
-function Fields({ field, navigation }) {
-    const { name, images, priceHour, typeField, rating } = field.item
-    return (
-        <View style={styles.containerCardField}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate("detail") }
-            >
-                <Card containerStyle={styles.card}>
-                    <View style={{ flexDirection: "row" }}>
-                        <Image
-                            style={styles.imageField}
-                            source={{
-                                uri: images[0]
-                            }}
-                        />
-                        <View style={{ flexDirection: "column", marginLeft: 15, width: "65%" }}>
-                            <View style={{ flexDirection: "row" , justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 4 }}>
-                                    {name}
-                                </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Icon
-                                        type="material-community"
-                                        name={"star"}
-                                        color="#FFBD00"
-                                    />
-                                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 4}}>
-                                        {rating}
-                                    </Text>
-                                </View>
-                            </View>
-                            <Text style={{ fontSize: 13, color: "#C3C3C3", marginBottom: 4 }}>
-                                {typeField}
-                            </Text>
-                            <View
-                                style={{
-                                    backgroundColor: "#8FDC97",
-                                    alignSelf: 'flex-start',
-                                    alignItems: "center",
-                                    borderRadius: 10,
-                                    padding: 4,
-                                    marginTop: 3
-                                }}>
-                                <Text style={{ textAlign: "center" }}>
-                                    {"$" + Intl.NumberFormat({style: 'currency', currency:'CO'}).format(priceHour)}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                </Card>
-            </TouchableWithoutFeedback>
-        </View >
-    )
-}
-
 function NotFound() {
     return (
         <View style={styles.containerCardField}>
@@ -238,9 +184,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         marginTop: 10,
         marginBottom: 30
-    },
-    containerCardField: {
-        marginTop: 8
     },
     containerItems: {
         flexDirection: "row"
@@ -269,13 +212,7 @@ const styles = StyleSheet.create({
     inputContainerStyle: {
         borderBottomColor: 'white'
     },
-    card: {
-        flexDirection: "row",
-        height: 130,
-        width: "90%",
-        alignSelf: "center",
-        ...stylesCard
-    },
+
     containerCardSportCategory: {
         flexDirection: "column",
         justifyContent: "center",
@@ -305,10 +242,5 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-    },
-    imageField: {
-        width: 100,
-        height: 100,
-        borderRadius: 10
     }
 })

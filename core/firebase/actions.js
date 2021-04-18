@@ -2,6 +2,7 @@ import * as firebase from 'firebase'
 import { firebaseApp } from './firebase'
 import { FireSQL } from 'firesql'
 import 'firebase/firestore'
+import { map } from "lodash"
 
 import { fileToBlob } from '../../shared/utils/fileUtily'
 import { collectionsFirebase } from "../firebase/collectionsFirebase"
@@ -205,6 +206,19 @@ export const searchFields = async (criteria) => {
     const result = { statusResponse: true, error: null, fields: [] }
     try {
         result.fields = await fireSQL.query(`SELECT * FROM fields WHERE name LIKE '${criteria}%'`)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getDocumentById = async (collection, id) => {
+    const result = { statusResponse: true, error: null, document: null }
+    try {
+        const response = await db.collection(collection).doc(id).get()
+        result.document = response.data()
+        result.document.id = response.id
     } catch (error) {
         result.statusResponse = false
         result.error = error
