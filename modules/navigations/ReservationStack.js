@@ -12,18 +12,7 @@ const Stack = createStackNavigator();
 export default function ReservationStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="detail"
-        component={Detail}
-        options={{
-          title: message.reservation.title,
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: colors.primary,
-          },
-          headerTintColor: colors.four,
-        }}
-      />
+     
       <Stack.Screen
         name="reservation"
         component={Reservation}
