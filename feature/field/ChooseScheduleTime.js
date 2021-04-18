@@ -70,11 +70,12 @@ export default function ChooseScheduleTime({ showModal, setShowModal, informatio
 
         if (selectDateTimePicker === "entryTime") {
             setDateEntryTime(currentDate)
-            setExitTime(time)
+            setEntryTime(time)
         }
+        
         if (selectDateTimePicker === "exitTime") {
             setDateExitTime(currentDate)
-            setEntryTime(time)
+            setExitTime(time)
         }
     }
 

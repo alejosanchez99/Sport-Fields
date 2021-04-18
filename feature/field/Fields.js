@@ -108,7 +108,9 @@ export default function Fields({ field, navigation, showIconDelete = false, setR
 
 const styles = StyleSheet.create({
     containerCardField: {
-        marginTop: 8
+        marginTop: 8,
+        marginBottom: 10
+
     },
     card: {
         flexDirection: "row",

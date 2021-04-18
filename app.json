@@ -17,12 +17,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sport.fields"
     },
     "android": {
+      "package": "com.sport.fields",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCok-ulL8N_UEHG3KbIc4rVfrN3Vrfju8A"
+        }
       },
       "permissions": [
         "CAMERA_ROLL",
