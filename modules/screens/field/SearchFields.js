@@ -169,7 +169,9 @@ function Fields({ field, navigation }) {
     const { name, images, priceHour, typeField, rating } = field.item
     return (
         <View style={styles.containerCardField}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("detail") }
+            >
                 <Card containerStyle={styles.card}>
                     <View style={{ flexDirection: "row" }}>
                         <Image
@@ -178,8 +180,8 @@ function Fields({ field, navigation }) {
                                 uri: images[0]
                             }}
                         />
-                        <View style={{ flexDirection: "column", marginLeft: 15 }}>
-                            <View style={{ flexDirection: "row", position: "relative" }}>
+                        <View style={{ flexDirection: "column", marginLeft: 15, width: "65%" }}>
+                            <View style={{ flexDirection: "row" , justifyContent: "space-between" }}>
                                 <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 4 }}>
                                     {name}
                                 </Text>
@@ -189,7 +191,7 @@ function Fields({ field, navigation }) {
                                         name={"star"}
                                         color="#FFBD00"
                                     />
-                                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 4, alignSelf: "flex-end" }}>
+                                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 4}}>
                                         {rating}
                                     </Text>
                                 </View>
