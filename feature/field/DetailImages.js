@@ -4,11 +4,14 @@ import { size, map, filter, round } from "lodash";
 import { Icon, Avatar } from "react-native-elements";
 import { loadImageFromGallery } from "../../shared/utils/fileUtily";
 import { ImageBackground } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 
 const widthScreen = Dimensions.get("window").width;
 
 export default function DetailImages({ imagesSelected, setImagesSelected }) {
 
+  const navigation = useNavigation()
 
   return (
     <ScrollView horizontal style={styles.viewImages}>

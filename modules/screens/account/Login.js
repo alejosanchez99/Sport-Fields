@@ -90,7 +90,7 @@ export default function Login({route}) {
         <Header />
         <Card containerStyle={styles.card}>
           <Input
-            wre
+            keyboardType="email-address"
             onChange={(e) => onChange(e, "email")}
             placeholder="Correo electronico"
           />

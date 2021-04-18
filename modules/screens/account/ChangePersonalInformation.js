@@ -132,6 +132,7 @@ export default function ChangePersonalInformation({route, navigate} ) {
             defaultValue={formData.email}
             onChange={(e) => onChange(e, "email")}
             placeholder="Nuevo correo electronico"
+            keyboardType="email-address"
           />
           <Input
             placeholder="Contraseña"
