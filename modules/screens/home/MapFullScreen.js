@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import LoadingMap from '../../../shared/components/LoadingMap'
 
 import Map from '../../../shared/components/Map'
-import colors from '../../../shared/styles/ColorsApp'
-import { map, isNull,isUndefined } from "lodash"
 
 export default function MapFullScreen({route}) {
     const [showLoadingMap, setShowLoadingMap] = useState(true)

@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignSelf: "flex-start",
         backgroundColor: "#FFF",
-        borderRadius: 6,
         borderColor: "#ccc",
         borderWidth: 0.5,
         padding: 15,

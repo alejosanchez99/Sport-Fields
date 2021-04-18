@@ -24,17 +24,18 @@ export default function Favorites({ navigation }) {
     useFocusEffect(
         useCallback(() => {
             if (userLogged) {
-                async function getData() {
-                    setLoading(true)
-                    const response = await getFavorites()
-                    setFields(response.favorites)
-                    setLoading(false)
-                }
                 getData()
             }
             setReloadData(false)
         }, [userLogged, reloadData])
     )
+
+    async function getData() {
+        setLoading(true)
+        const response = await getFavorites()
+        setFields(response.favorites)
+        setLoading(false)
+    }
 
     return (
         <View style={styles.container}>

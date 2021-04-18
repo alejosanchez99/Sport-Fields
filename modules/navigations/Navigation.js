@@ -1,10 +1,8 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
 
 import HomeStack from "./HomeStack";
-import ReservationStack from "./ReservationStack";
 import FavoriteStack from "./FavoriteStack";
 import PromotionsStack from "./PromotionsStack";
 import AccountStack from "./AccountStack";

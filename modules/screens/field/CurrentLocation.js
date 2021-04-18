@@ -6,7 +6,6 @@ import colors from "../../../shared/styles/ColorsApp";
 import { message } from '../../../assets/messages/message';
 import { getCurrentLocation } from '../../../shared/utils/location'
 import { stylesButtonContainer, stylesButton } from "../../../shared/styles/StylesButton"
-import { getToastMessage, defaultValueToastView } from "../../../shared/utils/toastMessage"
 import MapLocation from '../../../shared/components/MapLocation'
 
 export default function CurrentLocation({ navigation }) {

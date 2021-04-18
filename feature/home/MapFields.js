@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Card, Icon } from "react-native-elements"
 import { useNavigation } from "@react-navigation/native"
 

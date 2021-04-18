@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, ImageBackground, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { useNavigation, CommonActions } from "@react-navigation/native";

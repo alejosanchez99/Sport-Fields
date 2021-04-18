@@ -1,10 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, TouchableWithoutFeedback, Text, Alert } from 'react-native'
-import { Icon, Card, Image, Button } from 'react-native-elements'
+import { Icon, Card, Image } from 'react-native-elements'
 
 import { stylesCard } from '../../shared/styles/StylesCard'
 import { deleteFavorite } from "../../core/firebase/actions"
-import Loading from "../../shared/components/Loading"
 
 export default function Fields({ field, navigation, showIconDelete = false, setReloadData = null, setLoading = null }) {
     const { name, images, priceHour, typeField, rating, id } = field.item

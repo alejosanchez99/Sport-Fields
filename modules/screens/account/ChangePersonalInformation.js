@@ -25,13 +25,13 @@ import {
 import IconPassword from "../../../shared/components/IconPassword";
 import { getToastMessage } from "../../../shared/utils/toastMessage";
 
-const defaultFormsValues = ({nameUser,emailUser}) => {
+const defaultFormsValues = ({ nameUser, emailUser }) => {
   return { email: emailUser, name: nameUser, password: "" };
 };
 
-export default function ChangePersonalInformation({route, navigate} ) {
+export default function ChangePersonalInformation({ route }) {
   const { user } = route.params;
-  const [formData] = useState(defaultFormsValues({nameUser: user.displayName, emailUser : user.email}));
+  const [formData] = useState(defaultFormsValues({ nameUser: user.displayName, emailUser: user.email }));
   const [enable, setEnable] = useState(false);
   const [showPassword, setShowPassword] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -102,7 +102,7 @@ export default function ChangePersonalInformation({route, navigate} ) {
     this.timeoutHandle = setTimeout(() => {
       navigation.dispatch(StackActions.popToTop())
     }, 2000);
-    
+
   };
 
   const validateLogin = () => {
@@ -163,11 +163,11 @@ export default function ChangePersonalInformation({route, navigate} ) {
         <Loading isVisible={loading} />
       </KeyboardAwareScrollView>
       <Toast
-          ref={toastRef}
-          positionValue={200}
-          opacity={0.8}
-          textStyle={{ color: "white" }}
-        />
+        ref={toastRef}
+        positionValue={200}
+        opacity={0.8}
+        textStyle={{ color: "white" }}
+      />
     </ImageBackground>
   );
 }
