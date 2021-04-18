@@ -116,7 +116,9 @@ export default function FormField({ route, navigation }) {
         }
 
         setFormData(defaultFormValues())
-        toastRef.current.show("Guardado exitoso", 2000)
+             
+        const toastMessage = getToastMessage(true, message.generic.messageCreate)
+        toastRef.current.show(toastMessage, defaultValueToastView)
 
         navigation.navigate("user-logged")
     }

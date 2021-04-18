@@ -21,6 +21,7 @@ export default function SearchFields({ navigation }) {
     useEffect(() => {
         if (isEmpty(search)) {
             setFields(defaultFields)
+            Keyboard.dismiss()
             return
         }
 
@@ -207,7 +208,7 @@ function Fields({ field, navigation }) {
                                     marginTop: 3
                                 }}>
                                 <Text style={{ textAlign: "center" }}>
-                                    {"$" + priceHour}
+                                    {"$" + Intl.NumberFormat({style: 'currency', currency:'CO'}).format(priceHour)}
                                 </Text>
                             </View>
                         </View>

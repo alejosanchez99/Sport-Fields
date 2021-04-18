@@ -211,3 +211,62 @@ export const searchFields = async (criteria) => {
     }
     return result
 }
+
+export const getIsFavorite = async (idField) => {
+    const result = { statusResponse: true, error: null, isFavorite: false }
+    try {
+        const response = await db
+            .collection(collectionsFirebase.favorites)
+            .where("idField", "==", idField)
+            .where("idUser", "==", getCurrentUser().uid)
+            .get()
+        result.isFavorite = response.docs.length > 0
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const deleteFavorite = async (idField) => {
+    const result = { statusResponse: true, error: null }
+    try {
+        const response = await db
+            .collection(collectionsFirebase.favorites)
+            .where("idField", "==", idField)
+            .where("idUser", "==", getCurrentUser().uid)
+            .get()
+        response.forEach(async (doc) => {
+            const favoriteId = doc.id
+            await db.collection("favorites").doc(favoriteId).delete()
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const getFavorites = async () => {
+    const result = { statusResponse: true, error: null, favorites: [] }
+    try {
+        const response = await db
+            .collection(collectionsFirebase.favorites)
+            .where("idUser", "==", getCurrentUser().uid)
+            .get()
+
+        await Promise.all(
+            map(response.docs, async (doc) => {
+                const favorite = doc.data()
+                const field = await getDocumentById(collectionsFirebase.fields, favorite.idField)
+                if (field.statusResponse) {
+                    result.favorites.push(field.document)
+                }
+            })
+        )
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
