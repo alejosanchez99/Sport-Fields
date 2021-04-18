@@ -4,6 +4,7 @@ import { Card, Input, Button, Icon, Text } from "react-native-elements"
 import { isEmpty, isNull, isUndefined, map } from "lodash"
 import RNPickerSelect from 'react-native-picker-select'
 import uuid from "random-uuid-v4"
+import CountryPicker from 'react-native-country-picker-modal'
 import { StackActions } from "@react-navigation/native"
 
 import { stylesCard } from "../../shared/styles/StylesCard"
@@ -17,9 +18,8 @@ import Modal from "../../shared/components/Modal"
 import Loading from "../../shared/components/Loading"
 import colors from "../../shared/styles/ColorsApp"
 import UploadImages from "./UploadImages"
-import CountryPicker from 'react-native-country-picker-modal'
 
-export default function FormField({ route, navigation,toastRef }) {
+export default function FormField({ route, navigation, toastRef }) {
     const { locationField } = route.params;
     const { availablesDays } = route.params;
     const [formData, setFormData] = useState(defaultFormValues())
@@ -63,10 +63,10 @@ export default function FormField({ route, navigation,toastRef }) {
         if (isEmpty(formData.description)) {
             validateSuccessData = false;
         }
-        if (isEmpty(formData.typeField)){
+        if (isEmpty(formData.typeField)) {
             validateSuccessData = false
         }
-        if (isNull(locationField)){
+        if (isNull(locationField)) {
             validateSuccessData = false
         }
 
@@ -126,9 +126,9 @@ export default function FormField({ route, navigation,toastRef }) {
 
         this.timeoutHandle = setTimeout(() => {
             navigation.dispatch(StackActions.popToTop());
-          }, 2000);
-             
-       
+        }, 2000);
+
+
 
     }
 
@@ -288,7 +288,6 @@ const defaultFormValues = () => {
         description: "",
         typeField: ""
     }
-    setImagesSelected([])
 }
 
 const fieldsType =

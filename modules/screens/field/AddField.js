@@ -1,5 +1,5 @@
 import React,{useRef} from "react";
-import { ImageBackground, View } from "react-native";
+import { ImageBackground } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import styleImage from "../../../shared/styles/StylesImage";

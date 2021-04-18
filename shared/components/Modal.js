@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text } from "react-native";
 import { Button } from "react-native-elements";
 import { Overlay } from "react-native-elements";
 

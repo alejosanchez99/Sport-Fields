@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from "react"
+import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Avatar } from "react-native-elements"
-import { useFocusEffect } from "@react-navigation/native"
 
 import colors from "../../shared/styles/ColorsApp"
 import {  updateProfile, uploadImage } from "../../core/firebase/actions"

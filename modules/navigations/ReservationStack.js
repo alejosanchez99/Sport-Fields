@@ -2,7 +2,6 @@ import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 
 import Reservation from "../screens/reservation/Reservation"
-import Detail from "../screens/field/DetailField"
 import colors from "../../shared/styles/ColorsApp"
 import MapFullScreen from "../screens/home/MapFullScreen"
 import { message } from "../../assets/messages/message"

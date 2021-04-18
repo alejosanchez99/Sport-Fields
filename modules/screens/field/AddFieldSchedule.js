@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { Icon, Card, Button } from 'react-native-elements'
-import { map, size, isNull } from "lodash"
+import { map, size } from "lodash"
 
 import { stylesCard } from '../../../shared/styles/StylesCard'
 import ChooseScheduleTime from "../../../feature/field/ChooseScheduleTime"
