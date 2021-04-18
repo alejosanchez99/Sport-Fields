@@ -86,6 +86,7 @@ export default function AddUserAdmin() {
                 <Header />
                 <Card containerStyle={styles.card}>
                     <Input
+                       keyboardType="email-address"
                         defaultValue={formData.email}
                         onChange={(e) => onChange(e, "email")}
                         placeholder="Correo electronico"

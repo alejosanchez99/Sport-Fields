@@ -1,25 +1,46 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Icon, Card } from "react-native-elements";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity,ScrollView } from "react-native";
+import { Icon, Card,Avatar,Button } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import colors from "../../shared/styles/ColorsApp";
+import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
+
 import {
   stylesButton,
   stylesButtonContainerAlert,
   stylesButtonSecundary,
 } from "../../shared/styles/StylesButton";
-import { Button } from "react-native-elements";
 import { message } from "../../assets/messages/message";
 import ModalComponents from "../../shared/components/ModalComponents";
-import  { Calendar} from "react-native-calendars";
+import { Calendar } from "react-native-calendars";
 import { stylesCard } from "../../shared/styles/StylesCard";
-import moment from "moment";
+import { getCollection } from "../../core/firebase/actions";
+import { collectionsFirebase } from "../../core/firebase/collectionsFirebase";
+import { isNull, map } from "lodash";
 
 export default function DetailForm() {
   const [
     showModalChooseScheduleTime,
     setShowModalChooseScheduleTime,
   ] = useState(false);
-  const [reservation, setReservation] = useState("")
+  const [fields, setFields] = useState([]);
+  const [dateTime, setDateTime] = useState(new Date());
+  const [user, setUser] = useState("jl");
+  const [reservation, setReservation] = useState(null);
+  const [daysOfWeek, setDaysOfWeek] = useState(getDefaultDateOfWeek())
+
+  
+  useEffect(() => {
+    (async () => {
+      const responseField = await getCollection(collectionsFirebase.fields);
+      if (responseField.statusResponse) {
+        setFields(responseField.data);
+      }
+    })();
+  }, []);
+
+  const navigation = useNavigation();
 
   return (
     <View>
@@ -28,6 +49,9 @@ export default function DetailForm() {
           type="material-community"
           name="map-marker-outline"
           color={colors.four}
+          onPress={() =>
+            navigation.navigate("map-reservation", { fieldData: fields })
+          }
         />
       </View>
       <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
@@ -143,10 +167,48 @@ export default function DetailForm() {
           prueba@hotmail.com
         </Text>
       </View>
+      <Text style={styles.titleDates}>Horario de atención</Text>
+      <Card containerStyle={styles.cardDates}>
+        <ScrollView
+          style={styles.containerCard}
+          horizontal
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        >
+          {map(daysOfWeek, (dayOfWeek, index) => (
+            <Avatar
+              size="medium"
+              key={index}
+              rounded
+              title={dayOfWeek.value}
+              titleStyle={{ color: "#FFFFFF" }}
+              containerStyle={{
+                backgroundColor: dayOfWeek.isSelected
+                  ? colors.three
+                  : colors.primary,
+                marginLeft: 6,
+              }}
+            />
+          ))}
+        </ScrollView>
+      </Card>
+      <View style={{ marginTop: 10,marginStart:20 }}>
+          <Text
+            style={{
+              fontSize: 15,
+              lineHeight: 20,
+              color: colors.primary,
+            }}
+          >
+            10am - 9pm
+          </Text>
+        </View>
       <Schedule
         isVisible={showModalChooseScheduleTime}
         setVisible={setShowModalChooseScheduleTime}
-        setReservation={setReservation}
+        setDateReservation={setReservation}
+        dateTime={dateTime}
+        setDateTime={setDateTime}
       />
       <TouchableOpacity
         style={styles.containerSchedule}
@@ -154,11 +216,7 @@ export default function DetailForm() {
           setShowModalChooseScheduleTime(!showModalChooseScheduleTime)
         }
       >
-        <Icon
-          type="material-community"
-          name="clock-outline"
-          color="#7a7a7a"      
-        />
+        <Icon type="material-community" name="clock-outline" color="#7a7a7a" />
         <Text style={styles.textSchedule}>Seleccionar Fecha</Text>
       </TouchableOpacity>
       <View
@@ -184,38 +242,62 @@ export default function DetailForm() {
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          marginTop: 30,
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.buttonSecundary}
-          titleStyle={styles.textButton}
-          type="outline"
-          title={message.reservation.coments}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          buttonStyle={styles.button}
-          title={message.reservation.reservationButton}
-        />
-      </View>
+
+      {!isNull(user) ? (
+        <View style={styles.viewContainer}>
+          <Button
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonSecundary}
+            titleStyle={styles.textButton}
+            type="outline"
+            title={message.reservation.coments}
+          />
+          <Button
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
+            disabled={isNull(reservation)}
+            title={message.reservation.reservationButton}
+          />
+        </View>
+      ) : (
+        <View style={styles.viewContainer}>
+          <Button
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
+            title={message.login.login.buttonTitle}
+            onPress={() => navigation.navigate("user-guest")}
+          />
+        </View>
+      )}
     </View>
   );
 }
 
-function Schedule({ isVisible, setVisible, dateReservation }) {
-  const data = moment().format("YYYY-MM-DD");  
-  const [date, setDate] = useState(data)
+function Schedule({
+  isVisible,
+  setVisible,
+  dateTime,
+  setDateTime,
+  setDateReservation,
+}) {
+  const data = moment().format("YYYY-MM-DD");
+  const [date, setDate] = useState(data);
+  const [mode] = useState("time");
 
   const mark = {
-		[date]: {selected: true, marked: true}
-	};
+    [date]: { selected: true, marked: true },
+  };
+
+  const saveDate = () => {
+    setDateReservation(date);
+    setVisible(false);
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || time;
+    const time = currentDate.getHours() + ":" + currentDate.getMinutes();
+    setDateTime(currentDate);
+  };
 
   return (
     <ModalComponents
@@ -228,17 +310,27 @@ function Schedule({ isVisible, setVisible, dateReservation }) {
           Fecha de la reserva:
         </Text>
         <Card>
-
           <Calendar
-             minDate={data}
-             onDayPress={day => {
-              setDate(day.dateString)
+            minDate={data}
+            onDayPress={(day) => {
+              setDate(day.dateString);
             }}
             markedDates={mark}
-  
-           
           />
         </Card>
+        <Text style={styles.titleDates}>Hora de reserva</Text>
+        <View>
+          <View style={styles.viewDates}>
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={dateTime}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={(e, selectedDate) => onChange(e, selectedDate)}
+            />
+          </View>
+        </View>
         <View
           style={{
             marginTop: 30,
@@ -253,18 +345,59 @@ function Schedule({ isVisible, setVisible, dateReservation }) {
             titleStyle={styles.textButton}
             type="outline"
             title={message.generic.cancel}
-            onPress={() => setVisible(false)}
+            onPress={() => setVisible(false) }
           />
           <Button
             containerStyle={styles.buttonContainer}
             buttonStyle={styles.button}
             title={message.generic.saveButton}
+            onPress={() => saveDate()}
           />
         </View>
       </View>
     </ModalComponents>
   );
 }
+
+const getDefaultDateOfWeek = () => {
+  return [
+    {
+      name: "lunes",
+      value: "L",
+      isSelected: false,
+    },
+    {
+      name: "martes",
+      value: "M",
+      isSelected: false,
+    },
+    {
+      name: "miercoles",
+      value: "M",
+      isSelected: false,
+    },
+    {
+      name: "jueves",
+      value: "J",
+      isSelected: false,
+    },
+    {
+      name: "viernes",
+      value: "V",
+      isSelected: false,
+    },
+    {
+      name: "sabado",
+      value: "S",
+      isSelected: false,
+    },
+    {
+      name: "domingo",
+      value: "D",
+      isSelected: false,
+    },
+  ];
+};
 
 const styles = StyleSheet.create({
   textButton: {
@@ -283,6 +416,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 40,
     marginEnd: 10,
+    marginBottom: 10,
     ...stylesButtonContainerAlert,
   },
   priceTag: {
@@ -326,6 +460,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     ...stylesCard,
   },
+  cardDates:{
+    width: "90%",
+    marginStart: 10,
+    alignSelf: "center",
+    ...stylesCard,
+  },
   textSchedule: {
     marginLeft: 5,
   },
@@ -338,6 +478,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#e3e3e3",
     borderRadius: 30,
     marginTop: 30,
-    marginStart: 20
+    marginStart: 20,
+  },
+  viewDates: {
+    marginTop: 10,
+    marginStart: 20,
+  },
+  titleDates: {
+    marginTop: 30,
+    fontSize: 20,
+    marginLeft: 20,
+    fontWeight: "bold",
+  },
+  textDates: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  viewContainer: {
+    marginTop: 30,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
 });

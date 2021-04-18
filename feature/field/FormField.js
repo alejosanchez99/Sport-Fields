@@ -34,12 +34,12 @@ export default function FormField({ route, navigation }) {
     const toastRef = useRef()
 
     const onChange = (e, type) => {
-        setFormData({ ...formData, [type]: e.nativeEvent.text })
+        formData[type] = e.nativeEvent.text;
         setEnableButton(validateData())
     }
 
     const onValueChange = (value, type) => {
-        setFormData({ ...formData, [type]: value })
+        formData[type] = value
         setEnableButton(validateData())
     }
 

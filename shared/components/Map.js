@@ -22,7 +22,7 @@ export default function Map({ fieldsSearch = [], isHome, setShowIconMapFullScren
                 setUserLocation(response.location)
                 isHome && setShowIconMapFullScren(true)
                 setShowLoadingMap(false)
-
+                console.log(fieldsSearch)
                 if (fieldsSearch.length == 0) {
                     const responseField = await getCollection(collectionsFirebase.fields)
                     if (responseField.statusResponse) {

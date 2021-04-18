@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { ScrollView } from "react-native";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
-import { Icon, Avatar } from "react-native-elements";
+import { StyleSheet, View } from "react-native";
 import colors from "../../../shared/styles/ColorsApp";
 import DetailImages from "../../../feature/field/DetailImages";
 import DetailForm from "../../../feature/field/DetailForm";
+import { getCurrentUser } from "../../../core/firebase/actions";
 
 export default function DetailField() {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const userLogged = getCurrentUser()
+    userLogged && (setUser(userLogged))
+}, [])
+
   return (
     <View style={styles.container}>
     <ScrollView
@@ -25,10 +32,8 @@ const styles = StyleSheet.create({
     container: {
         height: "100%",
         backgroundColor: colors.four,
-        paddingBottom: 20,
     },
     containerScroll: {
       backgroundColor: colors.four,
-      paddingBottom: 20,
     }
   });

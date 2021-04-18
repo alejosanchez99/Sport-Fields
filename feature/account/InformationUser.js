@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements"
 import { useFocusEffect } from "@react-navigation/native"
 
 import colors from "../../shared/styles/ColorsApp"
-import { getCurrentUser, updateProfile, uploadImage } from "../../core/firebase/actions"
+import {  updateProfile, uploadImage } from "../../core/firebase/actions"
 import { loadImageFromGallery } from "../../shared/utils/fileUtily"
 import Modal from "../../shared/components/Modal"
 import Loading from "../../shared/components/Loading"
