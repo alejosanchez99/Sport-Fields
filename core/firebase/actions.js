@@ -1,10 +1,13 @@
 import * as firebase from 'firebase'
 import { firebaseApp } from './firebase'
+import { FireSQL } from 'firesql'
 import 'firebase/firestore'
 
 import { fileToBlob } from '../../shared/utils/fileUtily'
+import { collectionsFirebase } from "../firebase/collectionsFirebase"
 
 const db = firebase.firestore(firebaseApp)
+const fireSQL = new FireSQL(firebase.firestore(), { includeId: "id" })
 
 export const isUserLogged = () => {
     let isLogged = false
@@ -146,3 +149,65 @@ export const getCollection = async (collectionName) => {
     return result
 }
 
+export const getFields = async (limitFields) => {
+    const result = { statusResponse: true, error: null, fields: [], startField: null }
+
+    try {
+        const response = await db
+            .collection(collectionsFirebase.fields)
+            .orderBy("createAt", "desc")
+            .limit(limitFields)
+            .get()
+
+        if (response.docs.length > 0) {
+            result.startField = response.docs[response.docs.length - 1]
+        }
+
+        response.forEach((doc) => {
+            const field = doc.data()
+            field.id = doc.id
+            result.fields.push(field)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+
+    return result
+}
+
+export const getMoreFields = async (limitFields, startField) => {
+    const result = { statusResponse: true, error: null, fields: [], startField: null }
+    try {
+        const response = await db
+            .collection(collectionsFirebase.fields)
+            .orderBy("createAt", "desc")
+            .startAfter(startField.data().createAt)
+            .limit(limitFields)
+            .get()
+
+        if (response.docs.length > 0) {
+            result.startField = response.docs[response.docs.length - 1]
+        }
+        response.forEach((doc) => {
+            const field = doc.data()
+            field.id = doc.id
+            result.fields.push(field)
+        })
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}
+
+export const searchFields = async (criteria) => {
+    const result = { statusResponse: true, error: null, fields: [] }
+    try {
+        result.fields = await fireSQL.query(`SELECT * FROM fields WHERE name LIKE '${criteria}%'`)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = error
+    }
+    return result
+}

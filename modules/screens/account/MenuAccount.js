@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray,
   },
   title: {
-    textAlign: "center", // <-- the magic
+    textAlign: "center",
     fontWeight: "bold",
     fontSize: 14,
     marginTop: 20,

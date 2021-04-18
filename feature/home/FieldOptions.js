@@ -5,37 +5,8 @@ import { Card, Icon } from "react-native-elements"
 
 import colors from '../../shared/styles/ColorsApp'
 import { stylesCard } from "../../shared/styles/StylesCard"
-
+import { generateFirstOptions, generateSecondOptions } from "../../core/sportsCategory/sportsCategoryItems"
 export default function FieldOptions() {
-    const generateFirstOptions = () => {
-        return [
-            {
-                uri: require("../../assets/images/futbol.png"),
-                onPress: () => console.log("prueba")
-            },
-            {
-                uri: require("../../assets/images/tenis.png"),
-                onPress: () => console.log("prueba")
-            },
-            {
-                uri: require("../../assets/images/baloncesto.png"),
-                onPress: () => console.log("prueba")
-            }
-        ]
-    }
-
-    const generateSecondOptions = () => {
-        return [
-            {
-                uri: require("../../assets/images/futbol-americano.png"),
-                onPress: () => console.log("prueba")
-            },
-            {
-                uri: require("../../assets/images/golf.png"),
-                onPress: () => console.log("prueba")
-            }
-        ]
-    }
 
     const menuFirstOptions = generateFirstOptions()
     const menuSecondOptions = generateSecondOptions()

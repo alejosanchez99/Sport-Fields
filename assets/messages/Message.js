@@ -78,6 +78,9 @@ export const message = {
         }
 
     }, 
+    field: {
+        title: "Canchas"
+    },
     generic: {
         cancel: "Cancelar",
         saveButton: "Guardar",

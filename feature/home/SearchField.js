@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useLayoutEffect} from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
+import { useNavigation } from "@react-navigation/native"
 
 import colors from '../../shared/styles/ColorsApp'
 import { getCurrentUser } from "../../core/firebase/actions"
@@ -8,12 +9,12 @@ import { getCurrentUser } from "../../core/firebase/actions"
 
 export default function SearchField() {
     const [photoUrl, setPhotoUrl] = useState(null)
+    const navigation = useNavigation()
 
     useEffect(() => {
         const userLogged = getCurrentUser()
         userLogged && (setPhotoUrl(userLogged.photoURL))
     }, [])
-
 
     return (
         <View>
@@ -29,11 +30,17 @@ export default function SearchField() {
                             : require("../../assets/icons/avatar-default.jpg")
                     }
                 />
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="¿Qué cancha quieres hoy?"
-                    underlineColorAndroid="transparent"
-                />
+                <TouchableOpacity
+                    style={styles.containerInput}
+                    onPress={() => navigation.navigate("field")}
+                >
+                    <TextInput
+                        style={styles.textInput}
+                        pointerEvents="none"
+                        placeholder="¿Qué cancha quieres hoy?"
+                        underlineColorAndroid="transparent"
+                    />
+                </TouchableOpacity>
                 <Icon
                     containerStyle={styles.location}
                     type="material-community"
@@ -55,8 +62,12 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 10
     },
-    textInput: {
+    containerInput: {
         width: "60%",
+        height: 50
+    },
+    textInput: {
+        width: "90%",
         height: 40,
         borderWidth: 1,
         paddingLeft: 20,

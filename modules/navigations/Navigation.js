@@ -10,6 +10,7 @@ import PromotionsStack from "./PromotionsStack";
 import AccountStack from "./AccountStack";
 import colors from "../../shared/styles/ColorsApp";
 import { message } from "../../assets/messages/message";
+import FieldStack from "./FieldStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ export default function Navigation({ routeScreen }) {
       case "home":
         iconName = "home";
         break;
-      case "reservation":
+      case "field":
         iconName = "magnify";
         break;
       case "favorites":
@@ -58,9 +59,9 @@ export default function Navigation({ routeScreen }) {
         options={{ title: message.home.title }}
       />
       <Tab.Screen
-        name="reservation"
-        component={ReservationStack}
-        options={{ title: message.reservation.title }}
+        name="field"
+        component={FieldStack}
+        options={{ title: message.field.title }}
       />
       <Tab.Screen
         name="promotions"
