@@ -30,7 +30,7 @@ const defaultFormsValues = ({ nameUser, emailUser }) => {
 };
 
 export default function ChangePersonalInformation({ route }) {
-  const { user } = route.params;
+  const { user,setReloadUser } = route.params;
   const [formData] = useState(defaultFormsValues({ nameUser: user.displayName, emailUser: user.email }));
   const [enable, setEnable] = useState(false);
   const [showPassword, setShowPassword] = useState(null);
@@ -96,8 +96,10 @@ export default function ChangePersonalInformation({ route }) {
       return;
     }
 
+    setReloadUser(true)
     const toastMessage = getToastMessage(true, message.generic.messageUpdate);
     toastRef.current.show(toastMessage, 2000);
+   
 
     this.timeoutHandle = setTimeout(() => {
       navigation.dispatch(StackActions.popToTop())
@@ -164,7 +166,7 @@ export default function ChangePersonalInformation({ route }) {
       </KeyboardAwareScrollView>
       <Toast
         ref={toastRef}
-        positionValue={200}
+        positionValue={250}
         opacity={0.8}
         textStyle={{ color: "white" }}
       />

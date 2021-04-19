@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, SafeAreaView, StyleSheet,View } from 'react-native'
 import { useFocusEffect } from "@react-navigation/native"
 
@@ -8,20 +8,19 @@ import { getCurrentUser } from "../../../core/firebase/actions"
 
 export default function UserLogged() {
   const [user, setUser] = useState(null)
+  const [reloadUser, setReloadUser] = useState(false)
 
-  useFocusEffect(
-    useCallback(() => {
-      const userLogged = getCurrentUser()
-      userLogged && (setUser(userLogged))
-    }, [])
-  );
+  useEffect(() => {
+    setUser(getCurrentUser());
+    setReloadUser(false)
+  }, [reloadUser]);
 
   return user && (
     <SafeAreaView>
       <ScrollView>
         <InformationUser user={user} />
         <View style={styles.accountOptions}>
-          <AccountOptions user={user} />
+          <AccountOptions user={user} setReloadUser={setReloadUser} />
         </View>
       </ScrollView>
     </SafeAreaView>

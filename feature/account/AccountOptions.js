@@ -9,7 +9,7 @@ import { stylesCard } from '../../shared/styles/StylesCard'
 import { closeSession, getCollection } from '../../core/firebase/actions'
 import { collectionsFirebase } from '../../core/firebase/collectionsFirebase'
 
-export default function AccountOptions({ user }) {
+export default function AccountOptions({ user,setReloadUser }) {
 
     const [userIsAdmin, setUserIsAdmin] = useState(false)
     const navigation = useNavigation()
@@ -40,7 +40,8 @@ export default function AccountOptions({ user }) {
                 iconNameLeft: "account-circle",
                 ...commonMenuItems,
                 onPress: () => navigation.navigate("personal-information", {
-                    user: user
+                    user: user,
+                    setReloadUser: setReloadUser
                 })
             },
             {
