@@ -10,8 +10,6 @@ import Loading from "../../shared/components/Loading"
 import { message } from "../../assets/messages/message"
 
 export default function InformationUser({ user }) {
-  const [name] = useState(user.displayName);
-  const [email] = useState(user.email);
   const [photoUrl, setPhotoUrl] = useState(user.photoURL);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false)
@@ -72,8 +70,8 @@ export default function InformationUser({ user }) {
         />
       </Avatar>
       <View style={styles.InfoUser}>
-        <Text style={styles.displayName}>{name}</Text>
-        <Text>{email}</Text>
+        <Text style={styles.displayName}>{user.displayName}</Text>
+        <Text>{user.email}</Text>
       </View>
       <Modal
         isVisible={showModal}
