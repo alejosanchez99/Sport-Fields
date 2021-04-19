@@ -89,7 +89,7 @@ export default function Favorites({ navigation }) {
                                 style={styles.imageNotFound}
                             />
                             <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
-                                Aún no tienes restaurantes favoritos
+                                Aún no tienes canchas favoritas
                             </Text>
                         </View >
                     )
