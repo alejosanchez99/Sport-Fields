@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { StyleSheet, FlatList, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Text, ScrollView } from 'react-native'
+import { StyleSheet, FlatList, View, TouchableOpacity, TouchableWithoutFeedback, Platform, Keyboard, Text, ScrollView } from 'react-native'
 import { Input, Icon, Card, Image } from 'react-native-elements'
 import { map, isEmpty, size } from "lodash"
 import { useFocusEffect } from '@react-navigation/native'
@@ -17,7 +17,7 @@ export default function SearchFields({ navigation }) {
     const [startField, setStartField] = useState([])
     const [loading, setLoading] = useState(false)
 
-    const limitFields = 7
+    const limitFields = 5
 
     useEffect(() => {
         if (isEmpty(search)) {
@@ -55,13 +55,11 @@ export default function SearchFields({ navigation }) {
         if (!startField) {
             return
         }
-        setLoading(true)
         const response = await getMoreFields(limitFields, startField)
         if (response.statusResponse) {
             setStartField(response.startField)
             setFields([...fields, ...response.fields])
         }
-        setLoading(false)
     }
 
     return (
@@ -77,6 +75,7 @@ export default function SearchFields({ navigation }) {
                     </View>
                     <View style={styles.containerSearchBar}>
                         <Input
+                            keyboardType="web-search"
                             containerStyle={styles.input}
                             placeholder="Buscar canchas"
                             clearButtonMode="always"
@@ -209,12 +208,10 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         paddingHorizontal: 10,
         fontSize: 15,
-        justifyContent: "center",
-        alignItems: "center"
     },
     input: {
         justifyContent: "center",
-        marginTop: 36
+        marginTop: Platform.OS === 'ios' ? 20 : 28
     },
     inputContainerStyle: {
         borderBottomColor: 'white'

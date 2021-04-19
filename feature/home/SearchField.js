@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements'
 import { useNavigation } from "@react-navigation/native"
